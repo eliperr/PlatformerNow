@@ -5,7 +5,7 @@
  */
 package com.mycompany.platformernow;
 
-
+//why does github never work and whatever i do always has some other error?
 /**
  *
  * @author eliperr
@@ -36,13 +36,13 @@ public class GameFrame extends JFrame implements ComponentListener {
            @Override
            public void windowGainedFocus(WindowEvent e) {
                focus=true;
-               System.out.println(focus);
+               //System.out.println(focus);
            }
 
            @Override
            public void windowLostFocus(WindowEvent e) {
                focus=false;
-               System.out.println(focus);
+               //System.out.println(focus);
            }
        });
     }

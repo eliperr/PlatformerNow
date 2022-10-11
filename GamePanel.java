@@ -24,10 +24,10 @@ import javax.imageio.ImageIO;
 public class GamePanel extends JPanel{
     
         private int x=100;
-       private  int y=100;
+       private  int y=100;   //dont need these anymore. remove
         private int w=100;
         private int h=100;
-        private int FPS=60;
+        //private int FPS=60;
         private boolean touching;
         private Color c=Color.blue;
        private int xdim, ydim;
@@ -44,9 +44,10 @@ public class GamePanel extends JPanel{
    private int ycount=1;
    private int n=5;//number of frames in animation 
    private int tick=5;//speed of animation
-   private BufferedImage gameImg,fireImg;
+   private BufferedImage gameImg,fireImg, gemImg;
    public Player player;
-   public Obstacle fire;
+   public Fire fire[];
+   public Gem gem[];
    
     public final static int TILESIZE=32;
   public final static float SCALE=1f; ///This cannot be scaled easily 
@@ -60,12 +61,16 @@ public class GamePanel extends JPanel{
     public GamePanel()
     {    //init
          this.player= new Player(100,100); 
-         this.fire=new Obstacle(170,280);
-         
+         this.fire=Load.initFires();
+         this.gem=Load.initGems();
+         //this.gem=new Gem(50,50); //test
          this. playerImg= player.animate(); //keep updating image to draw as you animate player
          //this.gameImg=Load.LoadGameImg();
-         this.fireImg=fire.animate();
-        
+         
+         
+         this.fireImg=fire[0].animate();
+         this.gemImg=gem[0].animate();
+          //this.gemImg=Load.uploadGem();
        addKeyListener(new keyboardInputs(this));
     size=new Dimension (GAMEWIDTH,GAMEHEIGHT);
      
@@ -82,8 +87,12 @@ public class GamePanel extends JPanel{
       playerImg= player.animate();
      x=player.setPosition(x,y)[0];
      y=player.setPosition(x,y)[1];
-     fire.updateTick();   //should all have same update tick?
-     fireImg=fire.animate();
+     fire[0].updateTick();   //should all have same update tick?
+     fireImg=fire[0].animate();
+     gem[0].updateTick();
+     gemImg=gem[0].animate();
+     gem[0].isTouching(player);
+     //System.out.println(gemImg==null);
      
   
      
@@ -98,9 +107,16 @@ public class GamePanel extends JPanel{
         super.paintComponent(g);
         
          Load.LoadGameImg(g);
-         fire.draw(g,fireImg);
-         player.draw(g,playerImg,x,y);
+         for (Fire f:fire)
+         { f.draw(g,fireImg);  //if make many obstacles array of arrays
+                 }
          
+         for (Gem shiny:gem)
+         { shiny.draw(g,gemImg);
+                 }
+         
+         player.draw(g,playerImg,x,y);
+         // gem.draw(g,gemImg);
          //player.drawPlayer(g);
               //g.drawImage(gameImg,0,0,gameImg.getWidth(),gameImg.getHeight(),null);
               //g.drawImage(playerImg,x,y, playerImg.getWidth()*(int)(GamePanel.SCALE), playerImg.getHeight()*(int)(GamePanel.SCALE), null); 

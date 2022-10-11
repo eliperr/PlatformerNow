@@ -128,6 +128,124 @@ public BufferedImage animate()
       
       return sub;
       
+       
+
+  /*
+
+
+
+
+
+
+
+
+
          
-         
-     } */
+/*
+package com.mycompany.platformernow;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+/**
+ *
+ * @author eliperr
+ */
+
+/*
+public abstract class Obstacle {
+    private static BufferedImage img;
+    private BufferedImage subImg;
+    private int x, y;
+    private static int tick=0;
+    private static int xFrame=0;
+    private static int yFrame=0;
+    private static int tickspeed=5;
+    private static int col=8; //# of columns in spritefile
+    private static int row=8; //# of rows 
+    private final int SCALE=3;
+    
+    //later can generalize this if adding other types of obstacles// can extend animatable
+    //can add other types later 
+    public Obstacle(int x, int y)
+    {
+       this.img=Load.uploadFire();
+       this.x=x;
+       this.y=y;
+        
+    }
+    
+    public void draw(Graphics g, BufferedImage subImg)
+    {
+        //subImg=img.getSubimage(0,0,120,150);
+        g.drawImage(subImg ,x,y, subImg.getWidth()/SCALE, subImg.getHeight()/SCALE, null);
+       
+        
+    }
+    
+    public static  void updateTick()
+    {
+        
+        tick++;
+         if (tick>=tickspeed)
+         {
+            tick=0;
+            xFrame++;
+           
+            
+             if (yFrame>=row-1 && xFrame>=col)
+                {
+               
+                yFrame=0;
+                
+                }
+            
+            
+            if (xFrame>=col)
+            {
+                
+                
+                xFrame=0;
+                yFrame++;
+               
+                
+            }
+            
+             
+               
+                //System.out.println("Xframe" + xFrame + "yframe" + yFrame);
+           
+            
+         }
+    
+    }
+    
+    public static BufferedImage animate()
+    {
+         BufferedImage sub=img.getSubimage(xFrame*128, yFrame*128, 128, 128);
+    
+      
+      return sub;
+        
+        
+    }
+    
+    
+    //*public init()
+            
+   /* { 
+      
+        Cord[]arr= Load.getFireArray (1); 
+        this [] fire = new this[arr.length];
+//keep at level one for now 
+        for (int i=0; i<arr.length; i++)
+        {
+         =new Obstacle(170,280);  
+            
+        }
+        
+    }*/
+    
+
+
+    

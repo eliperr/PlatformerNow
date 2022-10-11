@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
  *
  * @author eliperr
  */
-public class Player {
+public class Player  {
     
         private int x;
        private  int y;
@@ -37,7 +37,7 @@ public class Player {
    private int n=5;//number of frames in animation 
    private int tick=0;
    private final int tickspeed=10;
-   private final int speed=5;
+   private final int speed=3;
    private String direction="idle";
    
    public Player(int x, int y)
@@ -110,27 +110,27 @@ public class Player {
   {
       if (right && !left)
       {
-          x+=speed;
+          this.x+=speed;
           
       }
       
       if (left && !right)
       {
           
-          x-=speed;
+          this.x-=speed;
           
       }
       
       if (down&&!up)
       {
           //System.out.println(y);
-          y+=speed;
+          this.y+=speed;
           ///System.out.println("down");
       }
       
       if (up&&!down)
       {
-         y-=speed; 
+         this.y-=speed; 
       }
      
       int [] result={x, y};
@@ -176,9 +176,9 @@ public class Player {
      
  }  
     
-    public void drawPlayer(Graphics g)
+    public void draw(Graphics g, BufferedImage img)
     {
-         g.drawImage(playerImg,x,y, playerImg.getWidth()*(int)(GamePanel.SCALE), playerImg.getHeight()*(int)(GamePanel.SCALE), null); 
+         g.drawImage(playerImg,x,y, img.getWidth()*(int)(GamePanel.SCALE), img.getHeight()*(int)(GamePanel.SCALE), null); 
     }
     
     
@@ -250,7 +250,7 @@ public class Player {
       
        BufferedImage sub=playerImg.getSubimage(animationFrame*64, ycount*40, 64, 40);
     
-      
+      this.subImg=sub;
       return sub;
       
       } 
@@ -259,11 +259,20 @@ public class Player {
     public void draw(Graphics g, BufferedImage img, int x, int y)
     {
         
-       g.drawImage(img,x,y, img.getWidth()*(int)(GamePanel.SCALE), img.getHeight()*(int)(GamePanel.SCALE), null);   
+       g.drawImage(img,this.x,this.y, img.getWidth()*(int)(GamePanel.SCALE), img.getHeight()*(int)(GamePanel.SCALE), null);   
         
     }
     
+    public int getWidth()
+    {
+        return subImg.getWidth()*(int)(GamePanel.SCALE);
+    }
     
+    public int getHeight()
+            
+    {
+        return subImg.getHeight()*(int)(GamePanel.SCALE);
+    }
     
 }
 

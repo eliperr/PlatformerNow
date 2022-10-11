@@ -56,6 +56,12 @@ public class Load {
         return uploadImg("images/fire-sprite-sheet.png");
     }
     
+    
+    public static BufferedImage uploadGem()
+    {
+        return uploadImg("images/gem.png");
+        
+    }
     public static BufferedImage[] LoadTiles()
             
             
@@ -147,6 +153,61 @@ public class Load {
          
          
      }
+     
+    /* public static Cord[] getFireArray (int level)
+             
+     {   Cord[]arr=null;
+     
+         switch (level)
+         { case 1:
+               
+         arr=new Cord[2];
+          arr[0]=new Cord(170,280);
+          arr[1]=new Cord(300,280);
+             
+            break;     
+     
+                  
+                  
+         
+         }
+                         
+         return arr;
+         
+         
+     }*/
+     
+     public static Fire[] initFires()   //make different for diff levels this is level one
+             
+     {
+         
+         Fire[] fire =new Fire[3];
+         
+         fire[0]=new Fire(170,280);
+         fire[1]=new Fire(420,280);
+         fire[2]=new Fire(700,280);
+         
+         return fire;
+         
+         
+     }
+     
+    public static Gem[] initGems()   //make different for diff levels this is level one
+             
+     {
+         
+         Gem[] gem =new Gem[3];
+         
+         gem[0]=new Gem(180,260);
+         gem[1]=new Gem(400,260);
+         gem[2]=new Gem(550,120);
+         
+         return gem;
+         
+         
+     }
+      
+     
     
     
 }

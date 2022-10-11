@@ -11,36 +11,43 @@ import java.awt.image.BufferedImage;
  *
  * @author eliperr
  */
-public class Obstacle {
-    private BufferedImage fireImg, subImg;
-    private int x, y;
-    private int tick=0;
-    private int xFrame=0;
-    private int yFrame=0;
-    private int tickspeed=5;
-    private int col=8; //# of columns in spritefile
-    private int row=8; //# of rows 
-    private final int SCALE=3;
-    
+public abstract class Obstacle {
+   protected BufferedImage img;
+    protected BufferedImage subImg;
+    protected int x;
+    protected int y;
+   protected int tick;
+    protected int xFrame;
+    protected  int yFrame;
+    protected  int tickspeed;
+    protected  int col; //# of columns in spritefile
+    protected  int row; //# of rows 
+    protected double SCALE;
+    protected int animx; //coordinates for animating
+    protected int animy;
+    protected int wobble=10;
     //later can generalize this if adding other types of obstacles// can extend animatable
     //can add other types later 
-    public Obstacle(int x, int y)
-    {
-       this.fireImg=Load.uploadFire();
+   public Obstacle(int x, int  y)
+   {
        this.x=x;
        this.y=y;
-        
-    }
+       this.tick=0;
+       this.xFrame=0;
+       this.yFrame=0;
+       
+   }
     
     public void draw(Graphics g, BufferedImage subImg)
     {
-        //subImg=fireImg.getSubimage(0,0,120,150);
-        g.drawImage(subImg ,x,y, subImg.getWidth()/SCALE, subImg.getHeight()/SCALE, null);
+        //subImg=img.getSubimage(0,0,120,150);
+        //System.out.println(SCALE);
+        g.drawImage(subImg ,x,y, (int) (subImg.getWidth()/SCALE), (int) (subImg.getHeight()/SCALE), null);
        
         
     }
     
-    public void updateTick()
+    public  void updateTick()
     {
         
         tick++;
@@ -79,12 +86,61 @@ public class Obstacle {
     
     public BufferedImage animate()
     {
-         BufferedImage sub=fireImg.getSubimage(xFrame*128, yFrame*128, 128, 128);
+         BufferedImage sub=img.getSubimage(xFrame*animx, yFrame*animy, animx, animy);
     
-      
+      this.subImg=sub;
       return sub;
         
         
     }
+    
+    public int getWidth()
+    {
+        return (int) (subImg.getWidth()/SCALE);
+        
+    }
+    
+    public int getHeight()
+    {
+        return (int) (subImg.getHeight()/SCALE);
+        
+    }
+         
+    
+    public boolean isTouching(Player p)
+    {
+        //int x=p.getX();
+        //int y=p.getY();
+        int xc=x+animx;
+        int xp=p.getX()+ p.getWidth();
+        
+        System.out.println ("player is " + p.getX() + " to " + xp);
+            System.out.println ("object between " + x + " and " + xc);
+        if (p.getX()<x+this.getWidth()-wobble && p.getX()+p.getWidth()-wobble>=x)
+        {  
+            //&& p.getY()>=y+animy && p.getY()<y
+            System.out.println("touching");
+            
+            return true;
+        }
+         
+        return false;
+    }
+    
+    
+    //*public init()
+            
+   /* { 
+      
+        Cord[]arr= Load.getFireArray (1); 
+        this [] fire = new this[arr.length];
+//keep at level one for now 
+        for (int i=0; i<arr.length; i++)
+        {
+         =new Obstacle(170,280);  
+            
+        }
+        
+    }*/
     
 }

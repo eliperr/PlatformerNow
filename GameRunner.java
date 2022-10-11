@@ -75,7 +75,7 @@ long timer = System.currentTimeMillis();
 
         if (System.currentTimeMillis() - timer > 1000) {
             
-                System.out.println(String.format("UPS: %s, FPS: %s", updates, frames));
+               // System.out.println(String.format("UPS: %s, FPS: %s", updates, frames));
             
             frames = 0;
             updates = 0;
