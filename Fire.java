@@ -4,6 +4,9 @@
  */
 package com.mycompany.platformernow;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 /**
@@ -24,7 +27,36 @@ public class Fire extends Obstacle{
        
        //super.tick=0;
        super.animx=super.animy=128;
+        super.subImg=this.animate(img);
       
     }
+     
+     
+     public void isDead(Player p)
+             
+     {
+         if (this.isTouching(p) && !GameRunner.gameover)
+         {
+             
+          /*    g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+         g.setColor(Color.RED);
+         g.drawString("dead",100,100);*/
+             System.out.println("dead");
+             GameRunner.gameover=true;
+         
+         }
+         
+         
+     }
+     
+     public static void deathScreen(Graphics g)
+             
+     {   //g.setColor(Color.BLACK);
+         //g.drawRect(GamePanel.GAMEWIDTH/2,GamePanel.GAMEHEIGHT/2, 20,20);
+         g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+         g.setColor(Color.RED);
+         g.drawString("You died :(",GamePanel.GAMEWIDTH/2,GamePanel.GAMEHEIGHT/2);
+         
+     }
 
 }

@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 public class GameRunner implements Runnable{
     
     public final double FPS=60;
-  public boolean gameover=false;
+  public static boolean gameover=false;
   private GamePanel gamePanel;
   private GameFrame gameFrame;
  private Thread gameThread;

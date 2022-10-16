@@ -11,6 +11,9 @@ import java.awt.image.BufferedImage;
  *
  * @author eliperr
  */
+
+//neeed to fix subimg error
+//needs to be specific for gem or fire but static among these like row or col variables
 public abstract class Obstacle {
    protected BufferedImage img;
     protected BufferedImage subImg;
@@ -25,7 +28,7 @@ public abstract class Obstacle {
     protected double SCALE;
     protected int animx; //coordinates for animating
     protected int animy;
-    protected int wobble=10;
+    protected int wobble=15;
     //later can generalize this if adding other types of obstacles// can extend animatable
     //can add other types later 
    public Obstacle(int x, int  y)
@@ -94,6 +97,16 @@ public abstract class Obstacle {
         
     }
     
+    public BufferedImage animate(BufferedImage b)
+    {
+         BufferedImage sub=b.getSubimage(xFrame*animx, yFrame*animy, animx, animy);
+    
+      
+      return sub;
+        
+        
+    }
+   /* 
     public int getWidth()
     {
         return (int) (subImg.getWidth()/SCALE);
@@ -106,41 +119,91 @@ public abstract class Obstacle {
         
     }
          
-    
-    public boolean isTouching(Player p)
+    /*
+   /* public boolean isTouching(Player p)
     {
         //int x=p.getX();
         //int y=p.getY();
-        int xc=x+animx;
-        int xp=p.getX()+ p.getWidth();
+       
+      //x test 
+      /*   int xc=x+this.getWidth()-wobble;
+        int xp=p.getX()+ p.getWidth()-wobble;
         
         System.out.println ("player is " + p.getX() + " to " + xp);
             System.out.println ("object between " + x + " and " + xc);
-        if (p.getX()<x+this.getWidth()-wobble && p.getX()+p.getWidth()-wobble>=x)
+      if (p.getX()<x+this.getWidth()-wobble && p.getX()+p.getWidth()-wobble>=x)
         {  
             //&& p.getY()>=y+animy && p.getY()<y
             System.out.println("touching");
             
             return true;
-        }
-         
+        }*/
+        
+   /*   
+      //y test
+      int yc=x+this.getHeight()-wobble;
+        int yp=p.getY()+ p.getHeight()-wobble;
+        
+        System.out.println ("player is " + p.getY() + " to " + yp);
+            System.out.println ("object between " + y + " and " + yc);
+          
+      if (p.getY()+p.getHeight()>y+this.getHeight()-wobble && p.getY()-wobble*2<=y )
+      {
+          System.out.println("touching");
+           
+          return true;
+      }
+      
+      
         return false;
     }
+    */
     
     
-    //*public init()
-            
-   /* { 
-      
-        Cord[]arr= Load.getFireArray (1); 
-        this [] fire = new this[arr.length];
-//keep at level one for now 
-        for (int i=0; i<arr.length; i++)
-        {
-         =new Obstacle(170,280);  
-            
-        }
+    public int getWidth()
+    {
+        return (int) (subImg.getWidth()/SCALE);
         
-    }*/
+    }
+    
+    public int getHeight()
+    {
+        return (int) (subImg.getHeight()/SCALE);
+        
+    }
+  public boolean isTouching(Player p)
+          
+  {
+      //tests
+      /*
+          int yc=x+this.getHeight()-wobble;
+        int yp=p.getY()+ p.getHeight()-wobble;
+      
+        System.out.println ("player Y is " + p.getY() + " to " + yp);
+            System.out.println ("object Y between " + y + " and " + yc);
+          
+            
+         int xc=x+this.getWidth()-wobble;
+        int xp=p.getX()+ p.getWidth()-wobble;
+        
+        System.out.println ("player X is " + p.getX() + " to " + xp);
+            System.out.println ("object X between " + x + " and " + xc);
+       
+         */
+      
+      if (p.getX()<x+this.getWidth()-wobble && p.getX()+p.getWidth()-wobble>=x && p.getY()+p.getHeight()>y+this.getHeight()-wobble && p.getY()-wobble*2<=y)
+        {  
+            //&& p.getY()>=y+animy && p.getY()<y
+            //System.out.println("touching");
+            
+            return true;
+        }
+      
+      return false;
+      
+  }
+    
+    
+    
     
 }

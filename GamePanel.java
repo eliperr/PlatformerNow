@@ -12,6 +12,7 @@ package com.mycompany.platformernow;
  */
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
@@ -66,7 +67,7 @@ public class GamePanel extends JPanel{
          //this.gem=new Gem(50,50); //test
          this. playerImg= player.animate(); //keep updating image to draw as you animate player
          //this.gameImg=Load.LoadGameImg();
-         
+         //System.out.println("player height is " + player.getHeight() );
          
          this.fireImg=fire[0].animate();
          this.gemImg=gem[0].animate();
@@ -91,16 +92,25 @@ public class GamePanel extends JPanel{
      fireImg=fire[0].animate();
      gem[0].updateTick();
      gemImg=gem[0].animate();
-     gem[0].isTouching(player);
+     //fire[0].isTouching(player);
+     //gem[0].isTouching(player);
      //System.out.println(gemImg==null);
      
+     //gem[0].collectGem(player);
+     for (Gem shiny:gem)
+         {  shiny.collectGem(player);
+                                     }
+     
+      for (Fire f:fire)
+         { f.isDead(player);  }
+                 
   
      
  }
     //should thus go into player class? do I need animate here? why moving faster?
   
   
-
+  @Override
    
   public void paintComponent(Graphics g)
     {
@@ -112,10 +122,19 @@ public class GamePanel extends JPanel{
                  }
          
          for (Gem shiny:gem)
-         { shiny.draw(g,gemImg);
+         {  if (!shiny.getCollectedYet())
+             
+             shiny.draw(g,gemImg);
                  }
          
          player.draw(g,playerImg,x,y);
+         
+         Gem.drawGemCount(g);
+         
+        if (GameRunner.gameover)
+        {
+            Fire.deathScreen(g);
+        }
          // gem.draw(g,gemImg);
          //player.drawPlayer(g);
               //g.drawImage(gameImg,0,0,gameImg.getWidth(),gameImg.getHeight(),null);
