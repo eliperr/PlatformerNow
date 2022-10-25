@@ -4,8 +4,12 @@
  */
 package com.mycompany.platformernow;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,15 +17,17 @@ import javax.imageio.ImageIO;
 
 
 /**
- *
+ * 
+ * 
+ * need to ask about scaling and collision detection system (if object is too small for hitbox corners)
  * @author eliperr
  */
 public class Player  {
     
         private int x;
        private  int y;
-        private int w=100;
-        private int h=100;
+        private final int w;
+        private final int h;
         private int FPS=60;
        private Dimension size;
         private BufferedImage playerImg, subImg;
@@ -37,8 +43,13 @@ public class Player  {
    private int n=5;//number of frames in animation 
    private int tick=0;
    private final int tickspeed=10;
-   private final int speed=3;
+   //private final int speed=5;
    private String direction="idle";
+   private Rectangle2D.Float hitbox;
+   private int xspeed=5;
+   private int yspeed=5;
+   private int xOffset=21;
+   private int yOffset=4;
    
    public Player(int x, int y)
    {
@@ -46,7 +57,24 @@ public class Player  {
       this.playerImg=Load.LoadPlayerImg();
       this.x=x;
       this.y=y;
-  
+      subImg=this.animate();
+      h=this.getHeight();
+      w=this.getWidth();
+      System.out.println("height is " + h + " width is " + w );
+     
+      //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);
+      hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), 26f, 30f);
+      
+      //need to make hitbox smaller?
+   }
+   
+   
+   public void drawHitbox(Graphics g)
+           
+   {   g.setColor(Color.BLUE);
+       //g.drawRect((int)(hitbox.getX()), (int)(hitbox.getY()-Obstacle.wobble*2), (int)(hitbox.getWidth()-Obstacle.wobble), (int)(hitbox.getHeight()+Obstacle.wobble));
+        Graphics2D g2d = (Graphics2D) g;
+       g2d.draw(hitbox);
    }
    /* private void uploadImg()
    {
@@ -70,7 +98,11 @@ public class Player  {
    }*/
     
   
-   
+   public void setPosition(int x, int y)
+   {
+       this.x=x;
+       this.y=y;
+   }
   public void Left()
   {
      
@@ -106,36 +138,100 @@ public class Player  {
      //repaint();
   }
   
-  public int[] setPosition(int x, int y)
+  public  void  setPosition()
   {
-      if (right && !left)
+     /* if (canMoveHere(this.x +xspeed, this.y+speed, w, h, Load.levelData))
       {
-          this.x+=speed;
+          xspeed=speed;
+          yspeed=speed;
+          
+      }
+      else
+      {
+          xspeed=yspeed=0;
+      }*/
+       //System.out.println (canMoveHere(this.x +xspeed, this.y, w, h, Load.levelData));
+      
+      if (right && !left && canMoveHere((int)(hitbox.getX()) +xspeed, (int)(hitbox.getY()),26, 30, Load.levelData))
+      {
+          this.x+=xspeed;
           
       }
       
-      if (left && !right)
+      if (left && !right && canMoveHere((int)(hitbox.getX()) -xspeed, (int)(hitbox.getY()), 26, 30, Load.levelData))
       {
           
-          this.x-=speed;
+          this.x-=xspeed;
           
       }
       
-      if (down&&!up)
+      if (down&&!up && canMoveHere((int)(hitbox.getX()), (int)(hitbox.getY()) +yspeed, 26, 30, Load.levelData))
       {
           //System.out.println(y);
-          this.y+=speed;
+          this.y+=yspeed;
           ///System.out.println("down");
       }
       
-      if (up&&!down)
+      if (up&&!down&& canMoveHere( (int)(hitbox.getX()), (int)(hitbox.getY()) -yspeed, 26, 30, Load.levelData))
       {
-         this.y-=speed; 
+         this.y-=yspeed; 
       }
      
-      int [] result={x, y};
-      return result;
+      hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), 26f, 30f);
+      
+      if (!canMoveHere((int)(hitbox.getX()), (int)(hitbox.getY()) , w, h, Load.levelData))
+      {
+          System.out.println ("collision");
+      }
+      
+      //int [] result={x, y};
+      //return result;
   }
+  
+  
+  private boolean canMoveHere(int x, int y, int width, int height, int[][] leveldata)
+          
+  {  //check all corners of hitbox
+       //what if hits in the center of hitbox???
+      return !isSolid(x,y, leveldata) && !isSolid(x+width,y, leveldata) && !isSolid(x,y+height,leveldata) && !isSolid(x+width, y+height, leveldata);
+      //can try breaking down into smaller and smaller widths and heights if neeeded? width and height/n loop as increasing n -computationaly intensive thoiguh 
+  }
+  
+  
+  private boolean isSolid(int x, int y, int[][] leveldata)
+  
+  {  if (x<0 || x>=GamePanel.GAMEWIDTH || y>=GamePanel.GAMEHEIGHT || y<0)
+     { 
+         /*System.out.println("game dim");
+         System.out.println("x is " + x);
+         System.out.println(" gamepanel x is " + GamePanel.GAMEWIDTH);
+         System.out.println("y is " + y);
+         System.out.println(" gamepanel y is " + GamePanel.GAMEHEIGHT);*/
+         return true;}
+     
+    float xIndex=x/GamePanel.TILESIZE;
+    float yIndex=y/GamePanel.TILESIZE;
+    
+    int val=leveldata[(int)xIndex][(int)yIndex];  //can just use Load.leveldata?
+    //System.out.println(val);
+   if (val>=48 || val<0 || val!=11)
+    {
+        //System.out.println("solid tile");
+        return true;
+    
+    }     //should include value being more than 48 and less than zero?
+                       // if (val>=48 || val<0 || val!=11)
+    
+    
+    return false;
+    
+  
+   
+      
+      
+  }
+  
+  
   
   public int getX()
   {
@@ -176,10 +272,10 @@ public class Player  {
      
  }  
     
-    public void draw(Graphics g, BufferedImage img)
+   /* public void draw(Graphics g, BufferedImage img)
     {
          g.drawImage(playerImg,x,y, img.getWidth()*(int)(GamePanel.SCALE), img.getHeight()*(int)(GamePanel.SCALE), null); 
-    }
+    }*/
     
     
     
@@ -256,22 +352,22 @@ public class Player  {
       } 
          
 
-    public void draw(Graphics g, BufferedImage img, int x, int y)
+    public void draw(Graphics g, BufferedImage img)
     {
         
        g.drawImage(img,this.x,this.y, img.getWidth()*(int)(GamePanel.SCALE), img.getHeight()*(int)(GamePanel.SCALE), null);   
         
     }
     
-    public int getWidth()
+    public final int getWidth()
     {
         return subImg.getWidth()*(int)(GamePanel.SCALE);
     }
     
-    public int getHeight()
+    public final int getHeight()
             
     {
-        return subImg.getHeight()*(int)(GamePanel.SCALE);
+        return subImg.getHeight()*(int)(GamePanel.SCALE) ;
     }
     
 }

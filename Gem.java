@@ -62,6 +62,15 @@ public boolean getCollectedYet()
     
 }
 
+
+public static void resetGems(Gem[]gem)
+{
+    gemsCollected=0;
+    for (Gem shiny:gem)
+         { shiny.collectedYet=false;
+                                     }
+}
+
 public static void drawGemCount(Graphics g)
         
 {  
@@ -78,6 +87,8 @@ public static void drawGemCount(Graphics g)
     
     
 }
+
+
 
 
 

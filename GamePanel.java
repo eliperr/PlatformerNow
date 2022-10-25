@@ -10,6 +10,10 @@ package com.mycompany.platformernow;
  *
  * @author eliperr
  */
+
+
+//restart fx after death
+//instsance of level handler
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -61,7 +65,7 @@ public class GamePanel extends JPanel{
     
     public GamePanel()
     {    //init
-         this.player= new Player(100,100); 
+         this.player= new Player(150,150); 
          this.fire=Load.initFires();
          this.gem=Load.initGems();
          //this.gem=new Gem(50,50); //test
@@ -76,18 +80,38 @@ public class GamePanel extends JPanel{
     size=new Dimension (GAMEWIDTH,GAMEHEIGHT);
      
        setPreferredSize(size);
+       
+       
          
          
     }
     
+    public void restart()
+            
+    {   GameRunner.gameover=false;
+    player.setPosition(100,100);
+        //player.setPosition(100,100);
+        //x=player.setPosition(100,100)[0];
+     //y=player.setPosition(100,100)[1];   //make x y only available in player?
+       // System.out.println("restart");
+       Gem.resetGems(gem);
+        
+        
+       //will change to depend on level later 
+       //will restart the level you are on
+    }
+    
+   
     
     public void update()
  { 
      
       player.updateTick();
       playerImg= player.animate();
-     x=player.setPosition(x,y)[0];
-     y=player.setPosition(x,y)[1];
+      
+      player.setPosition();
+     //x=player.setPosition(x,y)[0];
+     //y=player.setPosition(x,y)[1];
      fire[0].updateTick();   //should all have same update tick?
      fireImg=fire[0].animate();
      gem[0].updateTick();
@@ -127,7 +151,8 @@ public class GamePanel extends JPanel{
              shiny.draw(g,gemImg);
                  }
          
-         player.draw(g,playerImg,x,y);
+         player.draw(g,playerImg);
+         player.drawHitbox(g);
          
          Gem.drawGemCount(g);
          

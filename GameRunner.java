@@ -14,12 +14,12 @@ public class GameRunner implements Runnable{
     
     public final double FPS=60;
   public static boolean gameover=false;
-  private GamePanel gamePanel;
+  public GamePanel gamePanel;
   private GameFrame gameFrame;
  private Thread gameThread;
   private int frames=0;
   private int updates=0;
-  
+  private static boolean pause=false;
  
    
   
@@ -52,8 +52,8 @@ double deltaU = 0, deltaF = 0;
 int frames = 0, updates = 0;
 long timer = System.currentTimeMillis();
 
-    while (!gameover) {
-        if (gameFrame.focus)
+    while (true) {
+        if (gameFrame.focus && !pause && !gameover)
         {    
 
         long currentTime = System.nanoTime();
@@ -93,4 +93,9 @@ long timer = System.currentTimeMillis();
         
     }
 }
+ public static void togglePause()
+ {
+     pause=!pause;
+ }
+   
 }

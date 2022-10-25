@@ -12,8 +12,7 @@ import java.awt.image.BufferedImage;
  * @author eliperr
  */
 
-//neeed to fix subimg error
-//needs to be specific for gem or fire but static among these like row or col variables
+
 public abstract class Obstacle {
    protected BufferedImage img;
     protected BufferedImage subImg;
@@ -28,7 +27,7 @@ public abstract class Obstacle {
     protected double SCALE;
     protected int animx; //coordinates for animating
     protected int animy;
-    protected int wobble=15;
+    public static final int wobble=15;
     //later can generalize this if adding other types of obstacles// can extend animatable
     //can add other types later 
    public Obstacle(int x, int  y)
@@ -190,6 +189,7 @@ public abstract class Obstacle {
             System.out.println ("object X between " + x + " and " + xc);
        
          */
+      //if (p.getX()<x+this.getWidth()-wobble && p.getX()+p.getWidth()-wobble>=x && p.getY()+p.getHeight()>y+this.getHeight()-wobble && p.getY()-wobble*2<=y)
       
       if (p.getX()<x+this.getWidth()-wobble && p.getX()+p.getWidth()-wobble>=x && p.getY()+p.getHeight()>y+this.getHeight()-wobble && p.getY()-wobble*2<=y)
         {  

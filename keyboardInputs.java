@@ -15,11 +15,13 @@ public class keyboardInputs implements KeyListener{
    
    private GamePanel panel;
    
+   
     
     
  public keyboardInputs(GamePanel panel)
  {
      this.panel=panel;
+    
      
  }
     
@@ -52,7 +54,7 @@ public class keyboardInputs implements KeyListener{
     @Override
     public void keyPressed (KeyEvent e)
     { 
-        
+        //https://www.toptal.com/developers/keycode
         switch(e.getKeyCode()){
             case 38:   //up
             panel.player.Up();
@@ -67,6 +69,11 @@ public class keyboardInputs implements KeyListener{
             case 40://down
              panel.player.Down();
              break;
+            case 32: //space
+               GameRunner.togglePause();
+            case 82: //r for restart
+                panel.restart();
+                //System.out.println("r");
            /// default:
                 //panel.reset();
    

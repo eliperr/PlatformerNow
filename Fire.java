@@ -55,7 +55,7 @@ public class Fire extends Obstacle{
          //g.drawRect(GamePanel.GAMEWIDTH/2,GamePanel.GAMEHEIGHT/2, 20,20);
          g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
          g.setColor(Color.RED);
-         g.drawString("You died :(",GamePanel.GAMEWIDTH/2,GamePanel.GAMEHEIGHT/2);
+         g.drawString("You died :( press 'r' to restart",GamePanel.GAMEWIDTH/2,GamePanel.GAMEHEIGHT/2);
          
      }
 

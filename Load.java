@@ -12,16 +12,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 
-/**
+/**   
  *
  * @author eliperr
  */
 public class Load {
  
-    
+       private static int level=1;
     
       private static BufferedImage[] gameImg=LoadTiles();
-      private static int[][] levelData=loadLevelData();
+      public static int[][] levelData=loadLevelData();
      private static BufferedImage uploadImg(String pic)
    {
       
@@ -206,6 +206,8 @@ public class Load {
          
          
      }
+    
+
       
      
     
