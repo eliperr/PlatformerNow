@@ -246,6 +246,79 @@ public abstract class Obstacle {
         
     }*/
     
+/*
+public  void  setPosition()
+  {
+   
+     float newX=this.x;
+      float newY=this.y;
+      float newXspeed=xspeed;
+      float newYspeed=yspeed;
+      if (right && !left && canMoveHere((int)(hitbox.getX() +xspeed), (int)(hitbox.getY()),26, 30, Load.levelData))
+      {
+          if (xspeed<0)
+          {
+              xspeed=initSpeed;
+          }
+          
+          this.x+=xspeed;
+          
+           if ( xspeed+xacceleration<=maxXspeed)
+          {
+              xspeed+=xacceleration;
+              
+          }
+          
+          
+      }
+      
+      else if (left && !right && canMoveHere((int)(hitbox.getX() + xspeed), (int)(hitbox.getY()), 26, 30, Load.levelData))
+      {
+          
+          if (xspeed>0)
+          {
+              xspeed=-initSpeed;
+          }
+          
+          this.x+=xspeed;
+          
+           if ( xspeed-xacceleration>=-maxXspeed)
+          {
+              xspeed-=xacceleration;
+              
+          }
+          
+          
+      }
+      else
+      {
+          xspeed=0;
+      }
+      
+      if (down&&!up && canMoveHere((int)(hitbox.getX()), (int)(hitbox.getY() +yspeed), 26, 30, Load.levelData))
+      {
+          //System.out.println(y);
+          this.y+=yspeed;
+          ///System.out.println("down");
+      }
+      
+      if (up&&!down&& canMoveHere( (int)(hitbox.getX()), (int)(hitbox.getY() -yspeed), 26, 30, Load.levelData))
+      {
+         this.y-=yspeed; 
+      }
+     
+      hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), 26f, 30f);
+      
+      if (!canMoveHere((int)(hitbox.getX()), (int)(hitbox.getY()) , w, h, Load.levelData))
+      {
+          System.out.println ("collision");
+      }
+       System.out.println(xspeed);
+      // System.out.println("on ground?" + onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData));
+      //int [] result={x, y};
+      //return result;
+  }
+*/
 
 
     

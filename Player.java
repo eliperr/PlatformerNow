@@ -24,8 +24,8 @@ import javax.imageio.ImageIO;
  */
 public class Player  {
     
-        private int x;
-       private  int y;
+        private float x;
+       private  float y;
         private final int w;
         private final int h;
         private int FPS=60;
@@ -46,12 +46,19 @@ public class Player  {
    //private final int speed=5;
    private String direction="idle";
    private Rectangle2D.Float hitbox;
-   private int xspeed=5;
-   private int yspeed=5;
-   private int xOffset=21;
-   private int yOffset=4;
-   
-   public Player(int x, int y)
+   private float initSpeed=0;
+   private float xspeed=4;
+   private float yspeed=4;
+   private float xOffset=21;
+   private float yOffset=4;
+   private float xacceleration=1f;
+   private float yacceleration=1f;
+   private float maxXspeed=5;  
+   private float maxYspeed=5;
+   //make float
+   //add friction
+   //add gracity 
+   public Player(float x, float y)
    {
     
       this.playerImg=Load.LoadPlayerImg();
@@ -98,7 +105,7 @@ public class Player  {
    }*/
     
   
-   public void setPosition(int x, int y)
+   public void setPosition(float x, float y)
    {
        this.x=x;
        this.y=y;
@@ -140,41 +147,186 @@ public class Player  {
   
   public  void  setPosition()
   {
-     /* if (canMoveHere(this.x +xspeed, this.y+speed, w, h, Load.levelData))
+   
+     float newX=this.x;
+      float newY=this.y;
+      float newXspeed=xspeed;
+      float newYspeed=yspeed;
+      if (right && !left)
       {
-          xspeed=speed;
-          yspeed=speed;
+          /*if (xspeed<0)
+          {
+              xspeed=initSpeed;
+          }*/
+          
+          newX=this.x+xspeed;
+           if ( xspeed+xacceleration<=maxXspeed)
+          {
+              newXspeed=xspeed+xacceleration;
+              
+          }
+          
+          
+      }
+      
+      else if (left && !right )
+      {
+          
+         /* if (xspeed>0)
+          {
+              xspeed=-initSpeed;
+          }*/
+          
+          newX=this.x+xspeed;
+          
+           if ( xspeed-xacceleration>=-maxXspeed)
+          {
+              newXspeed=xspeed-xacceleration;
+              
+          }
+          
           
       }
       else
-      {
-          xspeed=yspeed=0;
-      }*/
-       //System.out.println (canMoveHere(this.x +xspeed, this.y, w, h, Load.levelData));
-      
-      if (right && !left && canMoveHere((int)(hitbox.getX()) +xspeed, (int)(hitbox.getY()),26, 30, Load.levelData))
-      {
-          this.x+=xspeed;
+      {  //decellelerate if not moving
+          //what if xspeed doesn't quite equal zero 
           
+          newX=this.x+xspeed; 
+          if (xspeed<0)       
+          {
+              newXspeed=xspeed+xacceleration;
+          }
+          else if (xspeed>0)
+              
+          {
+             newXspeed=xspeed-xacceleration; 
+          }
+          
+          
+          //newXspeed=xspeed=0;
       }
       
-      if (left && !right && canMoveHere((int)(hitbox.getX()) -xspeed, (int)(hitbox.getY()), 26, 30, Load.levelData))
-      {
-          
-          this.x-=xspeed;
-          
-      }
-      
-      if (down&&!up && canMoveHere((int)(hitbox.getX()), (int)(hitbox.getY()) +yspeed, 26, 30, Load.levelData))
+      if (down&&!up )
       {
           //System.out.println(y);
-          this.y+=yspeed;
+          yspeed=5;
+          newY=this.y+yspeed;
+         
           ///System.out.println("down");
       }
       
-      if (up&&!down&& canMoveHere( (int)(hitbox.getX()), (int)(hitbox.getY()) -yspeed, 26, 30, Load.levelData))
+      if (up&&!down)
       {
-         this.y-=yspeed; 
+          yspeed=5;
+        newY=this.y-yspeed;
+      }
+     
+      
+      if ( canMoveHere( (int)(newX+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData)) 
+          
+      {
+          this.x=newX;
+          this.y=newY;
+          xspeed=newXspeed;
+          yspeed=newYspeed;
+                 
+          
+      }
+      else        //too complicated and doesnt solve the problem, causes more glitcehs 
+      { System.out.println ("cant move here");
+        /* xspeed=0;
+         yspeed=0; */ //if can't move somewhere needs to decelerate into reaches that exact point  but this causes glitches 
+         newXspeed=xspeed;
+         while (!canMoveHere( (int)(newX+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData)  && xspeed!=0)
+                 {
+          if (newXspeed<0)       
+          {
+              newXspeed=newXspeed+xacceleration;
+          }
+          else if (newXspeed>0)
+              
+          {
+             newXspeed=newXspeed-xacceleration; 
+          }
+          newX=this.x+newXspeed; 
+          if (canMoveHere( (int)(newX+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData))
+          {
+               this.x=newX;
+          this.y=newY;
+          xspeed=newXspeed;
+          yspeed=newYspeed;
+          }
+          System.out.println("xspeed " + newXspeed);
+          
+       }
+      
+      }
+      hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), 26f, 30f);
+      
+      if (!canMoveHere((int)(hitbox.getX()), (int)(hitbox.getY()) , w, h, Load.levelData))
+      {
+          System.out.println ("collision");
+      }
+       //System.out.println("xspeed is "+ xspeed);
+       
+      System.out.println("on ground?" + onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData));
+      //int [] result={x, y};
+      //return result;
+  }
+
+  
+ /*public  void  setPosition()
+  {
+   int newX=this.x;
+     int newY=this.y;
+      
+      if (right && !left)
+      {
+          
+          newX=this.x+xspeed;
+         
+          
+          
+      }
+      
+     else if (left && !right)
+      {
+          
+          newX=this.x-xspeed;
+          
+          
+      }
+      else
+     {
+         xspeed=initSpeed;
+          
+     }
+      
+      if (down&&!up)
+      {
+         
+          newY=this.y+yspeed;
+          
+      }
+      
+      if (up&&!down)
+      {
+         newY=this.y-yspeed; 
+      }
+      
+      if (canMoveHere(newX + xOffset,newY+yOffset,26, 30, Load.levelData))
+      {
+          this.x=newX;
+          this.y=newY;
+          
+         if (right && xspeed+xacceleration<=maxXspeed)
+          {
+              xspeed+=xacceleration;
+              
+          }
+         System.out.println(xspeed);
+              
+          
       }
      
       hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), 26f, 30f);
@@ -186,7 +338,9 @@ public class Player  {
       
       //int [] result={x, y};
       //return result;
-  }
+  } 
+  */
+  
   
   
   private boolean canMoveHere(int x, int y, int width, int height, int[][] leveldata)
@@ -197,6 +351,14 @@ public class Player  {
       //can try breaking down into smaller and smaller widths and heights if neeeded? width and height/n loop as increasing n -computationaly intensive thoiguh 
   }
   
+  private boolean onGround(int x, int y, int width, int height, int[][] leveldata )
+           
+  {  int res=y+height;
+      System.out.print("y+ height:" + res);
+     System.out.print("y:" + y);
+     int n=3;
+      return  isSolid(x,y+height+n,leveldata) || isSolid(x+width, y+height+n, leveldata) || isSolid(x,y+n,leveldata) || isSolid(x+width, y+n, leveldata);
+  }
   
   private boolean isSolid(int x, int y, int[][] leveldata)
   
@@ -233,12 +395,12 @@ public class Player  {
   
   
   
-  public int getX()
+  public float getX()
   {
       return x;
   }
   
-  public int getY()
+  public float getY()
   {
           //System.out.println(y);
       return y;
@@ -355,7 +517,7 @@ public class Player  {
     public void draw(Graphics g, BufferedImage img)
     {
         
-       g.drawImage(img,this.x,this.y, img.getWidth()*(int)(GamePanel.SCALE), img.getHeight()*(int)(GamePanel.SCALE), null);   
+       g.drawImage(img,(int)(this.x),(int)this.y, img.getWidth()*(int)(GamePanel.SCALE), img.getHeight()*(int)(GamePanel.SCALE), null);   
         
     }
     
