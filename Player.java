@@ -209,16 +209,18 @@ public class Player  {
       if (down&&!up )
       {
           //System.out.println(y);
-          yspeed=5;
+           if (yspeed<=5)
+           { newYspeed++;}
           newY=this.y+yspeed;
          
           ///System.out.println("down");
       }
       
-      if (up&&!down)
+      else if (up&&!down)
       {
-          yspeed=5;
-        newY=this.y-yspeed;
+          if (yspeed>=-5)
+          {newYspeed--;}
+        newY=this.y+yspeed;
       }
      
       
@@ -234,11 +236,47 @@ public class Player  {
       }
       else        //too complicated and doesnt solve the problem, causes more glitcehs 
       { System.out.println ("cant move here");
-        /* xspeed=0;
-         yspeed=0; */ //if can't move somewhere needs to decelerate into reaches that exact point  but this causes glitches 
+          
+          xspeed=yspeed=0;  //simpler way works well but less accurate
+          /*
+         if( !canMoveHere( (int)(newX+xOffset), (int)(this.y+yOffset), 26, 30, Load.levelData)) 
+         {
+          if (left && !right && xspeed<0)   //slow down and see if can move to spot in smaller increments
+          {xspeed++; 
+          yspeed=0;}
+          else if (!left && right && xspeed>0)
+          {
+              xspeed--; 
+          yspeed=0;}
+          
+          System.out.println("becauze of x");
+          
+         }
+          
+         if( !canMoveHere( (int)(this.x+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData)) 
+         { 
+         if (up && !down && yspeed<0)   //slow down
+          {yspeed++; 
+         xspeed=0;}
+          else if (!up && down && yspeed>0)
+          {
+              yspeed--; 
+            xspeed=0; }
+         
+          System.out.println("becauze of y");
+         }
+          System.out.println("xspeed " + xspeed);
+          System.out.println("yspeed " + yspeed);*/
+          
+    //if can't move somewhere needs to decelerate into reaches that exact point  but this causes glitches 
+    
+    //overcomplicated, needed?
          newXspeed=xspeed;
-         while (!canMoveHere( (int)(newX+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData)  && xspeed!=0)
+         newYspeed=yspeed;
+         while (!canMoveHere( (int)(newX+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData))
                  {
+                     System.out.println("xspeed " + newXspeed);
+             System.out.println("yspeed " + newYspeed);
           if (newXspeed<0)       
           {
               newXspeed=newXspeed+xacceleration;
@@ -248,15 +286,45 @@ public class Player  {
           {
              newXspeed=newXspeed-xacceleration; 
           }
+          if (newYspeed>0)       
+          {
+              newYspeed--;
+          }
+          else if (newYspeed>0)
+              
+          {
+             newYspeed--; 
+             
+          }
+          
+          if (newYspeed==0 )
+          {
+              
+              yspeed=newYspeed;
+              xspeed=0;
+              break;
+          }
+          
+          if (newXspeed==0 )
+          {
+              
+              xspeed=newXspeed;
+              yspeed=0;
+              break;
+          }
           newX=this.x+newXspeed; 
+           newY=this.y+newYspeed;
+            System.out.println("xspeed " + newXspeed);
+             System.out.println("yspeed " + newYspeed);
           if (canMoveHere( (int)(newX+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData))
           {
                this.x=newX;
           this.y=newY;
           xspeed=newXspeed;
           yspeed=newYspeed;
+          break;
           }
-          System.out.println("xspeed " + newXspeed);
+         
           
        }
       
@@ -267,7 +335,7 @@ public class Player  {
       {
           System.out.println ("collision");
       }
-       //System.out.println("xspeed is "+ xspeed);
+       System.out.println("xspeed is "+ xspeed);
        
       System.out.println("on ground?" + onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData));
       //int [] result={x, y};
@@ -353,10 +421,10 @@ public class Player  {
   
   private boolean onGround(int x, int y, int width, int height, int[][] leveldata )
            
-  {  int res=y+height;
-      System.out.print("y+ height:" + res);
-     System.out.print("y:" + y);
-     int n=3;
+  {  //int res=y+height;
+      //System.out.print("y+ height:" + res);
+     //System.out.print("y:" + y);
+     int n=1;
       return  isSolid(x,y+height+n,leveldata) || isSolid(x+width, y+height+n, leveldata) || isSolid(x,y+n,leveldata) || isSolid(x+width, y+n, leveldata);
   }
   
