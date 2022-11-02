@@ -22,6 +22,12 @@ import javax.imageio.ImageIO;
  * need to ask about scaling and collision detection system (if object is too small for hitbox corners)
  * @author eliperr
  */
+
+//door to next level--> make next level
+//elements like buttons and boxes and ordered gems
+//check fire detection
+//new player sprite?
+
 public class Player  {
     
         private float x;
@@ -48,7 +54,8 @@ public class Player  {
    private Rectangle2D.Float hitbox;
    private float initSpeed=0;
    private float xspeed=4;
-   private float yspeed=4;
+   private float yspeed=4f; 
+   private float yspeedInit=5; 
    private float xOffset=21;
    private float yOffset=4;
    private float xacceleration=1f;
@@ -58,6 +65,8 @@ public class Player  {
    //make float
    //add friction
    //add gracity 
+   private boolean jump=false;
+   private float gravity=0.15f;
    public Player(float x, float y)
    {
     
@@ -206,7 +215,7 @@ public class Player  {
           //newXspeed=xspeed=0;
       }
       
-      if (down&&!up )
+     /* if (down&&!up )
       {
           //System.out.println(y);
            if (yspeed<=5)
@@ -214,15 +223,31 @@ public class Player  {
           newY=this.y+yspeed;
          
           ///System.out.println("down");
-      }
+      }*/
       
-      else if (up&&!down)
+       if (up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData))
       {
-          if (yspeed>=-5)
-          {newYspeed--;}
-        newY=this.y+yspeed;
+          jump=true;
+          yspeed=newYspeed=yspeedInit;
       }
+       else if (!up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData))
+       {
+           
+           jump=false;
+           System.out.println("jump:" + jump);
+       }
      
+       if (jump || !onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData))
+       {
+           System.out.println("jump:" + jump);
+           newY=this.y-newYspeed;
+           newYspeed=yspeed-gravity;
+          
+           
+           //NEEED TO ADD FALLING
+           
+       }  
+           
       
       if ( canMoveHere( (int)(newX+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData)) 
           
@@ -270,8 +295,8 @@ public class Player  {
           
     //if can't move somewhere needs to decelerate into reaches that exact point  but this causes glitches 
     
-    //overcomplicated, needed?
-         newXspeed=xspeed;
+    //overcomplicated, needed?   usually ends up being a speed of zero anyway-wont be noticed by user 
+       /*  newXspeed=xspeed;
          newYspeed=yspeed;
          while (!canMoveHere( (int)(newX+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData))
                  {
@@ -327,17 +352,17 @@ public class Player  {
          
           
        }
-      
+      */
       }
       hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), 26f, 30f);
       
       if (!canMoveHere((int)(hitbox.getX()), (int)(hitbox.getY()) , w, h, Load.levelData))
       {
-          System.out.println ("collision");
+          //System.out.println ("collision");
       }
-       System.out.println("xspeed is "+ xspeed);
+       //System.out.println("xspeed is "+ xspeed);
        
-      System.out.println("on ground?" + onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData));
+      //System.out.println("on ground?" + onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData));
       //int [] result={x, y};
       //return result;
   }

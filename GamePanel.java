@@ -65,7 +65,7 @@ public class GamePanel extends JPanel{
     
     public GamePanel()
     {    //init
-         this.player= new Player(150f,150f); 
+         this.player= new Player(100f,285f); 
          this.fire=Load.initFires();
          this.gem=Load.initGems();
          //this.gem=new Gem(50,50); //test
@@ -89,7 +89,7 @@ public class GamePanel extends JPanel{
     public void restart()
             
     {   GameRunner.gameover=false;
-    player.setPosition(100f,100f);
+    player.setPosition(100f,285f);
         //player.setPosition(100,100);
         //x=player.setPosition(100,100)[0];
      //y=player.setPosition(100,100)[1];   //make x y only available in player?
