@@ -23,6 +23,8 @@ import javax.imageio.ImageIO;
  * @author eliperr
  */
 
+
+//reset jump after pause
 //door to next level--> make next level
 //elements like buttons and boxes and ordered gems
 //check fire detection
@@ -244,7 +246,7 @@ public class Player  {
            newYspeed=yspeed-gravity;
           
            
-           //NEEED TO ADD FALLING
+           
            
        }  
            
@@ -261,8 +263,40 @@ public class Player  {
       }
       else        //too complicated and doesnt solve the problem, causes more glitcehs 
       { System.out.println ("cant move here");
+      xspeed=yspeed=0;  
+      //reaches close to ground but never gets there //what is differente?
+      /*   if (jump || !onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData))
+       {
+           System.out.println("jump:" + jump);
+           newY=this.y-newYspeed;
+           newYspeed=yspeed-gravity;
           
-          xspeed=yspeed=0;  //simpler way works well but less accurate
+           
+           System.out.println("falling");
+           //System.exit(0);
+           
+            if ( canMoveHere( (int)(this.x + xOffset), (int)(newY+yOffset), 26, 30, Load.levelData)) 
+          
+           {
+          //this.x=newX;
+          this.y=newY;
+          //xspeed=newXspeed;
+          yspeed=newYspeed;
+          System.out.println("can fall");  //not getting here but getting very close 
+           //but this is nt a problem in block above?
+          //System.exit(0);
+                 
+           }
+       }      
+               
+          else
+          { System.out.println ("still cant move here");
+              
+              xspeed=yspeed=0; }
+           
+        
+      
+           //simpler way works well but less accurate
           /*
          if( !canMoveHere( (int)(newX+xOffset), (int)(this.y+yOffset), 26, 30, Load.levelData)) 
          {
@@ -353,6 +387,7 @@ public class Player  {
           
        }
       */
+       
       }
       hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), 26f, 30f);
       

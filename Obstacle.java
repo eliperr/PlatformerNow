@@ -44,8 +44,15 @@ public abstract class Obstacle {
     {
         //subImg=img.getSubimage(0,0,120,150);
         //System.out.println(SCALE);
-        g.drawImage(subImg ,x,y, (int) (subImg.getWidth()/SCALE), (int) (subImg.getHeight()/SCALE), null);
+        
+        if (subImg!=null)
+        {
+         
+           g.drawImage(subImg ,x,y, (int) (subImg.getWidth()/SCALE), (int) (subImg.getHeight()/SCALE), null); 
+        }
+        
        
+        
         
     }
     
@@ -91,8 +98,12 @@ public abstract class Obstacle {
          BufferedImage sub=img.getSubimage(xFrame*animx, yFrame*animy, animx, animy);
     
       this.subImg=sub;
+      
+     
+      
+      
       return sub;
-        
+       
         
     }
     

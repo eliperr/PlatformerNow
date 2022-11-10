@@ -62,6 +62,12 @@ public class Load {
         return uploadImg("images/gem.png");
         
     }
+    
+    public static BufferedImage uploadPortal()
+    {
+        return uploadImg("images/portal.png");
+        
+    }
     public static BufferedImage[] LoadTiles()
             
             

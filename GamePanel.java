@@ -49,10 +49,11 @@ public class GamePanel extends JPanel{
    private int ycount=1;
    private int n=5;//number of frames in animation 
    private int tick=5;//speed of animation
-   private BufferedImage gameImg,fireImg, gemImg;
+   private BufferedImage gameImg,fireImg, gemImg, portalImg;
    public Player player;
    public Fire fire[];
    public Gem gem[];
+   public Portal portal;
    
     public final static int TILESIZE=32;
   public final static float SCALE=1f; ///This cannot be scaled easily 
@@ -68,6 +69,7 @@ public class GamePanel extends JPanel{
          this.player= new Player(100f,285f); 
          this.fire=Load.initFires();
          this.gem=Load.initGems();
+         this.portal=new Portal(200,200); 
          //this.gem=new Gem(50,50); //test
          this. playerImg= player.animate(); //keep updating image to draw as you animate player
          //this.gameImg=Load.LoadGameImg();
@@ -116,9 +118,10 @@ public class GamePanel extends JPanel{
      fireImg=fire[0].animate();
      gem[0].updateTick();
      gemImg=gem[0].animate();
-     //fire[0].isTouching(player);
-     //gem[0].isTouching(player);
-     //System.out.println(gemImg==null);
+     portal.updateTick();
+     portalImg=portal.animate();
+     
+     
      
      //gem[0].collectGem(player);
      for (Gem shiny:gem)
@@ -129,7 +132,7 @@ public class GamePanel extends JPanel{
          { f.isDead(player);  }
                  
   
-     
+     portal.nextLevel(player);
  }
     //should thus go into player class? do I need animate here? why moving faster?
   
@@ -150,6 +153,7 @@ public class GamePanel extends JPanel{
              
              shiny.draw(g,gemImg);
                  }
+         portal.draw(g,portalImg);
          
          player.draw(g,playerImg);
          player.drawHitbox(g);
