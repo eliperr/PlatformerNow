@@ -54,6 +54,7 @@ public class GamePanel extends JPanel{
    public Fire fire[];
    public Gem gem[];
    public Portal portal;
+   private Box box;
    
     public final static int TILESIZE=32;
   public final static float SCALE=1f; ///This cannot be scaled easily 
@@ -69,7 +70,8 @@ public class GamePanel extends JPanel{
          this.player= new Player(100f,285f); 
          this.fire=Load.initFires();
          this.gem=Load.initGems();
-         this.portal=new Portal(200,200); 
+         this.portal=new Portal(500,200); 
+         this.box=new Box(30,30,70,290, Color.BLACK);
          //this.gem=new Gem(50,50); //test
          this. playerImg= player.animate(); //keep updating image to draw as you animate player
          //this.gameImg=Load.LoadGameImg();
@@ -92,6 +94,7 @@ public class GamePanel extends JPanel{
             
     {   GameRunner.gameover=false;
     player.setPosition(100f,285f);
+     box.setPosition(70,290);
         //player.setPosition(100,100);
         //x=player.setPosition(100,100)[0];
      //y=player.setPosition(100,100)[1];   //make x y only available in player?
@@ -120,6 +123,7 @@ public class GamePanel extends JPanel{
      gemImg=gem[0].animate();
      portal.updateTick();
      portalImg=portal.animate();
+     box.move(player);
      
      
      
@@ -154,8 +158,9 @@ public class GamePanel extends JPanel{
              shiny.draw(g,gemImg);
                  }
          portal.draw(g,portalImg);
+         box.drawBox(g);
          
-         player.draw(g,playerImg);
+         player.draw(g,playerImg); //img can just be stored in object itself?
          player.drawHitbox(g);
          
          Gem.drawGemCount(g);

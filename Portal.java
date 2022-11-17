@@ -24,14 +24,14 @@ public class Portal extends Obstacle{
         
         super(x, y);
        super.img=Load.uploadPortal();
-       super.SCALE=2;
-       super.row=4;
-       super.col=4;
+       super.SCALE=3;
+       super.row=6;
+       super.col=5;
        super.tickspeed=7;
        
        //super.tick=0;
-       super.animx=180;
-       super.animy=200;
+       super.animx=190;
+       super.animy=190;
          super.subImg=this.animate(img);
         if (super.subImg==null)
         {
@@ -48,6 +48,7 @@ public class Portal extends Obstacle{
         if (isTouching(p))
         {
             System.out.println("next level");
+            System.exit(0);
         }
     }
 }

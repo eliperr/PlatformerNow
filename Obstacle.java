@@ -27,7 +27,7 @@ public abstract class Obstacle {
     protected double SCALE;
     protected int animx; //coordinates for animating
     protected int animy;
-    public static final int wobble=15;
+    public static final int wobble=15; //15
     //later can generalize this if adding other types of obstacles// can extend animatable
     //can add other types later 
    public Obstacle(int x, int  y)

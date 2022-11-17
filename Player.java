@@ -58,8 +58,8 @@ public class Player  {
    private float xspeed=4;
    private float yspeed=4f; 
    private float yspeedInit=5; 
-   private float xOffset=21;
-   private float yOffset=4;
+   public float xOffset=21;
+   public float yOffset=4;
    private float xacceleration=1f;
    private float yacceleration=1f;
    private float maxXspeed=5;  
@@ -86,7 +86,29 @@ public class Player  {
       //need to make hitbox smaller?
    }
    
+  public int getHitBoxY()
+  {
+      return (int) (y + yOffset);
+      
+  }      
+   public int getHitBoxX()
+  {
+      return (int) (x + xOffset);
+      
+  }      
+    
+   public int getHitBoxWidth()
+  {
+      return 26;
+      
+  } 
    
+   public int getHitBoxHeight()
+  {
+      return 30;
+      
+  } 
+  
    public void drawHitbox(Graphics g)
            
    {   g.setColor(Color.BLUE);
@@ -120,6 +142,35 @@ public class Player  {
    {
        this.x=x;
        this.y=y;
+       System.out.println ("x is " + x);
+         System.out.println ("y is " + y);
+   }
+   public boolean getRight()
+   {
+       return right;
+   }
+   
+    public boolean getLeft()
+   {
+       return left;
+   }
+    
+    public boolean getUp()
+   {
+       return up;
+   }
+     public boolean getJump()
+   {
+       return jump;
+   }
+      public float getXspeed()
+   {
+       return xspeed;
+   }
+      
+     public float getYspeed()
+   {
+       return yspeed;
    }
   public void Left()
   {
@@ -163,6 +214,8 @@ public class Player  {
       float newY=this.y;
       float newXspeed=xspeed;
       float newYspeed=yspeed;
+      //separating x and y direction movement works best 
+      // x direction
       if (right && !left)
       {
           /*if (xspeed<0)
@@ -214,18 +267,29 @@ public class Player  {
           }
           
           
-          //newXspeed=xspeed=0;
+          
       }
       
-     /* if (down&&!up )
+   
+     
+      if ( canMoveHere( (int)(newX+xOffset), (int)(this.y+yOffset), 26, 30, Load.levelData) ) 
+          
       {
-          //System.out.println(y);
-           if (yspeed<=5)
-           { newYspeed++;}
-          newY=this.y+yspeed;
+          this.x=newX;
          
-          ///System.out.println("down");
-      }*/
+          xspeed=newXspeed;
+       
+                 
+          
+      }
+      else        
+      { //System.out.println ("cant move here");
+      xspeed=0;  //add y=0 as well if want to slide against wall 
+      
+      }
+      hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), 26f, 30f);
+      
+      //y direction
       
        if (up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData))
       {
@@ -236,165 +300,39 @@ public class Player  {
        {
            
            jump=false;
-           System.out.println("jump:" + jump);
+           //System.out.println("jump:" + jump);
        }
      
        if (jump || !onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData))
        {
-           System.out.println("jump:" + jump);
+           //System.out.println("jump:" + jump);
            newY=this.y-newYspeed;
            newYspeed=yspeed-gravity;
-          
            
            
            
        }  
-           
-      
-      if ( canMoveHere( (int)(newX+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData)) 
+       
+       if ( canMoveHere( (int)(this.x+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData)) 
           
       {
-          this.x=newX;
+          
           this.y=newY;
-          xspeed=newXspeed;
+          
           yspeed=newYspeed;
                  
           
       }
-      else        //too complicated and doesnt solve the problem, causes more glitcehs 
-      { System.out.println ("cant move here");
-      xspeed=yspeed=0;  
-      //reaches close to ground but never gets there //what is differente?
-      /*   if (jump || !onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData))
-       {
-           System.out.println("jump:" + jump);
-           newY=this.y-newYspeed;
-           newYspeed=yspeed-gravity;
-          
-           
-           System.out.println("falling");
-           //System.exit(0);
-           
-            if ( canMoveHere( (int)(this.x + xOffset), (int)(newY+yOffset), 26, 30, Load.levelData)) 
-          
-           {
-          //this.x=newX;
-          this.y=newY;
-          //xspeed=newXspeed;
-          yspeed=newYspeed;
-          System.out.println("can fall");  //not getting here but getting very close 
-           //but this is nt a problem in block above?
-          //System.exit(0);
-                 
-           }
-       }      
-               
-          else
-          { System.out.println ("still cant move here");
-              
-              xspeed=yspeed=0; }
-           
-        
-      
-           //simpler way works well but less accurate
-          /*
-         if( !canMoveHere( (int)(newX+xOffset), (int)(this.y+yOffset), 26, 30, Load.levelData)) 
-         {
-          if (left && !right && xspeed<0)   //slow down and see if can move to spot in smaller increments
-          {xspeed++; 
-          yspeed=0;}
-          else if (!left && right && xspeed>0)
-          {
-              xspeed--; 
-          yspeed=0;}
-          
-          System.out.println("becauze of x");
-          
-         }
-          
-         if( !canMoveHere( (int)(this.x+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData)) 
-         { 
-         if (up && !down && yspeed<0)   //slow down
-          {yspeed++; 
-         xspeed=0;}
-          else if (!up && down && yspeed>0)
-          {
-              yspeed--; 
-            xspeed=0; }
-         
-          System.out.println("becauze of y");
-         }
-          System.out.println("xspeed " + xspeed);
-          System.out.println("yspeed " + yspeed);*/
-          
-    //if can't move somewhere needs to decelerate into reaches that exact point  but this causes glitches 
-    
-    //overcomplicated, needed?   usually ends up being a speed of zero anyway-wont be noticed by user 
-       /*  newXspeed=xspeed;
-         newYspeed=yspeed;
-         while (!canMoveHere( (int)(newX+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData))
-                 {
-                     System.out.println("xspeed " + newXspeed);
-             System.out.println("yspeed " + newYspeed);
-          if (newXspeed<0)       
-          {
-              newXspeed=newXspeed+xacceleration;
-          }
-          else if (newXspeed>0)
-              
-          {
-             newXspeed=newXspeed-xacceleration; 
-          }
-          if (newYspeed>0)       
-          {
-              newYspeed--;
-          }
-          else if (newYspeed>0)
-              
-          {
-             newYspeed--; 
-             
-          }
-          
-          if (newYspeed==0 )
-          {
-              
-              yspeed=newYspeed;
-              xspeed=0;
-              break;
-          }
-          
-          if (newXspeed==0 )
-          {
-              
-              xspeed=newXspeed;
-              yspeed=0;
-              break;
-          }
-          newX=this.x+newXspeed; 
-           newY=this.y+newYspeed;
-            System.out.println("xspeed " + newXspeed);
-             System.out.println("yspeed " + newYspeed);
-          if (canMoveHere( (int)(newX+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData))
-          {
-               this.x=newX;
-          this.y=newY;
-          xspeed=newXspeed;
-          yspeed=newYspeed;
-          break;
-          }
-         
-          
+      else        
+      {    //System.out.println ("cant move here");
+      yspeed=0; 
        }
-      */
        
-      }
       hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), 26f, 30f);
-      
-      if (!canMoveHere((int)(hitbox.getX()), (int)(hitbox.getY()) , w, h, Load.levelData))
+      /*if (!canMoveHere((int)(hitbox.getX()), (int)(hitbox.getY()) , w, h, Load.levelData))
       {
           //System.out.println ("collision");
-      }
+      }*/
        //System.out.println("xspeed is "+ xspeed);
        
       //System.out.println("on ground?" + onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData));
@@ -475,6 +413,41 @@ public class Player  {
           
   {  //check all corners of hitbox
        //what if hits in the center of hitbox???
+      //System.out.print ( "above box?");
+         // System.out.println( !(y+height>Box.y));
+     /* if (right && y+height>Box.y  && (x+width-Box.wobble>Box.x && x<Box.x))
+      {
+          System.out.println("cant go box-right");
+          
+          //System.exit(0);
+          return false;  //continue here , does not work well 
+          //stuck inside box but box doesnt move 
+          // need to not move here in the first place 
+          //especially when landing after jumping 
+      }
+       if (left && y+height>Box.y  && (x<Box.x+Box.width && x+width<Box.x))
+      {
+          System.out.println("cant go box-left");
+           //System.out.print ( "above box?");
+         // System.out.println( !(y+height>Box.y));
+          //System.exit(0);
+          return false;  //continue here , does not work well 
+          //stuck inside box but box doesnt move 
+          // need to not move here in the first place 
+          //especially when landing after jumping 
+      }*/
+      
+       if ( y+height>Box.y  && (x<Box.x+Box.width && x+width>Box.x))
+      {
+          System.out.println("cant go box");
+           //System.out.print ( "above box?");
+         // System.out.println( !(y+height>Box.y));
+          //System.exit(0);
+          return false;  //continue here , does not work well 
+          //stuck inside box but box doesnt move 
+          // need to not move here in the first place 
+          //especially when landing after jumping 
+      }
       return !isSolid(x,y, leveldata) && !isSolid(x+width,y, leveldata) && !isSolid(x,y+height,leveldata) && !isSolid(x+width, y+height, leveldata);
       //can try breaking down into smaller and smaller widths and heights if neeeded? width and height/n loop as increasing n -computationaly intensive thoiguh 
   }
@@ -484,6 +457,9 @@ public class Player  {
   {  //int res=y+height;
       //System.out.print("y+ height:" + res);
      //System.out.print("y:" + y);
+      
+     if (x<Box.x+Box.width && x+width>Box.x  && y+height==Box.y)
+     {return true; }
      int n=1;
       return  isSolid(x,y+height+n,leveldata) || isSolid(x+width, y+height+n, leveldata) || isSolid(x,y+n,leveldata) || isSolid(x+width, y+n, leveldata);
   }
@@ -504,7 +480,7 @@ public class Player  {
     
     int val=leveldata[(int)xIndex][(int)yIndex];  //can just use Load.leveldata?
     //System.out.println(val);
-   if (val>=48 || val<0 || val!=11)
+   if ( val!=11)
     {
         //System.out.println("solid tile");
         return true;
