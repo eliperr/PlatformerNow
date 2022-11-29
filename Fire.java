@@ -41,7 +41,7 @@ public class Fire extends Obstacle{
           /*    g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
          g.setColor(Color.RED);
          g.drawString("dead",100,100);*/
-             System.out.println("dead");
+             //System.out.println("dead");
              GameRunner.gameover=true;
          
          }

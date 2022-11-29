@@ -49,7 +49,7 @@ public void collectGem(Player p)
         collectedYet=true;
         gemsCollected++;
         
-        System.out.print("collected! "+ gemsCollected );
+        //System.out.print("collected! "+ gemsCollected );
         //System.exit(0);
     }
     

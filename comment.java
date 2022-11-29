@@ -13,10 +13,67 @@ import static com.mycompany.platformernow.GamePanel.randColor;
  * @author eliperr
  */
 public class comment {
+   
     
+    //instances of box
+    //hitbox for everything except wobble?
+    //clean up code ie commetns and hitbox 
+    //new level
+    //buttons 
+   
 }
 
 //
+/*
+private boolean canMoveHere(int x, int y, int width, int height, Box[] boxes, int[][] leveldata)
+          
+  {  //check all corners of hitbox
+       //what if hits in the center of hitbox???
+     
+      //check to see if running into boxes
+      for (Box box: boxes)
+      {    
+       if ( y+height>box.y  && (x<box.x+box.width && x+width>box.x))
+        {
+          //System.out.println("cant go box");
+          movingBox=true;
+          //System.out.print("can box move?");
+          
+          if (moveHelper(box.x+ (int) xspeed/2,box.y,box.width-1,box.height-1,leveldata))
+          //if (!isSolid(Box.x+(int) xspeed,Box.y, leveldata) && !isSolid(Box.x+(int) xspeed+Box.width,Box.y, leveldata) && !isSolid(Box.x+(int) xspeed,Box.y+Box.height-1,leveldata) && !isSolid(Box.x+(int) xspeed+Box.width, Box.y+Box.height-1, leveldata))
+          {box.setPosition(box.x+(int) xspeed/2, box.y);
+          
+           ArrayList<Box> overlaps=Box.overlapBox(box,boxes);   //if boxes are running into other boxes move each other
+              for (int i=0; i<overlaps.size(); i++)
+                  
+              {
+                  Box overlapBox=overlaps.get(i);
+                  if (moveHelper(overlapBox.x+(int)xspeed/2,overlapBox.y,overlapBox.width-1,overlapBox.height-1,leveldata))
+                  {
+                      //System.out.println("overlap box can mvoe");
+                      overlapBox.setPosition(overlapBox.x+(int) xspeed/2, overlapBox.y);}
+                  
+                  else
+                  {
+                      // System.out.println("overlap box cannot mvoe");
+                      box.setPosition(box.x-(int) xspeed/2, box.y); //return moved box back to original position because overlap box cannot move
+                      
+                  }
+                  
+              }
+          
+          }  //try doing box movement here 
+          //movement slower when moving box so xspeed/2
+           //System.out.print ( "above box?");
+         // System.out.println( !(y+height>Box.y));
+          //System.exit(0);
+          return false;  //continue here , does not work well 
+          //stuck inside box but box doesnt move 
+          // need to not move here in the first place 
+          //especially when landing after jumping 
+        }
+      }   
+
 ////*if (!touching && (x>=GameFrame.xdim || x<=0 ||y>=GameFrame.ydim || y<=0))
 //        {
 //        
@@ -43,7 +100,7 @@ public class comment {
 //             repaint();
 //           
 //       } 
-//*//
+//*/
 
 //if (!touching && (x>=GameFrame.xdim || x<=0 ||y>=GameFrame.ydim || y<=0))
 //        {

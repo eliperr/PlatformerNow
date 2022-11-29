@@ -14,6 +14,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 
 /**
@@ -69,6 +72,10 @@ public class Player  {
    //add gracity 
    private boolean jump=false;
    private float gravity=0.15f;
+   private boolean movingBox;
+   private float hitBoxWidth=26;
+   private float hitBoxHeight=30;
+   
    public Player(float x, float y)
    {
     
@@ -78,10 +85,10 @@ public class Player  {
       subImg=this.animate();
       h=this.getHeight();
       w=this.getWidth();
-      System.out.println("height is " + h + " width is " + w );
+      //System.out.println("height is " + h + " width is " + w );
      
       //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);
-      hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), 26f, 30f);
+      hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), hitBoxWidth, hitBoxHeight);
       
       //need to make hitbox smaller?
    }
@@ -99,13 +106,13 @@ public class Player  {
     
    public int getHitBoxWidth()
   {
-      return 26;
+      return (int)hitBoxWidth;
       
   } 
    
    public int getHitBoxHeight()
   {
-      return 30;
+      return (int) hitBoxHeight;
       
   } 
   
@@ -116,34 +123,15 @@ public class Player  {
         Graphics2D g2d = (Graphics2D) g;
        g2d.draw(hitbox);
    }
-   /* private void uploadImg()
-   {
-      // InputStream stream=getClass().getResourceAsStream("/bluediamond.png");
-       //for some reason this way of getting an image doesn't work regardless of the path 
-       
-       
-       try
-       {
-        this.img=ImageIO.read(new File("images/player_sprites.png")); 
-          //img= ImageIO.read(stream); 
-          //System.out.println(img);
-       }
-       catch (IOException e)
-               {
-                   System.out.println("error");
-                   e.printStackTrace();
-                   
-               }
-       
-   }*/
+  
     
   
    public void setPosition(float x, float y)
    {
        this.x=x;
        this.y=y;
-       System.out.println ("x is " + x);
-         System.out.println ("y is " + y);
+      // System.out.println ("x is " + x);
+         //System.out.println ("y is " + y);
    }
    public boolean getRight()
    {
@@ -207,15 +195,19 @@ public class Player  {
      //repaint();
   }
   
-  public  void  setPosition()
+  public  void  setPosition(Box[] box)
   {
    
      float newX=this.x;
       float newY=this.y;
       float newXspeed=xspeed;
       float newYspeed=yspeed;
+      
       //separating x and y direction movement works best 
       // x direction
+      
+      movingBox=false;
+     
       if (right && !left)
       {
           /*if (xspeed<0)
@@ -272,40 +264,49 @@ public class Player  {
       
    
      
-      if ( canMoveHere( (int)(newX+xOffset), (int)(this.y+yOffset), 26, 30, Load.levelData) ) 
+      if ( canMoveHere( (int)(newX+xOffset), (int)(this.y+yOffset), 26, 30, box, Load.levelData)  ) 
           
       {
           this.x=newX;
          
           xspeed=newXspeed;
-       
+       //maxXspeed=5;
+       //System.out.println("NOT slower because box" + maxXspeed);
                  
           
       }
+      else if (movingBox)
+      {  //if moving a box can't go to desired position but should still accelerate 
+          xspeed=newXspeed;
+          //maxXspeed=1f;
+          //System.out.println("slower because box" + maxXspeed);
+      }
+      
+     
       else        
       { //System.out.println ("cant move here");
       xspeed=0;  //add y=0 as well if want to slide against wall 
       
       }
-      hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), 26f, 30f);
+      hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), hitBoxWidth, hitBoxHeight);
       
       //y direction
       
-       if (up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData))
+       if (up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, Load.levelData))
       {
           jump=true;
           yspeed=newYspeed=yspeedInit;
       }
-       else if (!up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData))
+       else if (!up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, Load.levelData))
        {
            
            jump=false;
-           //System.out.println("jump:" + jump);
+          
        }
      
-       if (jump || !onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData))
+       if (jump || !onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, Load.levelData))
        {
-           //System.out.println("jump:" + jump);
+           
            newY=this.y-newYspeed;
            newYspeed=yspeed-gravity;
            
@@ -313,7 +314,7 @@ public class Player  {
            
        }  
        
-       if ( canMoveHere( (int)(this.x+xOffset), (int)(newY+yOffset), 26, 30, Load.levelData)) 
+       if ( canMoveHere( (int)(this.x+xOffset), (int)(newY+yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, Load.levelData)) 
           
       {
           
@@ -324,110 +325,66 @@ public class Player  {
           
       }
       else        
-      {    //System.out.println ("cant move here");
+      {    
       yspeed=0; 
        }
        
-      hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), 26f, 30f);
-      /*if (!canMoveHere((int)(hitbox.getX()), (int)(hitbox.getY()) , w, h, Load.levelData))
-      {
-          //System.out.println ("collision");
-      }*/
-       //System.out.println("xspeed is "+ xspeed);
-       
-      //System.out.println("on ground?" + onGround((int)(this.x + xOffset), (int)(this.y +yOffset), 26, 30, Load.levelData));
-      //int [] result={x, y};
-      //return result;
+      hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset),  hitBoxWidth, hitBoxHeight);
+     
   }
 
-  
- /*public  void  setPosition()
-  {
-   int newX=this.x;
-     int newY=this.y;
-      
-      if (right && !left)
-      {
-          
-          newX=this.x+xspeed;
-         
-          
-          
-      }
-      
-     else if (left && !right)
-      {
-          
-          newX=this.x-xspeed;
-          
-          
-      }
-      else
-     {
-         xspeed=initSpeed;
-          
-     }
-      
-      if (down&&!up)
-      {
-         
-          newY=this.y+yspeed;
-          
-      }
-      
-      if (up&&!down)
-      {
-         newY=this.y-yspeed; 
-      }
-      
-      if (canMoveHere(newX + xOffset,newY+yOffset,26, 30, Load.levelData))
-      {
-          this.x=newX;
-          this.y=newY;
-          
-         if (right && xspeed+xacceleration<=maxXspeed)
-          {
-              xspeed+=xacceleration;
-              
-          }
-         System.out.println(xspeed);
-              
-          
-      }
-     
-      hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), 26f, 30f);
-      
-      if (!canMoveHere((int)(hitbox.getX()), (int)(hitbox.getY()) , w, h, Load.levelData))
-      {
-          System.out.println ("collision");
-      }
-      
-      //int [] result={x, y};
-      //return result;
-  } 
-  */
+ 
   
   
-  
-  private boolean canMoveHere(int x, int y, int width, int height, int[][] leveldata)
+  private boolean canMoveHere(int x, int y, int width, int height, Box[] boxes, int[][] leveldata)
           
   {  //check all corners of hitbox
        //what if hits in the center of hitbox???
-      //System.out.print ( "above box?");
-         // System.out.println( !(y+height>Box.y));
-     /* if (right && y+height>Box.y  && (x+width-Box.wobble>Box.x && x<Box.x))
-      {
-          System.out.println("cant go box-right");
+     
+      //check to see if running into boxes
+      for (Box box: boxes)
+      {    
+       if ( y+height>box.y  && (x<box.x+box.width && x+width>box.x))
+        {
+          //System.out.println("cant go box");
+          movingBox=true;
+          //System.out.print("can box move?");
+          ArrayList <Box> overlaps=new ArrayList<Box>();
+           ArrayList <Box> check=new ArrayList<Box>();
+         check.addAll(Arrays.asList(boxes));
+           overlaps=Box.overlapBox(box,check,overlaps);   //if boxes are running into other boxes move each other
+          //if (moveHelper(box.x+ (int) xspeed/((overlaps.size()+1)*2),box.y,box.width-1,box.height-1,leveldata))
+          //if (!isSolid(Box.x+(int) xspeed,Box.y, leveldata) && !isSolid(Box.x+(int) xspeed+Box.width,Box.y, leveldata) && !isSolid(Box.x+(int) xspeed,Box.y+Box.height-1,leveldata) && !isSolid(Box.x+(int) xspeed+Box.width, Box.y+Box.height-1, leveldata))
+          {//box.setPosition(box.x+(int) xspeed/((overlaps.size()+1)*2), box.y);
+             
+           //move ALL boxes, including box that overlaps one player is touching
+           
+              for (int i=overlaps.size()-1; i>=0; i--)
+                  
+              {  int val=(overlaps.size())*2; //overlap>=1
+                  Box overlapBox=overlaps.get(i);
+                  if (moveHelper(overlapBox.x+(int)xspeed/val,overlapBox.y,overlapBox.width-1,overlapBox.height-1,leveldata))
+                  {  
+                      System.out.println("overlap box can mvoe");
+                      System.out.println("value " + (overlaps.size()+1)*2);
+                      overlapBox.setPosition(overlapBox.x+(int) xspeed/val, overlapBox.y);}
+                  
+                 /* else //((overlaps.size()+1)*2)
+                  {
+                      // System.out.println("overlap box cannot mvoe");
+                      box.setPosition(box.x-(int) xspeed/((overlaps.size()+1)*2), box.y); //return moved box back to original position because overlap box cannot move
+                      break; //if farthest overlapping box cannot move all other boxes cannot move
+                  }*/
+                 else
+              {System.out.println("overlap box CANNOT mvoe");
+               //System.exit(0);
+                  break;}
+                  
+               }
+              
           
-          //System.exit(0);
-          return false;  //continue here , does not work well 
-          //stuck inside box but box doesnt move 
-          // need to not move here in the first place 
-          //especially when landing after jumping 
-      }
-       if (left && y+height>Box.y  && (x<Box.x+Box.width && x+width<Box.x))
-      {
-          System.out.println("cant go box-left");
+          }  //try doing box movement here 
+          //movement slower when moving box so xspeed/2
            //System.out.print ( "above box?");
          // System.out.println( !(y+height>Box.y));
           //System.exit(0);
@@ -435,31 +392,33 @@ public class Player  {
           //stuck inside box but box doesnt move 
           // need to not move here in the first place 
           //especially when landing after jumping 
-      }*/
-      
-       if ( y+height>Box.y  && (x<Box.x+Box.width && x+width>Box.x))
-      {
-          System.out.println("cant go box");
-           //System.out.print ( "above box?");
-         // System.out.println( !(y+height>Box.y));
-          //System.exit(0);
-          return false;  //continue here , does not work well 
-          //stuck inside box but box doesnt move 
-          // need to not move here in the first place 
-          //especially when landing after jumping 
-      }
-      return !isSolid(x,y, leveldata) && !isSolid(x+width,y, leveldata) && !isSolid(x,y+height,leveldata) && !isSolid(x+width, y+height, leveldata);
+        }
+      }   
+       //see if can move within level
+      return moveHelper(x,y, width, height, leveldata);
       //can try breaking down into smaller and smaller widths and heights if neeeded? width and height/n loop as increasing n -computationaly intensive thoiguh 
   }
   
-  private boolean onGround(int x, int y, int width, int height, int[][] leveldata )
+  //private void boxHelper
+  
+  private boolean moveHelper(int x, int y, int width, int height, int[][] leveldata)
+  {
+      
+       return !isSolid(x,y, leveldata) && !isSolid(x+width,y, leveldata) && !isSolid(x,y+height,leveldata) && !isSolid(x+width, y+height, leveldata);
+  }       
+  
+  private boolean onGround(int x, int y, int width, int height, Box[] boxes, int[][] leveldata )
            
   {  //int res=y+height;
       //System.out.print("y+ height:" + res);
      //System.out.print("y:" + y);
-      
-     if (x<Box.x+Box.width && x+width>Box.x  && y+height==Box.y)
-     {return true; }
+     for (Box box: boxes) 
+         
+     { 
+         if (x<box.x+box.width && x+width>box.x  && y+height==box.y)
+       {return true; }
+     
+     }
      int n=1;
       return  isSolid(x,y+height+n,leveldata) || isSolid(x+width, y+height+n, leveldata) || isSolid(x,y+n,leveldata) || isSolid(x+width, y+n, leveldata);
   }
@@ -468,11 +427,7 @@ public class Player  {
   
   {  if (x<0 || x>=GamePanel.GAMEWIDTH || y>=GamePanel.GAMEHEIGHT || y<0)
      { 
-         /*System.out.println("game dim");
-         System.out.println("x is " + x);
-         System.out.println(" gamepanel x is " + GamePanel.GAMEWIDTH);
-         System.out.println("y is " + y);
-         System.out.println(" gamepanel y is " + GamePanel.GAMEHEIGHT);*/
+        
          return true;}
      
     float xIndex=x/GamePanel.TILESIZE;
@@ -597,7 +552,7 @@ public class Player  {
                 animationFrame=0;
             }
          }
-    //System.out.println(tick);
+    
     }
     
     
@@ -606,8 +561,7 @@ public class Player  {
      {
        
     
-        //chooseAnimation();
-          
+     
        
       
        BufferedImage sub=playerImg.getSubimage(animationFrame*64, ycount*40, 64, 40);

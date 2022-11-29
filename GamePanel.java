@@ -54,7 +54,7 @@ public class GamePanel extends JPanel{
    public Fire fire[];
    public Gem gem[];
    public Portal portal;
-   private Box box;
+   public Box box[];
    
     public final static int TILESIZE=32;
   public final static float SCALE=1f; ///This cannot be scaled easily 
@@ -70,9 +70,10 @@ public class GamePanel extends JPanel{
          this.player= new Player(100f,285f); 
          this.fire=Load.initFires();
          this.gem=Load.initGems();
+         this.box=Load.initBoxes();
          this.portal=new Portal(500,200); 
-         this.box=new Box(30,30,70,290, Color.BLACK);
-         //this.gem=new Gem(50,50); //test
+         
+         
          this. playerImg= player.animate(); //keep updating image to draw as you animate player
          //this.gameImg=Load.LoadGameImg();
          //System.out.println("player height is " + player.getHeight() );
@@ -94,11 +95,12 @@ public class GamePanel extends JPanel{
             
     {   GameRunner.gameover=false;
     player.setPosition(100f,285f);
-     box.setPosition(70,290);
-        //player.setPosition(100,100);
-        //x=player.setPosition(100,100)[0];
-     //y=player.setPosition(100,100)[1];   //make x y only available in player?
-       // System.out.println("restart");
+    for ( int b=0; b<box.length; b++)
+    {
+        box[b].setPosition(Load.initBoxes()[b].x,Load.initBoxes()[b].y);
+    }
+     
+        
        Gem.resetGems(gem);
         
         
@@ -114,7 +116,7 @@ public class GamePanel extends JPanel{
       player.updateTick();
       playerImg= player.animate();
       
-      player.setPosition();
+      player.setPosition(box);
      //x=player.setPosition(x,y)[0];
      //y=player.setPosition(x,y)[1];
      fire[0].updateTick();   //should all have same update tick?
@@ -123,7 +125,7 @@ public class GamePanel extends JPanel{
      gemImg=gem[0].animate();
      portal.updateTick();
      portalImg=portal.animate();
-     box.move(player);
+     //box.move(player);
      
      
      
@@ -158,8 +160,10 @@ public class GamePanel extends JPanel{
              shiny.draw(g,gemImg);
                  }
          portal.draw(g,portalImg);
-         box.drawBox(g);
-         
+         for (Box b: box)
+         {    
+           b.drawBox(g);
+         }
          player.draw(g,playerImg); //img can just be stored in object itself?
          player.drawHitbox(g);
          

@@ -216,6 +216,17 @@ public class Load {
          
      }
     
+    public static Box[] initBoxes()
+    {        
+        
+       Box[] box=new Box[3];
+       box[0]=new Box(30,30,70,290, Color.RED);
+        box[1]=new Box(30, 30,150,290, Color.BLACK);
+        box[2]=new Box(30, 30,30,290, Color.BLUE);
+        return box;
+        
+    }
+    
 
       
      

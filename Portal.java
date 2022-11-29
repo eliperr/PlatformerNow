@@ -33,14 +33,7 @@ public class Portal extends Obstacle{
        super.animx=190;
        super.animy=190;
          super.subImg=this.animate(img);
-        if (super.subImg==null)
-        {
-            System.out.println("null");
-        }
-        else 
-        {
-            System.out.println("pic");
-        }
+       
     }
     
     public void nextLevel(Player p)
