@@ -13,8 +13,13 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 public class Box {
+
+    private static Collection<? extends Box> ArrayList(ArrayList<Box> boxes) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     public  int width;
     public  int height;
@@ -73,9 +78,11 @@ public class Box {
         //ArrayList <Box> overlaps=new ArrayList<Box>();
         if (!overlaps.contains(checkBox))
                 {overlaps.add(checkBox);}
-         //System.out.println ("added " + checkBox);
-        ArrayList <Box> check=new ArrayList<>();
-        //check.addAll(Arrays.asList(boxes));
+         System.out.println ("added " + checkBox); 
+        ArrayList <Box> check=boxes;
+          //check.remove(checkBox); causes concurent modification exception, but not 100% needed
+        //next boxes to check 
+        //check.addAll(ArrayList(boxes));
         
         for (Box b: boxes)
         {   //!equating an object 
@@ -85,13 +92,13 @@ public class Box {
                
                    
                 overlaps.add(b);
-                  //System.out.println ("added " + b);}
+                  System.out.println ("added " + b);
              
-               check.remove(checkBox);
+             
                
               
                
-              overlapBox(b, check,overlaps);
+              overlaps=overlapBox(b, check,overlaps);
               //calls itself to find other boxes overlapping with the overlapped box
                //but not already checked box
                

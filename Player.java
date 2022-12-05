@@ -354,20 +354,38 @@ public class Player  {
          check.addAll(Arrays.asList(boxes));
            overlaps=Box.overlapBox(box,check,overlaps);   //if boxes are running into other boxes move each other
           //if (moveHelper(box.x+ (int) xspeed/((overlaps.size()+1)*2),box.y,box.width-1,box.height-1,leveldata))
-          //if (!isSolid(Box.x+(int) xspeed,Box.y, leveldata) && !isSolid(Box.x+(int) xspeed+Box.width,Box.y, leveldata) && !isSolid(Box.x+(int) xspeed,Box.y+Box.height-1,leveldata) && !isSolid(Box.x+(int) xspeed+Box.width, Box.y+Box.height-1, leveldata))
+         
           {//box.setPosition(box.x+(int) xspeed/((overlaps.size()+1)*2), box.y);
              
            //move ALL boxes, including box that overlaps one player is touching
            
               for (int i=overlaps.size()-1; i>=0; i--)
                   
-              {  int val=(overlaps.size())*2; //overlap>=1
+              {   float value=xspeed/(overlaps.size()*2); //overlap>=1 //this value gets to small to move if there are three boxes
+                  
+                 int val=(int)value;
+                 //get rid of these to say too many boxes are too heavy for one character to move
+                      //makes a minumun speed of boxes
+                     if( value<1 && value>=0)
+                       {
+                          val=1;
+                        }
+                  else if (value<=0 && value>-1)
+                      {
+                          val=-1;
+                      }
+              
+              
                   Box overlapBox=overlaps.get(i);
-                  if (moveHelper(overlapBox.x+(int)xspeed/val,overlapBox.y,overlapBox.width-1,overlapBox.height-1,leveldata))
+                  if (moveHelper(overlapBox.x+val,overlapBox.y,overlapBox.width-1,overlapBox.height-1,leveldata))
                   {  
+                      
+                      
                       System.out.println("overlap box can mvoe");
-                      System.out.println("value " + (overlaps.size()+1)*2);
-                      overlapBox.setPosition(overlapBox.x+(int) xspeed/val, overlapBox.y);}
+                      System.out.println("overlapsize " + (overlaps.size())*2);
+                      
+                      System.out.println("box speed " + val);
+                      overlapBox.setPosition(overlapBox.x+val, overlapBox.y);}
                   
                  /* else //((overlaps.size()+1)*2)
                   {
@@ -381,6 +399,8 @@ public class Player  {
                   break;}
                   
                }
+              
+              //if only one block use the less computationally heavy method
               
           
           }  //try doing box movement here 

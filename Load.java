@@ -220,9 +220,9 @@ public class Load {
     {        
         
        Box[] box=new Box[3];
-       box[0]=new Box(30,30,70,290, Color.RED);
-        box[1]=new Box(30, 30,150,290, Color.BLACK);
-        box[2]=new Box(30, 30,30,290, Color.BLUE);
+       box[0]=new Box(30,30,90,290, Color.RED);
+        box[1]=new Box(30, 30,160,290, Color.BLACK);
+        box[2]=new Box(30, 30,45,290, Color.BLUE);
         return box;
         
     }
