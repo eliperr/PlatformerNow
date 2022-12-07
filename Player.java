@@ -338,21 +338,47 @@ public class Player  {
   
   private boolean canMoveHere(int x, int y, int width, int height, Box[] boxes, int[][] leveldata)
           
-  {  //check all corners of hitbox
-       //what if hits in the center of hitbox???
-     
-      //check to see if running into boxes
+  {  
+       //easier computation if only one box in level
+     /* if (boxes.length==1)
+      { System.out.println("one bix");
+          Box box=boxes[0];
+        if ( y+height>box.y  && (x<box.x+box.width && x+width>box.x)) 
+            {     movingBox=true;  
+                if (moveHelper(box.x+ (int) (xspeed/2),box.y,box.width-1,box.height-1,leveldata)) 
+               {
+                           
+                   box.setPosition(box.x+(int) (xspeed/2), box.y);
+
+               }
+               else
+               { System.out.println("cant move here box");
+                   return false;
+               }
+                
+            }
+     }
+    else
+    {  */    
       for (Box box: boxes)
-      {    
+      {     
        if ( y+height>box.y  && (x<box.x+box.width && x+width>box.x))
         {
+            
           //System.out.println("cant go box");
           movingBox=true;
           //System.out.print("can box move?");
           ArrayList <Box> overlaps=new ArrayList<Box>();
+          if (boxes.length==1) 
+                {  overlaps.addAll(Arrays.asList(boxes)); 
+                 System.out.println("using faster way");
+                }
+          else
+          {
            ArrayList <Box> check=new ArrayList<Box>();
          check.addAll(Arrays.asList(boxes));
-           overlaps=Box.overlapBox(box,check,overlaps);   //if boxes are running into other boxes move each other
+           overlaps=Box.overlapBox(box,check,overlaps); 
+          }//if boxes are running into other boxes move each other
           //if (moveHelper(box.x+ (int) xspeed/((overlaps.size()+1)*2),box.y,box.width-1,box.height-1,leveldata))
          
           {//box.setPosition(box.x+(int) xspeed/((overlaps.size()+1)*2), box.y);
@@ -366,11 +392,11 @@ public class Player  {
                  int val=(int)value;
                  //get rid of these to say too many boxes are too heavy for one character to move
                       //makes a minumun speed of boxes
-                     if( value<1 && value>=0)
+                     if( value<1 && value>0)
                        {
                           val=1;
                         }
-                  else if (value<=0 && value>-1)
+                  else if (value<0 && value>-1)
                       {
                           val=-1;
                       }
@@ -413,7 +439,8 @@ public class Player  {
           // need to not move here in the first place 
           //especially when landing after jumping 
         }
-      }   
+      //} 
+    }  
        //see if can move within level
       return moveHelper(x,y, width, height, leveldata);
       //can try breaking down into smaller and smaller widths and heights if neeeded? width and height/n loop as increasing n -computationaly intensive thoiguh 
@@ -429,14 +456,14 @@ public class Player  {
   
   private boolean onGround(int x, int y, int width, int height, Box[] boxes, int[][] leveldata )
            
-  {  //int res=y+height;
-      //System.out.print("y+ height:" + res);
-     //System.out.print("y:" + y);
+  {  
      for (Box box: boxes) 
          
      { 
          if (x<box.x+box.width && x+width>box.x  && y+height==box.y)
-       {return true; }
+       { 
+           
+           return true; }
      
      }
      int n=1;
