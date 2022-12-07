@@ -78,7 +78,7 @@ public class Box {
         //ArrayList <Box> overlaps=new ArrayList<Box>();
         if (!overlaps.contains(checkBox))
                 {overlaps.add(checkBox);}
-         System.out.println ("added " + checkBox); 
+         //System.out.println ("added " + checkBox); 
         ArrayList <Box> check=boxes;
           //check.remove(checkBox); causes concurent modification exception, but not 100% needed
         //next boxes to check 
@@ -92,7 +92,7 @@ public class Box {
                
                    
                 overlaps.add(b);
-                  System.out.println ("added " + b);
+                  //System.out.println ("added " + b);
              
              
                
@@ -105,7 +105,7 @@ public class Box {
            }
             
         }
-        if (overlaps.size()>2)
+       /* if (overlaps.size()>2)
        
         {    
             for  (int i=0; i<overlaps.size(); i++)
@@ -118,7 +118,7 @@ public class Box {
             }
             System.out.println("end of overlaps");
             //System.exit(0);
-        }
+        }*/
         //System.exit(0);
         
         //should be faster way to do using Collections but dont have wifi 
