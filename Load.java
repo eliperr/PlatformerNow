@@ -70,6 +70,14 @@ public class Load {
         
         
     }
+    
+    public static BufferedImage uploadButton()
+    {
+        //return uploadImg("images/portal.png");
+        return uploadImg("images/button.png");
+        
+        
+    }
     public static BufferedImage[] LoadTiles()
             
             
@@ -219,10 +227,10 @@ public class Load {
     public static Box[] initBoxes()
     {        
         
-       Box[] box=new Box[3];
+       Box[] box=new Box[1];
        box[0]=new Box(30,30,90,290, Color.RED);
-        box[1]=new Box(30, 30,160,290, Color.BLACK);
-        box[2]=new Box(30, 30,45,290, Color.BLUE);
+        //box[1]=new Box(30, 30,160,290, Color.BLACK);   
+        //box[2]=new Box(30, 30,45,290, Color.BLUE);
         return box;
         
     }

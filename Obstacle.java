@@ -49,9 +49,25 @@ public abstract class Obstacle {
         {
          
            g.drawImage(subImg ,x,y, (int) (subImg.getWidth()/SCALE), (int) (subImg.getHeight()/SCALE), null); 
+           
+           
         }
         
-       
+        
+       else
+        {
+            System.out.println(this.getClass().getName() + " no img");
+            
+        }
+        if (this.getClass().getName().contains("Button"))
+        {
+            
+                        System.out.println("drawing button");
+                        int w=(int) (subImg.getWidth()/SCALE);
+                        System.out.println("subImg.getWidth()/SCALE " + w);
+
+        }
+        
         
         
     }

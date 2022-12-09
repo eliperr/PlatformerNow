@@ -12,8 +12,12 @@ package com.mycompany.platformernow;
  */
 
 
-//restart fx after death
-//instsance of level handler
+//dont need to keep images in  here, keep in object
+//array of Obstacles 
+//change hitbox for touchign method 
+//other more efficient wayS?
+//add gravity to boxes 
+//boxes for buttons that only turn on temporarily 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -49,12 +53,13 @@ public class GamePanel extends JPanel{
    private int ycount=1;
    private int n=5;//number of frames in animation 
    private int tick=5;//speed of animation
-   private BufferedImage gameImg,fireImg, gemImg, portalImg;
+   private BufferedImage gameImg,fireImg, gemImg, portalImg, buttonImg;
    public Player player;
    public Fire fire[];
    public Gem gem[];
    public Portal portal;
    public Box box[];
+   public Button button;
    
     public final static int TILESIZE=32;
   public final static float SCALE=1f; ///This cannot be scaled easily 
@@ -69,9 +74,10 @@ public class GamePanel extends JPanel{
     {    //init
          this.player= new Player(100f,285f); 
          this.fire=Load.initFires();
-         this.gem=Load.initGems();
+         this.gem=Load.initGems();              //should make an array of Obstacles?
          this.box=Load.initBoxes();
          this.portal=new Portal(500,200); 
+         this.button=new Button (250,220);
          
          
          this. playerImg= player.animate(); //keep updating image to draw as you animate player
@@ -102,7 +108,7 @@ public class GamePanel extends JPanel{
      
         
        Gem.resetGems(gem);
-        
+        button.restart();
         
        //will change to depend on level later 
        //will restart the level you are on
@@ -125,6 +131,8 @@ public class GamePanel extends JPanel{
      gemImg=gem[0].animate();
      portal.updateTick();
      portalImg=portal.animate();
+     buttonImg=button.animate();
+     button.run(player);
      //box.move(player);
      
      
@@ -168,6 +176,8 @@ public class GamePanel extends JPanel{
          player.drawHitbox(g);
          
          Gem.drawGemCount(g);
+         
+         button.draw(g,buttonImg);
          
         if (GameRunner.gameover)
         {

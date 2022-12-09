@@ -340,13 +340,12 @@ public class Player  {
           
   {  
       if (canBoxMove(x, y , width, height, boxes, leveldata))
-       //see if can move within level
+       
               {return moveHelper(x,y, width, height, leveldata);}
       return false;
       //can try breaking down into smaller and smaller widths and heights if neeeded? width and height/n loop as increasing n -computationaly intensive thoiguh 
   }
   
-  //private void boxHelper
   
   private boolean moveHelper(int x, int y, int width, int height, int[][] leveldata)
   {
