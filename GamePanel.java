@@ -18,6 +18,8 @@ package com.mycompany.platformernow;
 //other more efficient wayS?
 //add gravity to boxes 
 //boxes for buttons that only turn on temporarily 
+//what should botton do?
+//create cloud platform that appears? over fire 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -60,6 +62,7 @@ public class GamePanel extends JPanel{
    public Portal portal;
    public Box box[];
    public Button button;
+   public Platform platform;
    
     public final static int TILESIZE=32;
   public final static float SCALE=1f; ///This cannot be scaled easily 
@@ -78,7 +81,7 @@ public class GamePanel extends JPanel{
          this.box=Load.initBoxes();
          this.portal=new Portal(500,200); 
          this.button=new Button (250,220);
-         
+         this.platform=new Platform (250, 180, 70, 0);
          
          this. playerImg= player.animate(); //keep updating image to draw as you animate player
          //this.gameImg=Load.LoadGameImg();
@@ -122,7 +125,7 @@ public class GamePanel extends JPanel{
       player.updateTick();
       playerImg= player.animate();
       
-      player.setPosition(box);
+      player.setPosition(box,platform);
      //x=player.setPosition(x,y)[0];
      //y=player.setPosition(x,y)[1];
      fire[0].updateTick();   //should all have same update tick?
@@ -133,6 +136,7 @@ public class GamePanel extends JPanel{
      portalImg=portal.animate();
      buttonImg=button.animate();
      button.run(player);
+     //platform.updateTick();
      //box.move(player);
      
      
@@ -172,13 +176,16 @@ public class GamePanel extends JPanel{
          {    
            b.drawBox(g);
          }
+         button.draw(g,buttonImg);
+         platform.draw(g, platform.getImg());
+         
          player.draw(g,playerImg); //img can just be stored in object itself?
          player.drawHitbox(g);
          
          Gem.drawGemCount(g);
          
-         button.draw(g,buttonImg);
          
+         platform.drawHitbox(g);
         if (GameRunner.gameover)
         {
             Fire.deathScreen(g);

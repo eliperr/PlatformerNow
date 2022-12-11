@@ -195,7 +195,7 @@ public class Player  {
      //repaint();
   }
   
-  public  void  setPosition(Box[] box)
+  public  void  setPosition(Box[] box, Platform platform)
   {
    
      float newX=this.x;
@@ -292,19 +292,19 @@ public class Player  {
       
       //y direction
       
-       if (up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, Load.levelData))
+       if (up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, platform, Load.levelData))
       {
           jump=true;
           yspeed=newYspeed=yspeedInit;
       }
-       else if (!up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, Load.levelData))
+       else if (!up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box,platform, Load.levelData))
        {
            
            jump=false;
           
        }
      
-       if (jump || !onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, Load.levelData))
+       if (jump || !onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, platform, Load.levelData))
        {
            
            newY=this.y-newYspeed;
@@ -353,16 +353,26 @@ public class Player  {
        return !isSolid(x,y, leveldata) && !isSolid(x+width,y, leveldata) && !isSolid(x,y+height,leveldata) && !isSolid(x+width, y+height, leveldata);
   }       
   
-  private boolean onGround(int x, int y, int width, int height, Box[] boxes, int[][] leveldata )
+  private boolean onGround(int x, int y, int width, int height, Box[] boxes, Platform platform, int[][] leveldata )
            
   {  
-     for (Box box: boxes) 
+     for (Box box: boxes) //same for platforms, can also make a list if/when have multiple platforms 
          
      { 
          if (x<box.x+box.width && x+width>box.x  && y+height==box.y)
        { 
            
            return true; }
+         
+         else if (x<platform.getXHitBox()+platform.getWHitBox() && x+width>platform.getXHitBox()  && y+height==platform.getYHitBox())
+       { 
+           
+          /* System.out.println("on cloud");
+           System.out.println("player x " + x);
+           int res=platform.getXHitBox()+platform.getWHitBox();
+            System.out.println("cloud x " + x);
+           return true; } */ 
+         
      
      }
      int n=1;

@@ -78,6 +78,15 @@ public class Load {
         
         
     }
+    
+    public static BufferedImage uploadPlatform()
+    {
+        //return uploadImg("images/portal.png");
+        return uploadImg("images/cloud.png");
+        
+        
+    }
+    
     public static BufferedImage[] LoadTiles()
             
             
@@ -200,7 +209,7 @@ public class Load {
          Fire[] fire =new Fire[3];
          
         // fire[0]=new Fire(170,280);
-        fire[0]=new Fire(300,280);
+        fire[0]=new Fire(320,215);
          fire[1]=new Fire(420,280);
          fire[2]=new Fire(700,280);
          

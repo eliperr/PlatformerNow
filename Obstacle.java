@@ -59,14 +59,14 @@ public abstract class Obstacle {
             System.out.println(this.getClass().getName() + " no img");
             
         }
-        if (this.getClass().getName().contains("Button"))
+       /* if (this.getClass().getName().contains("Button"))
         {
             
                         System.out.println("drawing button");
                         int w=(int) (subImg.getWidth()/SCALE);
                         System.out.println("subImg.getWidth()/SCALE " + w);
 
-        }
+        }*/
         
         
         
