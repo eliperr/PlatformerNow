@@ -206,12 +206,13 @@ public class Load {
              
      {
          
-         Fire[] fire =new Fire[3];
+         Fire[] fire =new Fire[4];
          
         // fire[0]=new Fire(170,280);
-        fire[0]=new Fire(320,215);
-         fire[1]=new Fire(420,280);
-         fire[2]=new Fire(700,280);
+        fire[0]=new Fire(320,215);//320
+        fire[1]=new Fire(290,215);
+         fire[2]=new Fire(420,280); //420
+         fire[3]=new Fire(700,280);
          
          return fire;
          

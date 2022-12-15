@@ -59,7 +59,7 @@ public class Player  {
    private Rectangle2D.Float hitbox;
    private float initSpeed=0;
    private float xspeed=4;
-   private float yspeed=4f; 
+   private float yspeed=0; 
    private float yspeedInit=5; 
    public float xOffset=21;
    public float yOffset=4;
@@ -71,7 +71,8 @@ public class Player  {
    //add friction
    //add gracity 
    private boolean jump=false;
-   private float gravity=0.15f;
+   //private boolean jumping=false;
+   private float gravity=0.3f;
    private boolean movingBox;
    private float hitBoxWidth=26;
    private float hitBoxHeight=30;
@@ -264,7 +265,7 @@ public class Player  {
       
    
      
-      if ( canMoveHere( (int)(newX+xOffset), (int)(this.y+yOffset), 26, 30, box, Load.levelData)  ) 
+      if ( canMoveHere( (int)(newX+xOffset), (int)(this.y+yOffset), 26, 30, box, platform, Load.levelData)  ) 
           
       {
           this.x=newX;
@@ -291,19 +292,31 @@ public class Player  {
       hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), hitBoxWidth, hitBoxHeight);
       
       //y direction
-      
+      System.out.println("jump" + jump);
+      System.out.println("up " + up);
        if (up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, platform, Load.levelData))
       {
           jump=true;
+          //jumping=true;
           yspeed=newYspeed=yspeedInit;
       }
-       else if (!up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box,platform, Load.levelData))
+       //new
+      /*if (jump && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, platform, Load.levelData))
+      {
+          yspeed=newYspeed=yspeedInit;
+          jumping=true;
+      }*/
+       
+       
+      if (!up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box,platform, Load.levelData))
        {
            
            jump=false;
+           /*if (Math.abs(newYspeed)<=1 ||Math.abs(yspeed)<=1 )
+           {jumping=false;}*/
           
        }
-     
+     //falling
        if (jump || !onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, platform, Load.levelData))
        {
            
@@ -314,7 +327,7 @@ public class Player  {
            
        }  
        
-       if ( canMoveHere( (int)(this.x+xOffset), (int)(newY+yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, Load.levelData)) 
+       if ( canMoveHere( (int)(this.x+xOffset), (int)(newY+yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, platform, Load.levelData)) 
           
       {
           
@@ -326,7 +339,8 @@ public class Player  {
       }
       else        
       {    
-      yspeed=0; 
+      yspeed=0;
+      
        }
        
       hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset),  hitBoxWidth, hitBoxHeight);
@@ -336,12 +350,13 @@ public class Player  {
  
   
   
-  private boolean canMoveHere(int x, int y, int width, int height, Box[] boxes, int[][] leveldata)
+  private boolean canMoveHere(int x, int y, int width, int height, Box[] boxes, Platform platform, int[][] leveldata)
           
   {  
-      if (canBoxMove(x, y , width, height, boxes, leveldata))
+      if (canBoxMove(x, y , width, height, boxes, leveldata)) //&& (canMovePlatform (x,y, width, height, platform, leveldata)))
        
               {return moveHelper(x,y, width, height, leveldata);}
+      
       return false;
       //can try breaking down into smaller and smaller widths and heights if neeeded? width and height/n loop as increasing n -computationaly intensive thoiguh 
   }
@@ -360,21 +375,25 @@ public class Player  {
          
      { 
          if (x<box.x+box.width && x+width>box.x  && y+height==box.y)
-       { 
+         { 
            
-           return true; }
+           return true; 
+         }
          
-         else if (x<platform.getXHitBox()+platform.getWHitBox() && x+width>platform.getXHitBox()  && y+height==platform.getYHitBox())
-       { 
-           
-          /* System.out.println("on cloud");
-           System.out.println("player x " + x);
+        }
+        if (x<platform.getXHitBox()+platform.getWHitBox() && x+width>platform.getXHitBox()  && Math.abs(y+height-platform.getYHitBox())<=4)
+       { jump=false;
+         //this.setPosition(this.getX(),platform.getYHitBox()-height);
+           System.out.println("on cloud");
+           /*System.out.println("player x " + x);
            int res=platform.getXHitBox()+platform.getWHitBox();
-            System.out.println("cloud x " + x);
-           return true; } */ 
+            System.out.println("cloud x " + x);*/
+            
+            
+           return true; }  
          
      
-     }
+    
      int n=1;
       return  isSolid(x,y+height+n,leveldata) || isSolid(x+width, y+height+n, leveldata) || isSolid(x,y+n,leveldata) || isSolid(x+width, y+n, leveldata);
   }
@@ -404,6 +423,15 @@ public class Player  {
     
   
       
+  }
+  
+  private boolean canMovePlatform(int x, int y, int width, int height, Platform p, int[][] leveldata)
+  {
+      if ( (y<p.getYHitBox()  && y+height>p.getYHitBox()+p.getHHitBox())  && (x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox()))
+      {
+          return false;
+      }
+      return true;
   }
   
   private boolean canBoxMove(int x, int y, int width, int height, Box[] boxes, int[][] leveldata)
@@ -503,7 +531,7 @@ public class Player  {
  public void stopUp()
  {
      up=false;
-       //System.out.println(up);
+       System.out.println("up is " + up);
      
  }
  

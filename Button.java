@@ -64,7 +64,10 @@ public class Button extends Obstacle {
          boolean wasNotTouching=true;
     }
     
-    
+    public boolean isOn()
+    {
+        return pressed;
+    }
     
     
    

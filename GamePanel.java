@@ -81,7 +81,7 @@ public class GamePanel extends JPanel{
          this.box=Load.initBoxes();
          this.portal=new Portal(500,200); 
          this.button=new Button (250,220);
-         this.platform=new Platform (250, 180, 70, 0);
+         this.platform=new Platform (250, 170, 70, 0);
          
          this. playerImg= player.animate(); //keep updating image to draw as you animate player
          //this.gameImg=Load.LoadGameImg();
@@ -136,7 +136,10 @@ public class GamePanel extends JPanel{
      portalImg=portal.animate();
      buttonImg=button.animate();
      button.run(player);
-     //platform.updateTick();
+     if (button.isOn())
+     {
+     platform.updateTick();
+     }
      //box.move(player);
      
      
