@@ -18,8 +18,8 @@ package com.mycompany.platformernow;
 //other more efficient wayS?
 //add gravity to boxes 
 //boxes for buttons that only turn on temporarily 
-//what should botton do?
-//create cloud platform that appears? over fire 
+//more general button, button that makes blue box appear  
+//add case for know boxes can never overlap
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -79,9 +79,9 @@ public class GamePanel extends JPanel{
          this.fire=Load.initFires();
          this.gem=Load.initGems();              //should make an array of Obstacles?
          this.box=Load.initBoxes();
-         this.portal=new Portal(500,200); 
-         this.button=new Button (250,220);
-         this.platform=new Platform (250, 170, 70, 0);
+         this.portal=new Portal(735,275); 
+         this.button=new Button (160,180);
+         this.platform=new Platform (240, 180, 90, 0);
          
          this. playerImg= player.animate(); //keep updating image to draw as you animate player
          //this.gameImg=Load.LoadGameImg();
@@ -106,7 +106,9 @@ public class GamePanel extends JPanel{
     player.setPosition(100f,285f);
     for ( int b=0; b<box.length; b++)
     {
-        box[b].setPosition(Load.initBoxes()[b].x,Load.initBoxes()[b].y);
+        
+        box[b]=Load.initBoxes()[b];
+        //box[b].setPosition(Load.initBoxes()[b].x,Load.initBoxes()[b].y);
     }
      
         
@@ -137,12 +139,23 @@ public class GamePanel extends JPanel{
      buttonImg=button.animate();
      button.run(player);
      if (button.isOn())
-     {
+        {
      platform.updateTick();
-     }
+     //box[1]=new Box(30,30,480,195, Color.BLUE);
+        }
+     if (button.turnedOn())
+         
+        { //System.out.println ("turned on");
+         box[1]=Load.newBoxesToAdd()[0];
+        }
+     /*else
+     {System.out.println ("turned OFF");
+     }*/
      //box.move(player);
      
-     
+     for (Box b:box)
+         {  b.fall(platform);
+                                     }
      
      //gem[0].collectGem(player);
      for (Gem shiny:gem)

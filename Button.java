@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 public class Button extends Obstacle {
    private boolean pressed=false;
     boolean wasNotTouching=true;
+     boolean neverPressed=true;
    //what should button do when pressed? Open door?
    //maybe button stays
     public Button (int x, int y)
@@ -61,14 +62,25 @@ public class Button extends Obstacle {
     public void restart()
     {
         pressed=false;
-         boolean wasNotTouching=true;
+         wasNotTouching=true;
+         neverPressed=true;
     }
     
     public boolean isOn()
     {
         return pressed;
     }
-    
+    public boolean turnedOn()
+    {   boolean temp=neverPressed;
+      
+        boolean turnedOn= pressed && temp;
+        if (turnedOn)
+        {
+            neverPressed=false;
+        }
+      
+        return turnedOn;
+    }
     
    
    /* public void draw(Graphics g)

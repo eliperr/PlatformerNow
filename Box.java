@@ -23,18 +23,25 @@ public class Box {
     
     public  int width;
     public  int height;
-    public  int x, y; //static for now
+    public  float x, y; //static for now
     private Color color;
     private Rectangle rect;
     public  int wobble =5;
+    private float yspeed, yaccel,maxYspeed;
+    private float gravity;
+    private float newYspeed;
     
-    public Box(int width, int height,  int x, int y, Color color)
+    public Box(int width, int height,  float x, float y, Color color)
     {
         this.width=width;
         this.height=height;
         this.x=x;
         this.y=y;
         this.color=color;
+        yspeed=0;
+        yaccel=0;
+        maxYspeed=4;
+        gravity=0.3f;
         //rect=new Rectangle (x, y, width, height);
         
         
@@ -44,11 +51,11 @@ public class Box {
     public void drawBox(Graphics g)
     {
         g.setColor(color);
-        g.fillRect(x,y, width, height);
+        g.fillRect((int)x,(int)y, width, height);
         
     }
     
-    public  void setPosition (int x, int y)
+    public  void setPosition (float x, float y)
             
     {
         this.x=x;
@@ -56,11 +63,39 @@ public class Box {
         
     }
     
+    public void fall(Platform p)
+    {   
+        if (!this.onGround((int)x,(int)y,width, height,p, Load.levelData))
+            
+        {
+            newYspeed=yspeed + gravity;
+           //System.out.println("newYspeed " + newYspeed);
+            
+        }
+        if (!this.onGround((int)x,(int)y+(int)newYspeed,width, height,p, Load.levelData))
+        
+        {
+            yspeed=newYspeed;
+            y=y+(int)yspeed;
+            //System.out.println(" y " + y );
+            //System.out.println(" yspeed" + yspeed );
+            
+            
+        }
+        else
+        {
+            
+            yspeed=0;
+        }
+        
+        
+    }        
+    
     // need to make work for more than two boxes
     public static boolean overlapBox(Box a, Box b)
             //&& a.y>=b.y)
     {                   
-        if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y<=b.y+b.height && a.y+a.height>=b.y))
+        if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y<=b.y+b.height && b.y<=a.y+a.height))
         
         {
         //System.out.println("boxes overlap");
@@ -71,7 +106,7 @@ public class Box {
         return false;
                 
     }
-    
+    //add case for know boxes can never overlap
     public static ArrayList <Box>  overlapBox(Box checkBox, ArrayList <Box> boxes, ArrayList overlaps)
             
     {
@@ -93,7 +128,7 @@ public class Box {
                    
                 overlaps.add(b);
                   //System.out.println ("added " + b);
-             
+                 //System.exit(0);
              
                
               
@@ -129,7 +164,26 @@ public class Box {
        //return false; 
     }
     
-   
+    private boolean onGround(int x, int y, int width, int height, Platform platform, int[][] leveldata )
+           
+  {  
+     
+        if (x<platform.getXHitBox()+platform.getWHitBox() && x+width>platform.getXHitBox()  && Math.abs(y+height-platform.getYHitBox())<=4)
+       { //jump=false;
+         //this.setPosition(this.getX(),platform.getYHitBox()-height);
+           //System.out.println("on cloud");
+           /*System.out.println("player x " + x);
+           int res=platform.getXHitBox()+platform.getWHitBox();
+            System.out.println("cloud x " + x);*/
+            
+            
+           return true; }  
+         
+     
+    
+     int n=1;
+      return  Player.isSolid(x,y+height+n,leveldata) || Player.isSolid(x+width, y+height+n, leveldata) || Player.isSolid(x,y+n,leveldata) || Player.isSolid(x+width, y+n, leveldata);
+  }
     
     
 }

@@ -65,14 +65,14 @@ public class Player  {
    public float yOffset=4;
    private float xacceleration=1f;
    private float yacceleration=1f;
-   private float maxXspeed=5;  
+   private float maxXspeed=4.5f;  
    private float maxYspeed=5;
    //make float
    //add friction
    //add gracity 
    private boolean jump=false;
    //private boolean jumping=false;
-   private float gravity=0.3f;
+   private float gravity=0.25f;
    private boolean movingBox;
    private float hitBoxWidth=26;
    private float hitBoxHeight=30;
@@ -292,8 +292,8 @@ public class Player  {
       hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset), hitBoxWidth, hitBoxHeight);
       
       //y direction
-      System.out.println("jump" + jump);
-      System.out.println("up " + up);
+     // System.out.println("jump" + jump);
+     // System.out.println("up " + up);
        if (up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, platform, Load.levelData))
       {
           jump=true;
@@ -382,9 +382,9 @@ public class Player  {
          
         }
         if (x<platform.getXHitBox()+platform.getWHitBox() && x+width>platform.getXHitBox()  && Math.abs(y+height-platform.getYHitBox())<=4)
-       { jump=false;
+       { //jump=false;
          //this.setPosition(this.getX(),platform.getYHitBox()-height);
-           System.out.println("on cloud");
+           //System.out.println("on cloud");
            /*System.out.println("player x " + x);
            int res=platform.getXHitBox()+platform.getWHitBox();
             System.out.println("cloud x " + x);*/
@@ -398,7 +398,7 @@ public class Player  {
       return  isSolid(x,y+height+n,leveldata) || isSolid(x+width, y+height+n, leveldata) || isSolid(x,y+n,leveldata) || isSolid(x+width, y+n, leveldata);
   }
   
-  private boolean isSolid(int x, int y, int[][] leveldata)
+  public static boolean isSolid(int x, int y, int[][] leveldata)
   
   {  if (x<0 || x>=GamePanel.GAMEWIDTH || y>=GamePanel.GAMEHEIGHT || y<0)
      { 
@@ -440,7 +440,7 @@ public class Player  {
       
       for (Box box: boxes)
       {     
-       if ( y+height>box.y  && (x<box.x+box.width && x+width>box.x))  //if running into box 
+       if ( (y+height>box.y && (box.y+box.height>y))  && (x<box.x+box.width && x+width>box.x))  //if running into box 
         {
             
           
@@ -479,7 +479,7 @@ public class Player  {
               
               
                   Box overlapBox=overlaps.get(i);
-                  if (moveHelper(overlapBox.x+val,overlapBox.y,overlapBox.width-1,overlapBox.height-1,leveldata))
+                  if (moveHelper((int)(overlapBox.x+val),(int)(overlapBox.y),(int)(overlapBox.width-1),(int)(overlapBox.height-1),leveldata))
                   {  
                       
                       
@@ -531,7 +531,7 @@ public class Player  {
  public void stopUp()
  {
      up=false;
-       System.out.println("up is " + up);
+       //wSystem.out.println("up is " + up);
      
  }
  

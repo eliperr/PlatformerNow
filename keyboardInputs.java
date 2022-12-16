@@ -74,8 +74,8 @@ public class keyboardInputs implements KeyListener{
             case 82: //r for restart
                 panel.restart();
                 //System.out.println("r");
-          default:
-                panel.player.stopUp();
+          //default:
+                //panel.player.stopUp();
    
         }
     }
