@@ -19,7 +19,7 @@ import javax.imageio.ImageIO;
 public class Load {
  
        private static int level=1;
-    
+       public static boolean wontOverlap=true; //this should change with different levels, default is true
       private static BufferedImage[] gameImg=LoadTiles();
       public static int[][] levelData=loadLevelData();
      private static BufferedImage uploadImg(String pic)
@@ -206,13 +206,15 @@ public class Load {
              
      {
          
-         Fire[] fire =new Fire[3];
+         Fire[] fire =new Fire[4];
          
         // fire[0]=new Fire(170,280);
         fire[0]=new Fire(320,215);//320
-        //fire[1]=new Fire(290,215);
-         fire[1]=new Fire(420,280); //420
-         fire[2]=new Fire(700,280);
+        
+        fire[1]=new Fire(290,215);
+         fire[2]=new Fire(420,280); //420
+         fire[3]=new Fire(700,280);
+         //fire[4]=new Fire(170,280);
          
          return fire;
          
@@ -228,7 +230,7 @@ public class Load {
          gem[0]=new Gem(65,200);
          gem[1]=new Gem(350,160);
          gem[2]=new Gem(550,120);
-         gem[3]=new Gem(660,290);
+         gem[3]=new Gem(615,290);
          return gem;
          
          
@@ -242,7 +244,7 @@ public class Load {
        box[1]=new Box(0,0,0,0, Color.BLUE); //place holder box, could also use an array list
         //box[1]=new Box(30,30,480,100, Color.BLUE);
    //box[1]=new Box(30, 30,160,290, Color.BLACK);   
-        box[2]=new Box(30, 30,600,290, Color.BLACK);
+        box[2]=new Box(30, 30,618,290, Color.BLACK);
         return box;
         
     }  //

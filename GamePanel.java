@@ -16,7 +16,6 @@ package com.mycompany.platformernow;
 //array of Obstacles 
 //change hitbox for touchign method 
 //other more efficient wayS?
-//add gravity to boxes 
 //boxes for buttons that only turn on temporarily 
 //more general button, button that makes blue box appear  
 //add case for know boxes can never overlap

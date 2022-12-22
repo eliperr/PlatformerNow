@@ -436,14 +436,20 @@ public class Player  {
   
   private boolean canBoxMove(int x, int y, int width, int height, Box[] boxes, int[][] leveldata)
   {
-      
+         int checkCount=0;
       
       for (Box box: boxes)
       {     
        if ( (y+height>box.y && (box.y+box.height>y))  && (x<box.x+box.width && x+width>box.x))  //if running into box 
         {
             
-          
+          if (Load.wontOverlap)
+            {
+               boxes= new Box[1]; 
+                boxes[0]=box;
+            }
+          checkCount++;
+          System.out.println("checkCount" + checkCount);
           movingBox=true;
           
           ArrayList <Box> overlaps=new ArrayList<Box>();
