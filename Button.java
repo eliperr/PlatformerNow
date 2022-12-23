@@ -5,6 +5,7 @@
 package com.mycompany.platformernow;
 
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -23,6 +24,15 @@ public class Button extends Obstacle {
         super(x, y);
         super.img=Load.uploadButton();  //Button
         super.SCALE=45;
+         h=(int)(965/SCALE);
+       w=(int)(965/SCALE);
+       yOffset=(int)(0/SCALE);
+       xOffset=(int)(0/SCALE); //5
+      //System.out.println("height is " + h + " width is " + w );
+     
+      //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);
+      hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), w, h); 
+      
     }
     
     public void run(Player p)
@@ -70,13 +80,13 @@ public class Button extends Obstacle {
     {
         return pressed;
     }
-    public boolean turnedOn()
-    {   boolean temp=neverPressed;
+    public boolean turnedOn()  //when turned on for the first time only, blue box falls down into place 
+    {   boolean temp=neverPressed;     //test if turned on for the first time during game
       
         boolean turnedOn= pressed && temp;
         if (turnedOn)
         {
-            neverPressed=false;
+            neverPressed=false;   
         }
       
         return turnedOn;
@@ -99,12 +109,12 @@ public class Button extends Obstacle {
     {
         if (pressed)
         {
-            super.subImg=super.img.getSubimage(1100,0,1000,1000); 
+            super.subImg=super.img.getSubimage(1125,0,1000,1000); 
         }
         
         else
         {
-            super.subImg=super.img.getSubimage(0,1110,1000,1000);
+            super.subImg=super.img.getSubimage(0,1100,1000,1000);
             //super.subImg=super.img;
             
         }

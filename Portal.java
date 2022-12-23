@@ -12,6 +12,7 @@ package com.mycompany.platformernow;
  */
 
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 public class Portal extends Obstacle{
     
@@ -33,13 +34,23 @@ public class Portal extends Obstacle{
        super.animx=190;
        super.animy=190;
          super.subImg=this.animate(img);
+         
+           h=(int)(90/SCALE);  //145 for entire portal, but want in center 
+       w=(int)(90/SCALE);
+       yOffset=(int)(50/SCALE);
+       xOffset=(int)(50/SCALE); //5
+      //System.out.println("height is " + h + " width is " + w );
+     
+      //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);
+      hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), w, h); 
+      
        
     }
     
     public void nextLevel(Player p)
     {
         if (isTouching(p))
-        {
+        {  //wait one second before moving forward?
             System.out.println("next level");
             System.exit(0);
         }

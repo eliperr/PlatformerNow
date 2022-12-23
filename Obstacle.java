@@ -205,7 +205,7 @@ public abstract class Obstacle {
         return (int) (subImg.getHeight()/SCALE);
         
     }
-  public boolean isTouching(Player p)
+ /* public boolean isTouching(Player p)
           
   {
       //tests
@@ -226,7 +226,7 @@ public abstract class Obstacle {
          */
       //if (p.getX()<x+this.getWidth()-wobble && p.getX()+p.getWidth()-wobble>=x && p.getY()+p.getHeight()>y+this.getHeight()-wobble && p.getY()-wobble*2<=y)
       
-      if (p.getX()<x+this.getWidth()-wobble && p.getX()+p.getWidth()-wobble>=x && p.getY()+p.getHeight()>y+this.getHeight()-wobble && p.getY()-wobble*2<=y)
+     /* if (p.getX()<x+this.getWidth()-wobble && p.getX()+p.getWidth()-wobble>=x && p.getY()+p.getHeight()>y+this.getHeight()-wobble && p.getY()-wobble*2<=y)
         {  
             //&& p.getY()>=y+animy && p.getY()<y
             //System.out.println("touching");
@@ -236,8 +236,38 @@ public abstract class Obstacle {
       
       return false;
       
-  }
+  }*/
     
+  public boolean isTouching(Player p)
+          
+  {
+      //tests
+     
+      //if (p.getX()<x+this.getWidth()-wobble && p.getX()+p.getWidth()-wobble>=x && p.getY()+p.getHeight()>y+this.getHeight()-wobble && p.getY()-wobble*2<=y)
+      //(y<p.getYHitBox()  && y+height>p.getYHitBox()+p.getHHitBox())  && (x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox())
+      if (p.getHitBoxX()<this.getXHitBox()+this.getWHitBox() && p.getHitBoxX()+p.getHitBoxWidth()>=this.getXHitBox() && p.getHitBoxY()+p.getHitBoxHeight()>this.getYHitBox() && p.getHitBoxY()<=this.getYHitBox()+this.getHHitBox())
+        {  
+            
+            /* System.out.println("p.getX()" + p.getX());
+             System.out.println("x offset" + this.xOffset);
+      int res=this.getXHitBox()+this.getWHitBox();
+      System.out.println("getXHitBox()+this.getWHitBox() " + res);
+        System.out.println("getXHitBox()" + this.getXHitBox());
+         System.out.println("this.getWHitBox()" + this.getWHitBox());*/
+            
+            //&& p.getY()>=y+animy && p.getY()<y
+            //System.out.println("touching");
+            
+            return true;
+        }
+      
+      return false;
+      
+  }
+
+  
+  
+  
   public void drawHitbox(Graphics g)
            
    {   //System.out.println("trying to draw");

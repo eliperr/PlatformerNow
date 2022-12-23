@@ -32,7 +32,7 @@ public class Platform extends Obstacle{
         super.img=Load.uploadPlatform(); 
         super.SCALE=15;
         h=(int)(260/SCALE);
-       w=(int)(1000/SCALE);
+         w=(int)(1000/SCALE);
        yOffset=(int)(350/SCALE);
        xOffset=(int)(0/SCALE);
       //System.out.println("height is " + h + " width is " + w );

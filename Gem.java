@@ -38,7 +38,7 @@ public class Gem  extends Obstacle{
       h=(int)(30/SCALE);
        w=(int)(30/SCALE);
        yOffset=(int)(10/SCALE);
-       xOffset=(int)(5/SCALE);
+       xOffset=(int)(5/SCALE); //5
       //System.out.println("height is " + h + " width is " + w );
      
       //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);

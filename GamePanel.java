@@ -17,8 +17,13 @@ package com.mycompany.platformernow;
 //change hitbox for touchign method 
 //other more efficient wayS?
 //boxes for buttons that only turn on temporarily 
-//more general button, button that makes blue box appear  
-//add case for know boxes can never overlap
+//more general button, button that makes blue box appear -add event to button to be specificied later 
+//fix out of raster error
+//make it harder to jump as wide --shouldn't be able to accelerate x while in air!
+//comments
+//wait  before collecting gem and before moving forward with portal 
+//new levels!
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -79,7 +84,7 @@ public class GamePanel extends JPanel{
          this.gem=Load.initGems();              //should make an array of Obstacles?
          this.box=Load.initBoxes();
          this.portal=new Portal(735,275); 
-         this.button=new Button (160,180);
+         this.button=new Button (160,190);
          this.platform=new Platform (240, 180, 90, 0);
          
          this. playerImg= player.animate(); //keep updating image to draw as you animate player
@@ -178,7 +183,9 @@ public class GamePanel extends JPanel{
         
          Load.LoadGameImg(g);
          for (Fire f:fire)
-         { f.draw(g,fireImg);  //if make many obstacles array of arrays
+         { f.draw(g,fireImg);
+           f.drawHitbox(g);
+                      //if make many obstacles array of arrays
                  }
          
          for (Gem shiny:gem)
@@ -188,11 +195,14 @@ public class GamePanel extends JPanel{
             shiny.drawHitbox(g);
                  }
          portal.draw(g,portalImg);
+         portal.drawHitbox(g);
+         
          for (Box b: box)
          {    
            b.drawBox(g);
          }
          button.draw(g,buttonImg);
+         button.drawHitbox(g);
          platform.draw(g, platform.getImg());
          
          player.draw(g,playerImg); //img can just be stored in object itself?

@@ -7,6 +7,7 @@ package com.mycompany.platformernow;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -27,7 +28,17 @@ public class Fire extends Obstacle{
        
        //super.tick=0;
        super.animx=super.animy=128;
+       //super.animy=118;
+       
         super.subImg=this.animate(img);
+         h=(int)(75/SCALE);
+       w=(int)(88/SCALE);
+       yOffset=(int)(50/SCALE);
+       xOffset=(int)(20/SCALE); //5
+      //System.out.println("height is " + h + " width is " + w );
+     
+      //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);
+      hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), w, h); 
       
     }
      
