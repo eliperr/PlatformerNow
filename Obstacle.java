@@ -4,7 +4,10 @@
  */
 package com.mycompany.platformernow;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -27,6 +30,10 @@ public abstract class Obstacle {
     protected double SCALE;
     protected int animx; //coordinates for animating
     protected int animy;
+    protected Rectangle2D.Float hitbox;
+      protected int h, w;
+      protected  int yOffset;
+       protected  int xOffset;
     public static final int wobble=15; //15
     //later can generalize this if adding other types of obstacles// can extend animatable
     //can add other types later 
@@ -37,6 +44,7 @@ public abstract class Obstacle {
        this.tick=0;
        this.xFrame=0;
        this.yFrame=0;
+       //hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), w,h);
        
    }
     
@@ -230,7 +238,44 @@ public abstract class Obstacle {
       
   }
     
+  public void drawHitbox(Graphics g)
+           
+   {   //System.out.println("trying to draw");
+       
+       g.setColor(Color.RED);
+       //g.drawRect((int)(hitbox.getX()), (int)(hitbox.getY()-Obstacle.wobble*2), (int)(hitbox.getWidth()-Obstacle.wobble), (int)(hitbox.getHeight()+Obstacle.wobble));
+        Graphics2D g2d = (Graphics2D) g;
+       g2d.draw(hitbox);
+        /*System.out.println( "XH is " + this.getXHitBox() );
+         System.out.println( "HH is " + this.getHHitBox() );
+        System.out.println( "WH is " + this.getWHitBox() );
+        System.out.println( "XH is " + this.getXHitBox() );
+         System.out.println( "YH is " + this.getYHitBox() );
+          System.out.println( "HH is " + hitbox );*/
+   }
+  
+    public int getXHitBox()
+    {
+        
+        return x+ xOffset;
+    }
     
+    public int getYHitBox()
+    {
+        
+        return y + yOffset;
+    }
+    public int getHHitBox()
+    {
+        return h;
+    }
+    public int getWHitBox()
+    {
+        return w;
+    }
+      
+  
+  
     
     
 }

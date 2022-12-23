@@ -353,7 +353,7 @@ public class Player  {
   private boolean canMoveHere(int x, int y, int width, int height, Box[] boxes, Platform platform, int[][] leveldata)
           
   {  
-      if (canBoxMove(x, y , width, height, boxes, leveldata)) //&& (canMovePlatform (x,y, width, height, platform, leveldata)))
+      if (canBoxMove(x, y , width, height, boxes, leveldata)) //&& Platform.canMovePlatform (x,y, width, height, platform, leveldata)) //add this is want cloud to be solid 
        
               {return moveHelper(x,y, width, height, leveldata);}
       
@@ -425,18 +425,11 @@ public class Player  {
       
   }
   
-  private boolean canMovePlatform(int x, int y, int width, int height, Platform p, int[][] leveldata)
-  {
-      if ( (y<p.getYHitBox()  && y+height>p.getYHitBox()+p.getHHitBox())  && (x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox()))
-      {
-          return false;
-      }
-      return true;
-  }
+ 
   
   private boolean canBoxMove(int x, int y, int width, int height, Box[] boxes, int[][] leveldata)
   {
-         int checkCount=0;
+         //int checkCount=0;
       
       for (Box box: boxes)
       {     
@@ -448,8 +441,9 @@ public class Player  {
                boxes= new Box[1]; 
                 boxes[0]=box;
             }
-          checkCount++;
-          System.out.println("checkCount" + checkCount);
+          //checkCount++;
+          //System.out.println("checkCount" + checkCount);
+          //This checks the wontOverlap method, should only go through this large loop once when wontoverlap
           movingBox=true;
           
           ArrayList <Box> overlaps=new ArrayList<Box>();

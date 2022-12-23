@@ -18,10 +18,10 @@ public class Platform extends Obstacle{
     private int maxX,  maxY, minX, minY;
     private boolean movingRight=true;
       private boolean movingDown=true;
-      private Rectangle2D.Float hitbox;
-      private int h, w;
-      private final int yOffset;
-       private final int xOffset; //need to work on XOffset and why this doesnt work when platform moving 
+      //private Rectangle2D.Float hitbox;
+      //private int h, w;
+      //private final int yOffset;
+      // private final int xOffset; //need to work on XOffset and why this doesnt work when platform moving 
     public Platform (int x, int y, int distX, int distY)
     {
         super(x, y);
@@ -38,8 +38,9 @@ public class Platform extends Obstacle{
       //System.out.println("height is " + h + " width is " + w );
      
       //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);
-      hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), w,h);
-    }  //will usualy only move in the x direction
+      hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), w, h);
+    }  
+//will usualy only move in the x direction
     
     
     public BufferedImage getImg()
@@ -48,33 +49,6 @@ public class Platform extends Obstacle{
     return super.img;
     }
     
-    public void drawHitbox(Graphics g)
-           
-   {   g.setColor(Color.RED);
-       //g.drawRect((int)(hitbox.getX()), (int)(hitbox.getY()-Obstacle.wobble*2), (int)(hitbox.getWidth()-Obstacle.wobble), (int)(hitbox.getHeight()+Obstacle.wobble));
-        Graphics2D g2d = (Graphics2D) g;
-       g2d.draw(hitbox);
-   }
-  
-    public int getXHitBox()
-    {
-        
-        return x+ xOffset;
-    }
-    
-    public int getYHitBox()
-    {
-        
-        return y + yOffset;
-    }
-    public int getHHitBox()
-    {
-        return h;
-    }
-    public int getWHitBox()
-    {
-        return w;
-    }
     
     
     @Override
@@ -116,13 +90,20 @@ public class Platform extends Obstacle{
                 y--;
             }
            
-           hitbox.setRect(  (float) (this.x + xOffset ), (float) (this.y + yOffset), w, h); 
+           super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h); 
             
          }
     
     }
     
-    
+     public static  boolean canMovePlatform(int x, int y, int width, int height, Platform p, int[][] leveldata)
+  {
+      if ( (y<p.getYHitBox()  && y+height>p.getYHitBox()+p.getHHitBox())  && (x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox()))
+      {
+          return false;
+      }
+      return true;
+  }
     
     
     

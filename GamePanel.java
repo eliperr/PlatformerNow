@@ -185,6 +185,7 @@ public class GamePanel extends JPanel{
          {  if (!shiny.getCollectedYet())
              
              shiny.draw(g,gemImg);
+            shiny.drawHitbox(g);
                  }
          portal.draw(g,portalImg);
          for (Box b: box)
@@ -201,6 +202,8 @@ public class GamePanel extends JPanel{
          
          
          platform.drawHitbox(g);
+         
+       
         if (GameRunner.gameover)
         {
             Fire.deathScreen(g);

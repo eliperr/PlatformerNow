@@ -6,6 +6,7 @@ package com.mycompany.platformernow;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -34,7 +35,14 @@ public class Gem  extends Obstacle{
     super. animx=40; //coordinates for animating
     super. animy=40;
     super.subImg=this.subImg=this.animate(img);
-      
+      h=(int)(30/SCALE);
+       w=(int)(30/SCALE);
+       yOffset=(int)(10/SCALE);
+       xOffset=(int)(5/SCALE);
+      //System.out.println("height is " + h + " width is " + w );
+     
+      //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);
+      hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), w, h); 
       
       
   }
