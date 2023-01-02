@@ -27,7 +27,8 @@ public class Fire extends Obstacle{
        super.tickspeed=5;
        
        //super.tick=0;
-       super.animx=super.animy=128;
+      super.animy=128;
+       super.animx=128;
        //super.animy=118;
        
         super.subImg=this.animate(img);

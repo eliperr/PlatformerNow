@@ -47,6 +47,20 @@ public abstract class Obstacle {
        //hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), w,h);
        
    }
+   
+   public BufferedImage getSubImg()
+  {
+           
+      return subImg;
+      
+           }
+   
+    public void setSubImg(BufferedImage sub)
+  {
+           
+      subImg=sub;
+      
+           }
     
     public void draw(Graphics g, BufferedImage subImg)
     {
@@ -80,6 +94,40 @@ public abstract class Obstacle {
         
     }
     
+     
+    public void draw(Graphics g)
+    {
+        //subImg=img.getSubimage(0,0,120,150);
+        //System.out.println(SCALE);
+        
+        if (this.subImg!=null)
+        {
+         
+           g.drawImage(subImg ,x,y, (int) (subImg.getWidth()/SCALE), (int) (subImg.getHeight()/SCALE), null); 
+           
+           
+        }
+        
+        
+       else
+        {
+            System.out.println(this.getClass().getName() + " no img");
+            
+        }
+       /* if (this.getClass().getName().contains("Button"))
+        {
+            
+                        System.out.println("drawing button");
+                        int w=(int) (subImg.getWidth()/SCALE);
+                        System.out.println("subImg.getWidth()/SCALE " + w);
+
+        }*/
+        
+        
+        
+    }
+    
+    
     public  void updateTick()
     {
         
@@ -90,7 +138,7 @@ public abstract class Obstacle {
             xFrame++;
            
             
-             if (yFrame>=row-1 && xFrame>=col)
+             if (yFrame>=row-1 && xFrame>=col-1)
                 {
                
                 yFrame=0;
@@ -98,7 +146,7 @@ public abstract class Obstacle {
                 }
             
             
-            if (xFrame>=col)
+            if (xFrame>=col-1)
             {
                 
                 
@@ -122,12 +170,15 @@ public abstract class Obstacle {
          BufferedImage sub=img.getSubimage(xFrame*animx, yFrame*animy, animx, animy);
     
       this.subImg=sub;
-      
+      if (this.subImg==null )
      
-      
+      {
+          System.out.println(this.getClass().getName() + " no subimg");
+      }
       
       return sub;
-       
+      
+      
         
     }
     
@@ -135,6 +186,7 @@ public abstract class Obstacle {
     {
          BufferedImage sub=b.getSubimage(xFrame*animx, yFrame*animy, animx, animy);
     
+      
       
       return sub;
         

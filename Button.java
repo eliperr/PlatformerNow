@@ -28,6 +28,7 @@ public class Button extends Obstacle {
        w=(int)(965/SCALE);
        yOffset=(int)(0/SCALE);
        xOffset=(int)(0/SCALE); //5
+       //super.subImg=super.img.getSubimage(0,1100,1000,1000);
       //System.out.println("height is " + h + " width is " + w );
      
       //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);

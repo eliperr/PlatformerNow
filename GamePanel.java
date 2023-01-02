@@ -14,14 +14,13 @@ package com.mycompany.platformernow;
 
 //dont need to keep images in  here, keep in object
 //array of Obstacles 
-//change hitbox for touchign method 
 //other more efficient wayS?
 //boxes for buttons that only turn on temporarily 
 //more general button, button that makes blue box appear -add event to button to be specificied later 
-//fix out of raster error
 //make it harder to jump as wide --shouldn't be able to accelerate x while in air!
 //comments
 //wait  before collecting gem and before moving forward with portal 
+//less wobble in cloud
 //new levels!
 
 import java.awt.Color;
@@ -35,6 +34,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
  import java.io.InputStream;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 public class GamePanel extends JPanel{
     
@@ -59,7 +59,7 @@ public class GamePanel extends JPanel{
    private int ycount=1;
    private int n=5;//number of frames in animation 
    private int tick=5;//speed of animation
-   private BufferedImage gameImg,fireImg, gemImg, portalImg, buttonImg;
+   //private BufferedImage gameImg,fireImg, gemImg, portalImg, buttonImg;
    public Player player;
    public Fire fire[];
    public Gem gem[];
@@ -67,6 +67,7 @@ public class GamePanel extends JPanel{
    public Box box[];
    public Button button;
    public Platform platform;
+   public ArrayList<Obstacle[]>ObstacleList;
    
     public final static int TILESIZE=32;
   public final static float SCALE=1f; ///This cannot be scaled easily 
@@ -79,6 +80,7 @@ public class GamePanel extends JPanel{
     
     public GamePanel()
     {    //init
+        ObstacleList=Load.levelOne();
          this.player= new Player(100f,285f); 
          this.fire=Load.initFires();
          this.gem=Load.initGems();              //should make an array of Obstacles?
@@ -86,13 +88,13 @@ public class GamePanel extends JPanel{
          this.portal=new Portal(735,275); 
          this.button=new Button (160,190);
          this.platform=new Platform (240, 180, 90, 0);
+         playerImg= player.animate();
          
-         this. playerImg= player.animate(); //keep updating image to draw as you animate player
+        //keep updating image to draw as you animate player
          //this.gameImg=Load.LoadGameImg();
          //System.out.println("player height is " + player.getHeight() );
          
-         this.fireImg=fire[0].animate();
-         this.gemImg=gem[0].animate();
+        
           //this.gemImg=Load.uploadGem();
        addKeyListener(new keyboardInputs(this));
     size=new Dimension (GAMEWIDTH,GAMEHEIGHT);
@@ -118,6 +120,7 @@ public class GamePanel extends JPanel{
         
        Gem.resetGems(gem);
         button.restart();
+         platform.reset(240, 180);
         
        //will change to depend on level later 
        //will restart the level you are on
@@ -126,21 +129,65 @@ public class GamePanel extends JPanel{
    
     
     public void update()
- { 
-     
+ {   //pattern: updatetick and animate all except box and button (button only animate
+     playerImg= player.animate(); 
       player.updateTick();
-      playerImg= player.animate();
-      
       player.setPosition(box,platform);
+      
      //x=player.setPosition(x,y)[0];
      //y=player.setPosition(x,y)[1];
-     fire[0].updateTick();   //should all have same update tick?
-     fireImg=fire[0].animate();
-     gem[0].updateTick();
-     gemImg=gem[0].animate();
+      for (Obstacle[] i:ObstacleList)
+      {
+          if (i[0] instanceof Fire || i[0] instanceof Gem) //not button, platform
+          {
+             i[0].updateTick();
+             i[0].animate();
+              for (Obstacle o:i)
+                     {
+                         //System.out.println("set fire" + o);
+                        o.setSubImg(i[0].getSubImg());
+                    }
+          }
+              if (i[0] instanceof Fire)
+             {   Fire[] fire=(Fire[])i;
+                for (Fire f:fire)
+                    { f.isDead(player);  }
+                }
+              
+              
+              else if (i[0] instanceof Gem)
+             {   Gem[] gem=(Gem[])i;
+                System.out.println("gem");
+                for (Gem g:gem)
+                    { g.collectGem(player);  }
+                }
+          
+      }
+     //fire:
+    /* fire[0].updateTick();   //should all have same update tick?
+     fire[0].animate();
+     
+     for (Fire f:fire)
+      {
+          f.setSubImg(fire[0].getSubImg());
+      }*/
+     //gem:
+    /* gem[0].updateTick();
+     gem[0].animate();
+      for (Gem shiny:gem)
+      {
+          shiny.setSubImg(gem[0].getSubImg());
+      }*/
+     
      portal.updateTick();
-     portalImg=portal.animate();
-     buttonImg=button.animate();
+       portal.animate();
+     //animate
+     
+       
+      
+       
+     button.animate();
+     
      button.run(player);
      if (button.isOn())
         {
@@ -162,12 +209,12 @@ public class GamePanel extends JPanel{
                                      }
      
      //gem[0].collectGem(player);
-     for (Gem shiny:gem)
+   /*  for (Gem shiny:gem)
          {  shiny.collectGem(player);
                                      }
      
       for (Fire f:fire)
-         { f.isDead(player);  }
+         { f.isDead(player);  }*/
                  
   
      portal.nextLevel(player);
@@ -178,32 +225,64 @@ public class GamePanel extends JPanel{
   @Override
    
   public void paintComponent(Graphics g)
-    {
+    {  //pattern draw all and drawHitbox
+        
         super.paintComponent(g);
         
          Load.LoadGameImg(g);
-         for (Fire f:fire)
-         { f.draw(g,fireImg);
+         boolean draw=true;
+         
+         
+         for (Obstacle[] i:ObstacleList)
+      {  
+          if (i[0] instanceof Fire || i[0] instanceof Gem )
+          {
+             //i[0].draw(g);
+             //i[0].animate();
+              for (Obstacle o:i)
+                     { draw=true;
+                       if (o instanceof Gem)
+                       {
+                           Gem shiny=(Gem)o;
+                           if(shiny.getCollectedYet())
+                           {draw=false;}
+                       }
+                       if (draw==true)
+                       {
+                        o.draw(g);
+                        o.drawHitbox(g);
+                       }
+                    }
+          }
+          
+      }
+         
+      /*   for (Fire f:fire)
+         { f.draw(g);
            f.drawHitbox(g);
                       //if make many obstacles array of arrays
-                 }
+                 }*/
          
-         for (Gem shiny:gem)
+         /*for (Gem shiny:gem)
          {  if (!shiny.getCollectedYet())
              
-             shiny.draw(g,gemImg);
+             shiny.draw(g);
             shiny.drawHitbox(g);
-                 }
-         portal.draw(g,portalImg);
+                 }*/
+         portal.draw(g);
          portal.drawHitbox(g);
          
          for (Box b: box)
          {    
            b.drawBox(g);
          }
-         button.draw(g,buttonImg);
+         button.draw(g);
          button.drawHitbox(g);
-         platform.draw(g, platform.getImg());
+         
+         platform.draw(g);
+    
+         platform.drawHitbox(g);
+       
          
          player.draw(g,playerImg); //img can just be stored in object itself?
          player.drawHitbox(g);
@@ -211,7 +290,7 @@ public class GamePanel extends JPanel{
          Gem.drawGemCount(g);
          
          
-         platform.drawHitbox(g);
+         
          
        
         if (GameRunner.gameover)

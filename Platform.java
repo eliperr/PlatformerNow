@@ -35,6 +35,7 @@ public class Platform extends Obstacle{
          w=(int)(1000/SCALE);
        yOffset=(int)(350/SCALE);
        xOffset=(int)(0/SCALE);
+       subImg=img;
       //System.out.println("height is " + h + " width is " + w );
      
       //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);
@@ -42,12 +43,17 @@ public class Platform extends Obstacle{
     }  
 //will usualy only move in the x direction
     
-    
-    public BufferedImage getImg()
-    
+    public void reset(int x, int y )
     {
-    return super.img;
-    }
+        
+        this.x=x;
+        this.y=y;
+        
+        super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h); 
+        
+        
+    }        
+    
     
     
     
@@ -90,7 +96,7 @@ public class Platform extends Obstacle{
                 y--;
             }
            
-           super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h); 
+          super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h); 
             
          }
     

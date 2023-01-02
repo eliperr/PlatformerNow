@@ -65,7 +65,7 @@ public class Player  {
    public float yOffset=4;
    private float xacceleration=1f;
    private float yacceleration=1f;
-   private float maxXspeed=4.5f;  
+   private float maxXspeed=3f;  
    private float maxYspeed=5;
    //make float
    //add friction
@@ -203,6 +203,7 @@ public class Player  {
       float newY=this.y;
       float newXspeed=xspeed;
       float newYspeed=yspeed;
+      boolean onGround=onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, platform, Load.levelData);
       
       //separating x and y direction movement works best 
       // x direction
@@ -217,7 +218,7 @@ public class Player  {
           }*/
           
           newX=this.x+xspeed;
-           if ( xspeed+xacceleration<=maxXspeed)
+           if ( xspeed+xacceleration<=maxXspeed )
           {
               newXspeed=xspeed+xacceleration;
               
@@ -246,7 +247,7 @@ public class Player  {
       }
       else
       {  //decellelerate if not moving
-          //what if xspeed doesn't quite equal zero 
+          
           
           newX=this.x+xspeed; 
           if (xspeed<0)       
@@ -294,7 +295,7 @@ public class Player  {
       //y direction
      // System.out.println("jump" + jump);
      // System.out.println("up " + up);
-       if (up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, platform, Load.levelData))
+       if (up && onGround)
       {
           jump=true;
           //jumping=true;
@@ -308,7 +309,7 @@ public class Player  {
       }*/
        
        
-      if (!up && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box,platform, Load.levelData))
+      if (!up && onGround)
        {
            
            jump=false;

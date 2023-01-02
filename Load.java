@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 
@@ -22,6 +23,19 @@ public class Load {
        public static boolean wontOverlap=true; //this should change with different levels, default is true
       private static BufferedImage[] gameImg=LoadTiles();
       public static int[][] levelData=loadLevelData();
+      
+      public static  int getLevel()
+      {
+         return level; 
+          
+      }
+      
+      public static  void setLevel()
+      {
+        level++;
+          
+      }
+      
      private static BufferedImage uploadImg(String pic)
    {
       
@@ -43,6 +57,9 @@ public class Load {
        return img;
        
    }
+   
+     
+     
      
     public static BufferedImage LoadPlayerImg()
     {
@@ -209,7 +226,7 @@ public class Load {
          Fire[] fire =new Fire[4];
          
         // fire[0]=new Fire(170,280);
-        fire[0]=new Fire(320,215);//320
+        fire[0]=new Fire(335,215);//320
         
         fire[1]=new Fire(290,215);
          fire[2]=new Fire(420,280); //420
@@ -249,6 +266,8 @@ public class Load {
         
     }  //
     
+    
+    
    public static Box[] newBoxesToAdd()  //needs to be different for diffferent levels 
            
    {
@@ -257,7 +276,30 @@ public class Load {
        
        return box;
    }
-     
+     public static ArrayList<Obstacle[]> levelOne()
+     {
+         ArrayList<Obstacle[]> levelOne=new ArrayList<Obstacle[]>();
+         levelOne.add(Load.initFires());
+         levelOne.add(Load.initGems());
+         
+        Portal portal=new Portal(735,275); 
+        Portal [] p=new Portal[1];
+        p[0]=portal;
+        levelOne.add(p);
+        
+        Button button=new Button (160,190);
+         Button [] b=new Button[1]; //can add more buttons later easier
+         b[0]=button;
+         levelOne.add(b);
+         
+        Platform platform=new Platform (240, 180, 90, 0);
+        Platform[]plat=new Platform[1];
+        plat[0]=platform;
+         levelOne.add(plat);   
+        
+         //levelOne.add(Load.initBoxes());
+         return levelOne;
+     }
     
     
 }
