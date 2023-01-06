@@ -17,6 +17,8 @@ import java.awt.image.BufferedImage;
 
 
 public abstract class Obstacle {
+    protected boolean drawable=true;
+    protected boolean restartable=false;
    protected BufferedImage img;
     protected BufferedImage subImg;
     protected int x;
@@ -47,6 +49,16 @@ public abstract class Obstacle {
        //hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), w,h);
        
    }
+   
+   public boolean isDrawable()
+   {
+       return drawable;
+   }
+   public boolean isRestartable()
+   {
+       return restartable;
+   }
+   
    
    public BufferedImage getSubImg()
   {
@@ -126,6 +138,9 @@ public abstract class Obstacle {
         
         
     }
+    public abstract void restart();
+    
+    
     
     
     public  void updateTick()

@@ -47,6 +47,15 @@ public class Portal extends Obstacle{
        
     }
     
+    /**
+     *
+     */
+  //why do I have to do this?
+    @Override
+  public void restart()
+  {
+  }
+            
     public void nextLevel(Player p)
     {
         if (isTouching(p))

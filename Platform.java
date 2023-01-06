@@ -25,6 +25,7 @@ public class Platform extends Obstacle{
     public Platform (int x, int y, int distX, int distY)
     {
         super(x, y);
+        restartable=true;
         minX=x;
         minY=y;
         maxX=minX+distX;
@@ -54,6 +55,13 @@ public class Platform extends Obstacle{
         
     }        
     
+    public void restart()
+    {
+       this.x=minX;
+       this.y=minY;
+       super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h);
+        
+    }
     
     
     
@@ -97,7 +105,7 @@ public class Platform extends Obstacle{
             }
            
           super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h); 
-            
+            System.out.println("updating");
          }
     
     }

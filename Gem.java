@@ -27,7 +27,7 @@ public class Gem  extends Obstacle{
       super(x,y);
       super.img=Load.uploadGem();
       this.collectedYet=false;
-     
+     super.restartable=true;
      super.tickspeed=10;
     super.col=4; //# of columns in spritefile
     super.row=2; //# of rows 
@@ -55,7 +55,7 @@ public void collectGem(Player p)
     {
         
         collectedYet=true;
-        
+        drawable=false;
         gemsCollected++;
         
         //System.out.print("collected! "+ gemsCollected );
@@ -78,6 +78,18 @@ public static void resetGems(Gem[]gem)
     for (Gem shiny:gem)
          { shiny.collectedYet=false;
                                      }
+}
+
+    /**
+     *
+     */
+    @Override
+public  void restart()
+{
+    gemsCollected=0;
+    collectedYet=false;
+    drawable=true;
+    
 }
 
 public static void drawGemCount(Graphics g)

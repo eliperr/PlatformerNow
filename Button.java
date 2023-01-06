@@ -17,11 +17,13 @@ public class Button extends Obstacle {
    private boolean pressed=false;
     boolean wasNotTouching=true;
      boolean neverPressed=true;
+     
    //what should button do when pressed? Open door?
    //maybe button stays
     public Button (int x, int y)
     {
         super(x, y);
+        super.restartable=true;
         super.img=Load.uploadButton();  //Button
         super.SCALE=45;
          h=(int)(965/SCALE);

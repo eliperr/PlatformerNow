@@ -117,11 +117,23 @@ public class GamePanel extends JPanel{
         //box[b].setPosition(Load.initBoxes()[b].x,Load.initBoxes()[b].y);
     }
      
-        
-       Gem.resetGems(gem);
+        for (Obstacle[] i:ObstacleList)
+        {
+            if (i[0].isRestartable())
+                    { System.out.println( "restart" + i[0].getClass());
+                        for (Obstacle o:i)
+                        { o.restart();}
+                        
+                        
+                    }
+            
+        }
+       /*Gem.resetGems(gem);
         button.restart();
-         platform.reset(240, 180);
+         platform.reset(240, 180);*/
         
+       
+       
        //will change to depend on level later 
        //will restart the level you are on
     }
@@ -133,12 +145,12 @@ public class GamePanel extends JPanel{
      playerImg= player.animate(); 
       player.updateTick();
       player.setPosition(box,platform);
-      
+      boolean platformOn=false;
      //x=player.setPosition(x,y)[0];
      //y=player.setPosition(x,y)[1];
       for (Obstacle[] i:ObstacleList)
       {
-          if (i[0] instanceof Fire || i[0] instanceof Gem) //not button, platform
+          if (!(i[0] instanceof Button) && !(i[0] instanceof Platform)) //not button, platform
           {
              i[0].updateTick();
              i[0].animate();
@@ -157,10 +169,58 @@ public class GamePanel extends JPanel{
               
               else if (i[0] instanceof Gem)
              {   Gem[] gem=(Gem[])i;
-                System.out.println("gem");
+                //System.out.println("gem");
                 for (Gem g:gem)
                     { g.collectGem(player);  }
                 }
+              
+              else if (i[0] instanceof Button)
+              {
+                  
+                
+                  Button[] button=(Button[])i;  //only one button now but will work with multiple buttons
+                  
+                  for (Button b:button)
+                    { b.animate();  
+                     b.run(player);
+                     if (b.turnedOn())
+                     {
+                        box[1]=Load.newBoxesToAdd()[0]; 
+                         
+                     }
+                     if (b.isOn())
+                     {
+                         platformOn=true;
+                       System.out.println("platform on");
+                     }
+                     
+                    }
+                }
+              
+              else if (i[0] instanceof Platform)
+              { 
+                    if (platformOn)
+                        {
+                      platform=(Platform)i[0];      
+                   i[0].updateTick();
+                   //platform.updateTick();
+                     
+                        }
+
+                 
+                }
+              
+               else if (i[0] instanceof Portal)
+              { 
+                   Portal[] port=(Portal[])i;
+                  
+                  port[0].nextLevel(player);
+
+                 
+                } 
+                  
+            //making it this abstract is limitng flexibility. Maybe not the best?
+            //will be quite difficult to implement platform, harder to interact with other components 
           
       }
      //fire:
@@ -179,26 +239,26 @@ public class GamePanel extends JPanel{
           shiny.setSubImg(gem[0].getSubImg());
       }*/
      
-     portal.updateTick();
-       portal.animate();
+     //portal.updateTick();
+      // portal.animate();
      //animate
      
        
       
        
-     button.animate();
+     //button.animate();
      
-     button.run(player);
-     if (button.isOn())
+     //button.run(player);
+     /*if (button.isOn())
         {
      platform.updateTick();
      //box[1]=new Box(30,30,480,195, Color.BLUE);
         }
-     if (button.turnedOn())
+     /*if (button.turnedOn())
          
         { //System.out.println ("turned on");
          box[1]=Load.newBoxesToAdd()[0];
-        }
+        }*/
      /*else
      {System.out.println ("turned OFF");
      }*/
@@ -217,7 +277,7 @@ public class GamePanel extends JPanel{
          { f.isDead(player);  }*/
                  
   
-     portal.nextLevel(player);
+     //portal.nextLevel(player);
  }
     //should thus go into player class? do I need animate here? why moving faster?
   
@@ -235,24 +295,17 @@ public class GamePanel extends JPanel{
          
          for (Obstacle[] i:ObstacleList)
       {  
-          if (i[0] instanceof Fire || i[0] instanceof Gem )
-          {
+          
              //i[0].draw(g);
              //i[0].animate();
               for (Obstacle o:i)
-                     { draw=true;
-                       if (o instanceof Gem)
-                       {
-                           Gem shiny=(Gem)o;
-                           if(shiny.getCollectedYet())
-                           {draw=false;}
-                       }
-                       if (draw==true)
+              {    
+                       if (o.isDrawable())
                        {
                         o.draw(g);
                         o.drawHitbox(g);
                        }
-                    }
+                    
           }
           
       }
@@ -269,21 +322,21 @@ public class GamePanel extends JPanel{
              shiny.draw(g);
             shiny.drawHitbox(g);
                  }*/
-         portal.draw(g);
+        /* portal.draw(g);
          portal.drawHitbox(g);
          
-         for (Box b: box)
-         {    
-           b.drawBox(g);
-         }
+         
          button.draw(g);
          button.drawHitbox(g);
          
          platform.draw(g);
     
-         platform.drawHitbox(g);
+         platform.drawHitbox(g);*/
        
-         
+         for (Box b: box)
+         {    
+           b.drawBox(g);
+         }
          player.draw(g,playerImg); //img can just be stored in object itself?
          player.drawHitbox(g);
          
