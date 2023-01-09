@@ -120,7 +120,7 @@ public class GamePanel extends JPanel{
         for (Obstacle[] i:ObstacleList)
         {
             if (i[0].isRestartable())
-                    { System.out.println( "restart" + i[0].getClass());
+                    {   //System.out.println( "restart" + i[0].getClass());
                         for (Obstacle o:i)
                         { o.restart();}
                         
@@ -191,7 +191,7 @@ public class GamePanel extends JPanel{
                      if (b.isOn())
                      {
                          platformOn=true;
-                       System.out.println("platform on");
+                      // System.out.println("platform on");
                      }
                      
                     }
