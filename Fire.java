@@ -75,4 +75,15 @@ public class Fire extends Obstacle{
   {
   }
 
+  
+  public void doStuff(Player p, GamePanel game)
+          
+  {
+      
+        //this.updateTick();          //not more efficient because still have to write update tick and aniamte everytime!
+             //this.animate();
+             this.isDead(p);
+  }
+  
+  
 }

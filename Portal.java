@@ -52,7 +52,7 @@ public class Portal extends Obstacle{
      */
   //why do I have to do this?
     @Override
-  public void restart()
+  public void restart()   
   {
   }
             
@@ -64,4 +64,12 @@ public class Portal extends Obstacle{
             System.exit(0);
         }
     }
+    
+    @Override
+    public void doStuff (Player p, GamePanel game) 
+   {
+         //this.updateTick();
+             //this.animate();
+       this.nextLevel(p);
+   }
 }

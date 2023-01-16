@@ -18,6 +18,7 @@ public class Platform extends Obstacle{
     private int maxX,  maxY, minX, minY;
     private boolean movingRight=true;
       private boolean movingDown=true;
+      public boolean platformOn=false;
       //private Rectangle2D.Float hitbox;
       //private int h, w;
       //private final int yOffset;
@@ -66,47 +67,51 @@ public class Platform extends Obstacle{
     
     
     @Override
-    public  void updateTick()
+    public  void updateTick()   //make static?
     {
-        
-        tick++;
-         if (tick>=tickspeed)
-         {
-            tick=0;
-            if (x<=minX)
-                { movingRight=true;}
-            else if (x>=maxX)
-           
-              {movingRight=false;}
-           
-            if (movingRight)
-            {
-                x++;
-            }
-            else 
-            {
-                x--;
-            }
+        if (platformOn)
             
-            if (y<=minY)
-                { movingDown=true;}
-            
-            else if (y>=maxY)
-           
-              {movingDown=false;}
-           
-            if (movingDown)
-            {
-                y++;
-            }
-            else 
-            {
-                y--;
-            }
-           
-          super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h); 
-            System.out.println("updating");
-         }
+        {    
+            tick++;
+             if (tick>=tickspeed)
+             {
+                tick=0;
+                if (x<=minX)
+                    { movingRight=true;}
+                else if (x>=maxX)
+
+                  {movingRight=false;}
+
+                if (movingRight)
+                {
+                    x++;
+                }
+                else 
+                {
+                    x--;
+                }
+
+                if (y<=minY)
+                    { movingDown=true;}
+
+                else if (y>=maxY)
+
+                  {movingDown=false;}
+
+                if (movingDown)
+                {
+                    y++;
+                }
+                else 
+                {
+                    y--;
+                }
+
+              super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h); 
+                System.out.println("updating");
+             }
+             
+        }      
     
     }
     
@@ -118,13 +123,32 @@ public class Platform extends Obstacle{
       }
       return true;
   }
+    @Override
+   public void doStuff(Player p, GamePanel game)
+           
+   {
+       this.platformOn=game.platformOn;
+       game.platform=this; //need to modify for multiple platforms //add into arraylist
+   }  //need setter?
     
-    
-    
+   @Override
+   public  BufferedImage animate()
+   { return img;
+   };
+   
+   
 }
 
 
-  
+  /*
+
+if (platformOn)
+                        {
+                      platform=(Platform)i[0];      
+                   i[0].updateTick();
+
+*/
+
 
 //when update tick instead of changing subimage change x and y 
 //try touching based off hitbox 

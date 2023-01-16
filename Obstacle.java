@@ -140,7 +140,7 @@ public abstract class Obstacle {
     }
     public abstract void restart();
     
-    
+    public abstract void doStuff(Player player, GamePanel game);
     
     
     public  void updateTick()

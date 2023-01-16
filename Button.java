@@ -126,9 +126,26 @@ public class Button extends Obstacle {
         
         return subImg;
     }
-        
-    
-    
+      @Override  
+    public void doStuff(Player p,GamePanel game)   //wish I could access player without adding it in
+   { this.animate();  
+       this.run(p);         
+           if (this.turnedOn())
+                  {
+                      game.box[1]=Load.newBoxesToAdd()[0]; 
+                         
+                   }
+                   if (this.isOn())
+                     {
+                         game.platformOn=true;
+                      // System.out.println("platform on");
+                     }
+                     
+          }
+       @Override  
+       public void updateTick()
+       {
+       }
     
     //only needs draw and toutching  //override animate
     //and dont need tick 

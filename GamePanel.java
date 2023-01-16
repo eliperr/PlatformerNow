@@ -68,7 +68,7 @@ public class GamePanel extends JPanel{
    public Button button;
    public Platform platform;
    public ArrayList<Obstacle[]>ObstacleList;
-   
+   public boolean platformOn=false;
     public final static int TILESIZE=32;
   public final static float SCALE=1f; ///This cannot be scaled easily 
   public final static int TILESINWIDTH=26;
@@ -145,7 +145,7 @@ public class GamePanel extends JPanel{
      playerImg= player.animate(); 
       player.updateTick();
       player.setPosition(box,platform);
-      boolean platformOn=false;
+      
      //x=player.setPosition(x,y)[0];
      //y=player.setPosition(x,y)[1];
       for (Obstacle[] i:ObstacleList)

@@ -109,10 +109,15 @@ public static void drawGemCount(Graphics g)
     
 }
 
-
-
-
-
+@Override
+public void doStuff(Player p, GamePanel game)
+{
+    
+     this.updateTick();
+      this.animate();
+      this.collectGem(p);
+    
+}
  
          
 
