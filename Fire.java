@@ -71,7 +71,7 @@ public class Fire extends Obstacle{
          
      }
        @Override
-  public void restart()
+  public void restart(GamePanel game)
   {
   }
 

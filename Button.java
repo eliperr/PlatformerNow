@@ -71,12 +71,14 @@ public class Button extends Obstacle {
        }
         
        
-    }       
-    public void restart()
+    }  
+    @Override
+    public void restart(GamePanel game)
     {
         pressed=false;
          wasNotTouching=true;
          neverPressed=true;
+        game.platformOn=false;
     }
     
     public boolean isOn()
@@ -128,7 +130,7 @@ public class Button extends Obstacle {
     }
       @Override  
     public void doStuff(Player p,GamePanel game)   //wish I could access player without adding it in
-   { this.animate();  
+   { //this.animate();  
        this.run(p);         
            if (this.turnedOn())
                   {

@@ -56,11 +56,12 @@ public class Platform extends Obstacle{
         
     }        
     
-    public void restart()
+    public void restart(GamePanel game)
     {
        this.x=minX;
        this.y=minY;
        super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h);
+       
         
     }
     
@@ -108,7 +109,7 @@ public class Platform extends Obstacle{
                 }
 
               super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h); 
-                System.out.println("updating");
+                //System.out.println("updating");
              }
              
         }      

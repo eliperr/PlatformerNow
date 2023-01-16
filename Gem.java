@@ -82,9 +82,10 @@ public static void resetGems(Gem[]gem)
 
     /**
      *
+     * @param game
      */
     @Override
-public  void restart()
+public  void restart(GamePanel game)
 {
     gemsCollected=0;
     collectedYet=false;
@@ -113,14 +114,42 @@ public static void drawGemCount(Graphics g)
 public void doStuff(Player p, GamePanel game)
 {
     
-     this.updateTick();
-      this.animate();
+     //this.updateTick();
+      //this.animate();
       this.collectGem(p);
     
 }
  
+@Override
+ public void draw(Graphics g)
+   {
+
+        if (this.drawable)          ///worth doing like this?  instead of just if statement 
+        {   
+            if (super.subImg!=null)
+                {
+
+                   g.drawImage(super.subImg ,x,y, (int) (super.subImg.getWidth()/SCALE), (int) (super.subImg.getHeight()/SCALE), null); 
+
+
+                }
+
+
+               else
+                {
+                    System.out.println(this.getClass().getName() + " no img");
+
+                }
+
+        }
+   Gem.drawGemCount(g);
+        
+    }  
+        
          
 
+         
+    
 
 
 

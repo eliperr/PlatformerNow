@@ -52,7 +52,7 @@ public class Portal extends Obstacle{
      */
   //why do I have to do this?
     @Override
-  public void restart()   
+  public void restart(GamePanel game)   
   {
   }
             

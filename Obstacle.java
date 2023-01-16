@@ -138,7 +138,7 @@ public abstract class Obstacle {
         
         
     }
-    public abstract void restart();
+    public abstract void restart(GamePanel game);
     
     public abstract void doStuff(Player player, GamePanel game);
     
