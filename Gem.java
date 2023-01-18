@@ -126,20 +126,7 @@ public void doStuff(Player p, GamePanel game)
 
         if (this.drawable)          ///worth doing like this?  instead of just if statement 
         {   
-            if (super.subImg!=null)
-                {
-
-                   g.drawImage(super.subImg ,x,y, (int) (super.subImg.getWidth()/SCALE), (int) (super.subImg.getHeight()/SCALE), null); 
-
-
-                }
-
-
-               else
-                {
-                    System.out.println(this.getClass().getName() + " no img");
-
-                }
+            super.draw(g);
 
         }
    Gem.drawGemCount(g);

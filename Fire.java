@@ -70,10 +70,7 @@ public class Fire extends Obstacle{
          g.drawString("You died :( press 'r' to restart",GamePanel.GAMEWIDTH/2,GamePanel.GAMEHEIGHT/2);
          
      }
-       @Override
-  public void restart(GamePanel game)
-  {
-  }
+   
 
   
   public void doStuff(Player p, GamePanel game)

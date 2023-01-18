@@ -61,7 +61,7 @@ public class Platform extends Obstacle{
        this.x=minX;
        this.y=minY;
        super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h);
-       
+   
         
     }
     

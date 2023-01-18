@@ -47,14 +47,7 @@ public class Portal extends Obstacle{
        
     }
     
-    /**
-     *
-     */
-  //why do I have to do this?
-    @Override
-  public void restart(GamePanel game)   
-  {
-  }
+ 
             
     public void nextLevel(Player p)
     {
