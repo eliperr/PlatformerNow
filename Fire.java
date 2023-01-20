@@ -109,8 +109,13 @@ public class Fire extends Obstacle{
      }
 
   public void restart(GamePanel game)
-  {messageSent=false;
-    game.remove(label);
+  {
+      if (messageSent)
+      {game.remove(label);
+      }
+      
+      messageSent=false;
+    
    
   }
   public void doStuff(Player p, GamePanel game)

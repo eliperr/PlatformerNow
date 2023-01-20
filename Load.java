@@ -21,6 +21,7 @@ public class Load {
  
        private static int level=1;
        public static boolean wontOverlap=true; //this should change with different levels, default is true
+       //remove algrotihm deciding if boxes will overlap if know they couldnt 
       private static BufferedImage[] gameImg=LoadTiles();
       public static int[][] levelData=loadLevelData();
       
@@ -253,29 +254,39 @@ public class Load {
          
      }
     
-    public static Box[] initBoxes()
+    public static ArrayList<Box> initBoxes()
     {        
+        ArrayList<Box> box =new ArrayList<>(); 
+       box.add(new Box(30,30,90,290, Color.RED));
+      // box.add(new Box(30,30,50,290, Color.PINK));
+       //box.add(new Box(30,30,160,290, Color.GREEN));
+       box.add(new Box(0,0,0,0, Color.BLUE));
+       box.add(new Box (30, 30,618,290, Color.BLACK));
+       
         
-       Box[] box=new Box[3];
+        /*Box[] box=new Box[3];
        box[0]=new Box(30,30,90,290, Color.RED);
        box[1]=new Box(0,0,0,0, Color.BLUE); //place holder box, could also use an array list
         //box[1]=new Box(30,30,480,100, Color.BLUE);
    //box[1]=new Box(30, 30,160,290, Color.BLACK);   
-        box[2]=new Box(30, 30,618,290, Color.BLACK);
+        box[2]=new Box(30, 30,618,290, Color.BLACK);*/
         return box;
         
     }  //
     
     
-    
-   public static Box[] newBoxesToAdd()  //needs to be different for diffferent levels 
+    //only needed when using array not needed with arraylist
+  /* public static ArrayList<Box>  newBoxesToAdd()  //needs to be different for diffferent levels 
            
    {
-       Box[] box=new Box[1];
-       box[0]=new Box(30,30,480,100, Color.BLUE);
+       //Box[] box=new Box[1];
+        ArrayList<Box> box =new ArrayList<>(); 
+       box.add(new Box(30,30,480,100, Color.BLUE));
        
        return box;
-   }
+   }*/
+    
+    //do these need to be in 2d matrix, 2d should work with new way
      public static ArrayList<Obstacle[]> levelOne()
      {
          ArrayList<Obstacle[]> levelOne=new ArrayList<Obstacle[]>();

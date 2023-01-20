@@ -4,6 +4,7 @@
  */
 package com.mycompany.platformernow;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -134,7 +135,7 @@ public class Button extends Obstacle {
        this.run(p);         
            if (this.turnedOn())
                   {
-                      game.box[1]=Load.newBoxesToAdd()[0]; 
+                      game.box.add(new Box(30,30,480,100, Color.BLUE)); 
                          
                    }
                    if (this.isOn())

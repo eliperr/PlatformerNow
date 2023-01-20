@@ -65,7 +65,7 @@ public class GamePanel extends JPanel{
    public Fire fire[];
    public Gem gem[];
    public Portal portal;
-   public Box box[];
+   public ArrayList<Box> box;
    public Button button;
    public Platform platform;
    public ArrayList<Obstacle[]>ObstacleList;
@@ -118,12 +118,13 @@ public class GamePanel extends JPanel{
         
         GameRunner.gameover=false;
     player.setPosition(100f,285f);
-    for ( int b=0; b<box.length; b++)
+    /*for ( int b=0; b<box.size(); b++)
     {
         
-        box[b]=Load.initBoxes()[b];
+        box.set(b,Load.initBoxes().get(b));
         //box[b].setPosition(Load.initBoxes()[b].x,Load.initBoxes()[b].y);
-    }
+    }*/
+    box=Load.initBoxes();
      
         for (Obstacle[] i:ObstacleList)
         {

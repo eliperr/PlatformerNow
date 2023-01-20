@@ -196,7 +196,7 @@ public class Player  {
      //repaint();
   }
   
-  public  void  setPosition(Box[] box, Platform platform)
+  public  void  setPosition(ArrayList<Box> box, Platform platform)
   {
    
      float newX=this.x;
@@ -351,7 +351,7 @@ public class Player  {
  
   
   
-  private boolean canMoveHere(int x, int y, int width, int height, Box[] boxes, Platform platform, int[][] leveldata)
+  private boolean canMoveHere(int x, int y, int width, int height, ArrayList<Box> boxes, Platform platform, int[][] leveldata)
           
   {  
       if (canBoxMove(x, y , width, height, boxes, leveldata)) //&& Platform.canMovePlatform (x,y, width, height, platform, leveldata)) //add this is want cloud to be solid 
@@ -369,7 +369,7 @@ public class Player  {
        return !isSolid(x,y, leveldata) && !isSolid(x+width,y, leveldata) && !isSolid(x,y+height,leveldata) && !isSolid(x+width, y+height, leveldata);
   }       
   
-  private boolean onGround(int x, int y, int width, int height, Box[] boxes, Platform platform, int[][] leveldata )
+  private boolean onGround(int x, int y, int width, int height, ArrayList<Box> boxes, Platform platform, int[][] leveldata )
            
   {  
      for (Box box: boxes) //same for platforms, can also make a list if/when have multiple platforms 
@@ -428,7 +428,7 @@ public class Player  {
   
  
   
-  private boolean canBoxMove(int x, int y, int width, int height, Box[] boxes, int[][] leveldata)
+  private boolean canBoxMove(int x, int y, int width, int height, ArrayList<Box> boxes, int[][] leveldata)
   {
          //int checkCount=0;
       
@@ -438,9 +438,11 @@ public class Player  {
         {
             
           if (Load.wontOverlap)
-            {
-               boxes= new Box[1]; 
-                boxes[0]=box;
+            {  //list is single box
+                boxes=new ArrayList<Box>();
+                boxes.add(box);
+                /*boxes= new Box[1]; 
+                boxes[0]=box;*/
             }
           //checkCount++;
           //System.out.println("checkCount" + checkCount);
@@ -448,14 +450,14 @@ public class Player  {
           movingBox=true;
           
           ArrayList <Box> overlaps=new ArrayList<Box>();
-          if (boxes.length==1)   //if only one block use the less computationally heavy method
-                {  overlaps.addAll(Arrays.asList(boxes)); 
+          if (boxes.size()==1)   //if only one block use the less computationally heavy method
+                {  overlaps.addAll(boxes); 
                  //System.out.println("using faster way");
                 }
           else
           {
            ArrayList <Box> check=new ArrayList<Box>();
-         check.addAll(Arrays.asList(boxes));
+         check.addAll(boxes);
            overlaps=Box.overlapBox(box,check,overlaps); 
           }//if boxes are running into other boxes move each other
           
