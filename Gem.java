@@ -5,6 +5,7 @@
 package com.mycompany.platformernow;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -99,6 +100,7 @@ public static void drawGemCount(Graphics g)
     int x=(int)((double)(GamePanel.GAMEWIDTH)*0.8);
     int y=(int)((double)(GamePanel.GAMEHEIGHT)*0.1);
      g.drawImage(subImg ,x,y, (int) (subImg.getWidth()/SCALE), (int) (subImg.getHeight()/SCALE), null);
+     g.setFont(new Font("TimesRoman", Font.PLAIN, 13)); 
      g.setColor(Color.WHITE);
      int hRect=(int)(20/1.5*SCALE);
      int wRect=(int)(30/1.5*SCALE);

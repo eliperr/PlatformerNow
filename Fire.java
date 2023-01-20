@@ -5,18 +5,23 @@
 package com.mycompany.platformernow;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+
 
 /**
  *
  * @author eliperr
  */
 public class Fire extends Obstacle{
-    
-    
+    private static boolean messageSent=false;
+    private static JLabel label;
    
      public Fire(int x, int y)
     {  super(x, y);
@@ -61,18 +66,53 @@ public class Fire extends Obstacle{
          
      }
      
-     public static void deathScreen(Graphics g)
+     public static void deathScreen( GamePanel game)
              
      {   //g.setColor(Color.BLACK);
          //g.drawRect(GamePanel.GAMEWIDTH/2,GamePanel.GAMEHEIGHT/2, 20,20);
-         g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
-         g.setColor(Color.RED);
-         g.drawString("You died :( press 'r' to restart",GamePanel.GAMEWIDTH/2,GamePanel.GAMEHEIGHT/2);
+         //g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+        // g.setColor(Color.RED);
          
+        if (!messageSent)
+         {
+            
+             //System.out.println("game over");
+              label= new JLabel("You died :( press 'r' to restart");
+          label.setFont(new java.awt.Font("Arial", Font.ITALIC, 16));
+          game.setLayout( new GridBagLayout( ));
+          label.setBackground(Color.lightGray);
+          label.setOpaque(true);
+          label.setForeground(Color.RED);
+           //game.setLayout(new FlowLayout());
+     //label.setOpaque(true); 
+     //label.setVisible(true); 
+          game.revalidate();
+       game.repaint();
+        //game.setComponentZOrder(label,1);
+         game.add(label);
+         messageSent=true;
+         }
+        
+        // g.drawString("You died :( press 'r' to restart",GamePanel.GAMEWIDTH/2,GamePanel.GAMEHEIGHT/2);
+         //this is much easier but cant set in front, the label weridly only works of the time
      }
-   
+   @Override
+     public void draw(Graphics g)
+             
+     {
+         super.draw(g);
+         
+      /*  if (GameRunner.gameover)
+        {
+            Fire.deathScreen(g);
+        }*/
+     }
 
-  
+  public void restart(GamePanel game)
+  {messageSent=false;
+    game.remove(label);
+   
+  }
   public void doStuff(Player p, GamePanel game)
           
   {
@@ -80,6 +120,14 @@ public class Fire extends Obstacle{
         //this.updateTick();          //not more efficient because still have to write update tick and aniamte everytime!
              //this.animate();
              this.isDead(p);
+              if (GameRunner.gameover)
+        {
+            Fire.deathScreen(game);
+        }
+              
+              
+           
+         
   }
   
   

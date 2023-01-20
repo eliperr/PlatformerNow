@@ -36,6 +36,7 @@ import java.io.IOException;
  import java.io.InputStream;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 public class GamePanel extends JPanel{
     
         private int x=100;
@@ -81,6 +82,10 @@ public class GamePanel extends JPanel{
     public GamePanel()
     {    //init
         ObstacleList=Load.levelOne();
+        JLabel test=new JLabel("one", JLabel.CENTER);
+        test.setVisible(false);
+        this.add(test);
+      
          this.player= new Player(100f,285f); 
          this.fire=Load.initFires();
          this.gem=Load.initGems();              //should make an array of Obstacles?
@@ -108,7 +113,10 @@ public class GamePanel extends JPanel{
     
     public void restart()
             
-    {   GameRunner.gameover=false;
+    {  
+      this.repaint();
+        
+        GameRunner.gameover=false;
     player.setPosition(100f,285f);
     for ( int b=0; b<box.length; b++)
     {
@@ -228,7 +236,7 @@ public class GamePanel extends JPanel{
         super.paintComponent(g);
         
          Load.LoadGameImg(g);
-         boolean draw=true;
+         
          
          
          for (Obstacle[] i:ObstacleList)
@@ -282,12 +290,12 @@ public class GamePanel extends JPanel{
          
          
          
-         
+         /* if (GameRunner.gameover)
+        { 
        
-        if (GameRunner.gameover)
-        {
-            Fire.deathScreen(g);
-        }
+            Fire.deathScreen(this);
+        }*/
+       
          // gem.draw(g,gemImg);
          //player.drawPlayer(g);
               //g.drawImage(gameImg,0,0,gameImg.getWidth(),gameImg.getHeight(),null);
