@@ -50,14 +50,14 @@ public abstract class Obstacle {
        
    }
    
-   public boolean isDrawable()
+   /*public boolean isDrawable()
    {
        return drawable;
    }
    public boolean isRestartable()
    {
        return restartable;
-   }
+   }*/
    
    
    public BufferedImage getSubImg()

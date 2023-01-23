@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-public class Box {
+public class Box  {
 
     private static Collection<? extends Box> ArrayList(ArrayList<Box> boxes) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -30,6 +30,7 @@ public class Box {
     private float yspeed, yaccel,maxYspeed;
     private float gravity;
     private float newYspeed;
+    private int boxIndex=-1;
     
     public Box(int width, int height,  float x, float y, Color color)
     {
@@ -47,11 +48,29 @@ public class Box {
         
     }
     
+    public void restart(GamePanel game)
+    {   game.box=Load.initBoxes();
+    }
     
-    public void drawBox(Graphics g)
+    public void draw(Graphics g)
     {
         g.setColor(color);
         g.fillRect((int)x,(int)y, width, height);
+        
+    }
+    
+    public void doStuff(Player p, GamePanel game)
+    {   
+        if (boxIndex<=game.box.size())
+        {
+            boxIndex++;
+        }
+        else
+        {
+             boxIndex=0;
+        }
+        fall(game.platform);
+        game.box.set(boxIndex,this);
         
     }
     

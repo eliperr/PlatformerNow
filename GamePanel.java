@@ -282,7 +282,7 @@ public class GamePanel extends JPanel{
        
          for (Box b: box)
          {    
-           b.drawBox(g);
+           b.draw(g);
          }
          player.draw(g,playerImg); //img can just be stored in object itself?
          player.drawHitbox(g);
