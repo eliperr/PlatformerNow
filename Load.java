@@ -4,12 +4,14 @@
  */
 package com.mycompany.platformernow;
 
+import static com.mycompany.platformernow.LevelManager.sortLevels;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.imageio.ImageIO;
 
 
@@ -19,7 +21,8 @@ import javax.imageio.ImageIO;
  */
 public class Load {
  
-       private static int level=1;
+       private static int levelNum=0;
+       private static final int TOTALNUMBEROFLEVELS=3;
        public static boolean wontOverlap=true; //this should change with different levels, default is true
        //remove algrotihm deciding if boxes will overlap if know they couldnt 
       private static BufferedImage[] gameImg=LoadTiles();
@@ -27,17 +30,20 @@ public class Load {
       
       public static  int getLevel()
       {
-         return level; 
+         return levelNum; 
           
       }
       
-      public static  void setLevel()
+      public static  void upLevel()
       {
-        level++;
-          
+        levelNum++;
+        if (levelNum>=TOTALNUMBEROFLEVELS)
+        {levelNum=0;}
+        
+          levelData=loadLevelData();
       }
       
-     private static BufferedImage uploadImg(String pic)
+     public static BufferedImage uploadImg(String pic)
    {
       
        BufferedImage img=null; 
@@ -149,16 +155,17 @@ public class Load {
      public static int[][] loadLevelData() 
              
      {   
-         BufferedImage levelOne=uploadImg("images/level_one_data.png");
-         int[][] levelData=new int [levelOne.getWidth()][levelOne.getHeight()];
+         BufferedImage level=LevelManager.levels.get(levelNum);
+                 //uploadImg("images/lvls/1.png");
+         int[][] levelData=new int [level.getWidth()][level.getHeight()];
          
-         for (int x=0; x<levelOne.getWidth();x++ )
+         for (int x=0; x<level.getWidth();x++ )
          {   
-             for (int y=0; y<levelOne.getHeight(); y++)
+             for (int y=0; y<level.getHeight(); y++)
                  
                  
              {
-                 Color color= new Color(levelOne.getRGB(x,y));
+                 Color color= new Color(level.getRGB(x,y));
                    levelData[x][y]=color.getRed();
                  
                  
@@ -222,18 +229,42 @@ public class Load {
      
      public static Fire[] initFires()   //make different for diff levels this is level one
              
-     {
-         
-         Fire[] fire =new Fire[4];
-         
-        // fire[0]=new Fire(170,280);
-        fire[0]=new Fire(335,215);//320
-        
-        fire[1]=new Fire(290,215);
-         fire[2]=new Fire(420,280); //420
-         fire[3]=new Fire(700,280);
+     {  
+          Fire[] fire;
+          System.out.print ("level is " + Load.levelNum);
+         switch (Load.levelNum)
+        {
+             
+            
+             case 0: 
+                 {    
+                   fire =new Fire[4];
+
+                   // fire[0]=new Fire(170,280);
+                   fire[0]=new Fire(335,215);//320
+
+                   fire[1]=new Fire(290,215);
+                    fire[2]=new Fire(420,280); //420
+                    fire[3]=new Fire(700,280);
          //fire[4]=new Fire(170,280);
+                 break;
+                 }
+             case 1:
+             { //test
+                 fire =new Fire[1];
+                  fire[0]=new Fire(335,215);
+                  System.out.print("level 0 to level one");
+                  break;
+             }
+         default:
+         { 
+              fire =null;
+              System.out.print("null fire");
+           
+         }
          
+         
+       }     
          return fire;
          
          
@@ -260,7 +291,7 @@ public class Load {
        box.add(new Box(30,30,90,290, Color.RED));
       // box.add(new Box(30,30,50,290, Color.PINK));
        //box.add(new Box(30,30,160,290, Color.GREEN));
-       box.add(new Box(0,0,0,0, Color.BLUE));
+       //box.add(new Box(0,0,0,0, Color.BLUE));
        box.add(new Box (30, 30,618,290, Color.BLACK));
        
         
@@ -287,29 +318,44 @@ public class Load {
    }*/
     
     //do these need to be in 2d matrix, 2d should work with new way
-     public static ArrayList<Obstacle[]> levelOne()
+     public static ArrayList<Obstacle> initLevel()
      {
-         ArrayList<Obstacle[]> levelOne=new ArrayList<Obstacle[]>();
-         levelOne.add(Load.initFires());
-         levelOne.add(Load.initGems());
-         
-        Portal portal=new Portal(735,275); 
-        Portal [] p=new Portal[1];
-        p[0]=portal;
-        levelOne.add(p);
+         ArrayList<Obstacle> level=new ArrayList<Obstacle>();
+        if (Load.initFires() !=null )
+                {level.addAll(Arrays.asList(Load.initFires()));}
+                 
+                 
+                 
+         level.addAll(Arrays.asList(Load.initGems()));
+         //levelOne.addAll(Load.initBoxes());
+        /* Box[] boxy=new Box[Load.initBoxes().size()];
+         for (int i=0; i<boxy.length; i++)
+         {  
+             boxy[i]=Load.initBoxes().get(i);  //need to change this to arraylist
+             
+         }
+         levelOne.add(boxy);*/
+        //tried adding boxes, but too diffferent need to be own group
+         //tester
+        //Portal portal=new Portal(735,275); 
+        Portal portal=new Portal(30,270);
+        //Portal [] p=new Portal[1];
+       // p[0]=portal;
+        level.add(portal);
         
         Button button=new Button (160,190);
-         Button [] b=new Button[1]; //can add more buttons later easier
-         b[0]=button;
-         levelOne.add(b);
+         //Button [] b=new Button[1]; //can add more buttons later easier
+         //b[0]=button;
+         level.add(button);
          
+        
         Platform platform=new Platform (240, 180, 90, 0);
-        Platform[]plat=new Platform[1];
-        plat[0]=platform;
-         levelOne.add(plat);   
+        //Platform[]plat=new Platform[1];
+        //plat[0]=platform;
+         level.add(platform);   
         
          //levelOne.add(Load.initBoxes());
-         return levelOne;
+         return level;
      }
     
     

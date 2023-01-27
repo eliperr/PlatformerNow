@@ -11,33 +11,39 @@ package com.mycompany.platformernow;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-public class Box  {
-
+public class Box extends Obstacle{
+//try to extend Obstacle but too different and neeed too many references 
     private static Collection<? extends Box> ArrayList(ArrayList<Box> boxes) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     public  int width;
     public  int height;
-    public  float x, y; //static for now
+    public  int x, y; 
     private Color color;
     private Rectangle rect;
     public  int wobble =5;
     private float yspeed, yaccel,maxYspeed;
     private float gravity;
     private float newYspeed;
-    private int boxIndex=-1;
+    private int boxIndex=0; //make x y floats again
     
-    public Box(int width, int height,  float x, float y, Color color)
-    {
+    public Box(int width, int height,  int x, int y, Color color)
+    {   super(x,y);
+    this.x=x;
+    this.y=y;
+    //System.out.println(" startign x " + super.x );
+        //System.out.println("y " + y );
         this.width=width;
         this.height=height;
-        this.x=x;
-        this.y=y;
+       // this.x=x;
+       // this.y=y;
+        
         this.color=color;
         yspeed=0;
         yaccel=0;
@@ -47,38 +53,88 @@ public class Box  {
         
         
     }
-    
+    public String getColor()
+    { return color.toString();
+    }
+    //@Override
     public void restart(GamePanel game)
     {   game.box=Load.initBoxes();
+         boxIndex=0;
     }
-    
+    //@Override
     public void draw(Graphics g)
     {
         g.setColor(color);
-        g.fillRect((int)x,(int)y, width, height);
-        
+        g.fillRect(x,y, width, height);
+        //System.out.println("x " + x );
+        //System.out.println("y " + y );
     }
-    
+   // @Override
+    //TOOOOOOOOOO complicated for no gain
     public void doStuff(Player p, GamePanel game)
-    {   
-        if (boxIndex<=game.box.size())
+    {  
+      //  System.out.println(boxIndex);
+        fall(game.platform);
+       game.box.set(boxIndex,this);
+       
+          int find=0;
+       // enneficient to do it is this way
+      for (int i=0;i<game.ObstacleList.size();i++)
+      {
+          if (game.ObstacleList.get(i) instanceof Box)
+          { 
+              //System.out.println("got here");
+              // System.exit(0);
+             find =i; 
+             i= game.ObstacleList.size();
+          }
+         
+      }  int result=find+boxIndex;
+        game.ObstacleList.set(result, this);
+       
+       System.out.println("find " + result);
+        if (boxIndex<game.box.size()-1)
         {
             boxIndex++;
+            
         }
         else
         {
              boxIndex=0;
+             
         }
-        fall(game.platform);
-        game.box.set(boxIndex,this);
-        
+     
+      
     }
     
-    public  void setPosition (float x, float y)
+    
+    @Override 
+   //
+       public void updateTick()
+       {
+          
+           
+       }
+       
+    @Override 
+   
+       public void drawHitbox(Graphics g)
+       { 
+       };    
+       
+       
+        
+    @Override 
+   
+       public BufferedImage animate()
+       { return null;
+       }; 
+       
+    public  void setPosition (int x, int y)
             
     {
-        this.x=x;
-        this.y=y;
+     super.x=this.x=x;
+       super.y=this.y=y;
         
     }
     

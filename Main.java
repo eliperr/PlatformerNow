@@ -16,5 +16,7 @@ public class Main  {
     game.startGameLoop();
  Thread gameThread=new Thread(game);
         gameThread.start();
+        
+        LevelManager.sortLevels();
 }
 }

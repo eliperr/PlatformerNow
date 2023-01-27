@@ -14,8 +14,9 @@ package com.mycompany.platformernow;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+
 public class Portal extends Obstacle{
-    
+ private static boolean nextLevel=false;   
     
   //private static BufferedImage subImg;
  // private static BufferedImage subImg;
@@ -49,12 +50,19 @@ public class Portal extends Obstacle{
     
  
             
-    public void nextLevel(Player p)
+    public void nextLevel(Player p,GamePanel game)
     {
-        if (isTouching(p))
+        if (isTouching(p)&&!nextLevel)
         {  //wait one second before moving forward?
+            nextLevel=true;
             System.out.println("next level");
-            System.exit(0);
+            Load.upLevel();
+              p.setPosition(100,270);
+            game.ObstacleList=Load.initLevel();
+           nextLevel=false;
+            
+            
+            //System.exit(0);
         }
     }
     
@@ -63,6 +71,6 @@ public class Portal extends Obstacle{
    {
          //this.updateTick();
              //this.animate();
-       this.nextLevel(p);
+       this.nextLevel(p,game);
    }
 }
