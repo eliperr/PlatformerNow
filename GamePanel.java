@@ -103,7 +103,9 @@ public class GamePanel extends JPanel{
          
         
           //this.gemImg=Load.uploadGem();
-       addKeyListener(new keyboardInputs(this));
+          keyboardInputs key=new keyboardInputs(this);
+       addKeyListener(key);
+       addMouseListener(key);
     size=new Dimension (GAMEWIDTH,GAMEHEIGHT);
      
        setPreferredSize(size);

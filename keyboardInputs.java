@@ -10,8 +10,12 @@ package com.mycompany.platformernow;
  * @author eliperr
  */
 import java.awt.event.KeyListener; 
+import java.awt.event.MouseListener; 
+import java.awt.event.MouseAdapter; 
 import java.awt.event.KeyEvent;
-public class keyboardInputs implements KeyListener{
+import java.awt.event.MouseEvent;
+public class keyboardInputs extends MouseAdapter implements KeyListener, MouseListener 
+{
    
    private GamePanel panel;
    
@@ -78,6 +82,16 @@ public class keyboardInputs implements KeyListener{
                 //panel.player.stopUp();
    
         }
+    }
+    
+    //helper for adding obstacles
+   @Override
+    public void mouseClicked(MouseEvent e) 
+    {
+       System.out.println("mouse");
+        
+        System.out.println(e.getPoint());
+
     }
    
 }

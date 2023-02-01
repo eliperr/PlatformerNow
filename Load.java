@@ -236,9 +236,27 @@ public class Load {
         {
              
             
-             case 0: 
-                 {    
-                   fire =new Fire[4];
+             case 0:      
+                 {   
+                     int w=(int)(88/GamePanel.SCALE);
+                     int len=(int)((GamePanel.GAMEWIDTH-250)/w);
+                   fire =new Fire[len];
+                     for (int f=0; f<len; f++)
+                     {
+                        
+                         fire[f] =new Fire(400+(f*50), 280);
+                     }   
+                        
+                                  
+                   
+                    //fire[0]=new Fire(400,280);
+                    //fire[1]=new Fire(450,280);
+         //fire[4]=new Fire(170,280);
+                 break;
+                 }
+             case 1:
+             { //test
+                 fire =new Fire[4];
 
                    // fire[0]=new Fire(170,280);
                    fire[0]=new Fire(335,215);//320
@@ -246,14 +264,6 @@ public class Load {
                    fire[1]=new Fire(290,215);
                     fire[2]=new Fire(420,280); //420
                     fire[3]=new Fire(700,280);
-         //fire[4]=new Fire(170,280);
-                 break;
-                 }
-             case 1:
-             { //test
-                 fire =new Fire[1];
-                  fire[0]=new Fire(335,215);
-                  System.out.print("level 0 to level one");
                   break;
              }
          default:
@@ -275,21 +285,39 @@ public class Load {
      {  Gem[] gem;
          switch (Load.levelNum)
        {       case 0: 
-         {        
-             gem =new Gem[4];
+         {      
+             
+             
+               
+               int w=(int)(30/GamePanel.SCALE);
+                     int len=(int)((GamePanel.GAMEWIDTH-600)/w);
+             
+                    gem =new Gem[len+4];
+              //gem =new Gem[4];
+              gem[0]=new Gem(140,210);
+              gem[1]=new Gem(195,256);
+              gem[2]=new Gem(226,222);
+              gem[3]=new Gem(417,154);
+              
+              
+                     for (int g=4; g<len+4; g++)
+                     {
+                        
+                         gem[g] =new Gem(417+((g-4)*50), 154);
+                     }   
+                        
+              break;
+         }
+         
+             case 1:
+                 
+             {    gem =new Gem[4];
 
             gem[0]=new Gem(65,200);
             gem[1]=new Gem(350,160);
             gem[2]=new Gem(550,120);
             gem[3]=new Gem(615,290);
             break;
-         }
-         
-             case 1:
-             {     gem =new Gem[1];
-
-             gem[0]=new Gem(65,200);
-             break;
              }
              default:
              {

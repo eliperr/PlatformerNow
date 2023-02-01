@@ -33,7 +33,7 @@ public abstract class Obstacle {
     protected int animx; //coordinates for animating
     protected int animy;
     protected Rectangle2D.Float hitbox;
-      protected int h, w;
+      protected  int h, w;
       protected  int yOffset;
        protected  int xOffset;
     public static final int wobble=15; //15
