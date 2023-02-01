@@ -14,7 +14,7 @@ package com.mycompany.platformernow;
 //need to to place player in correct position for each levwl listed in LoAD
             //new obstacles for each level
             //modify level images
-            //restart should be specific for each level
+            
 //make boxes an obstacle more efficiwnty 
 
 //boxes for buttons that only turn on temporarily 

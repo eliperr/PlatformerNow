@@ -71,15 +71,18 @@ public boolean getCollectedYet()
     return collectedYet;
     
 }
+public static void resetGemNum()
+{
+    gemsCollected=0;
+}
 
-
-public static void resetGems(Gem[]gem)
+/*public static void resetGems(Gem[]gem)
 {
     gemsCollected=0;
     for (Gem shiny:gem)
          { shiny.collectedYet=false;
                                      }
-}
+}*/
 
     /**
      *

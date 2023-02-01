@@ -272,17 +272,31 @@ public class Load {
      
     public static Gem[] initGems()   //make different for diff levels this is level one
              
-     {
+     {  Gem[] gem;
+         switch (Load.levelNum)
+       {       case 0: 
+         {        
+             gem =new Gem[4];
+
+            gem[0]=new Gem(65,200);
+            gem[1]=new Gem(350,160);
+            gem[2]=new Gem(550,120);
+            gem[3]=new Gem(615,290);
+            break;
+         }
          
-         Gem[] gem =new Gem[4];
-         
-         gem[0]=new Gem(65,200);
-         gem[1]=new Gem(350,160);
-         gem[2]=new Gem(550,120);
-         gem[3]=new Gem(615,290);
-         return gem;
-         
-         
+             case 1:
+             {     gem =new Gem[1];
+
+             gem[0]=new Gem(65,200);
+             break;
+             }
+             default:
+             {
+                 gem=null;
+             }
+         }          
+        return gem; 
      }
     
     public static ArrayList<Box> initBoxes()
@@ -321,12 +335,14 @@ public class Load {
      public static ArrayList<Obstacle> initLevel()
      {
          ArrayList<Obstacle> level=new ArrayList<Obstacle>();
-        if (Load.initFires() !=null )
-                {level.addAll(Arrays.asList(Load.initFires()));}
+         Fire fire[]=Load.initFires();
+        if (fire !=null )
+                {level.addAll(Arrays.asList(fire));}
                  
                  
-                 
-         level.addAll(Arrays.asList(Load.initGems()));
+             Gem gem[] = Load.initGems(); 
+              if (gem !=null )
+         level.addAll(Arrays.asList(gem));
          //levelOne.addAll(Load.initBoxes());
         /* Box[] boxy=new Box[Load.initBoxes().size()];
          for (int i=0; i<boxy.length; i++)
