@@ -351,14 +351,14 @@ public class Load {
         
     }  //
     //change to array List if multiple platforms
-    public static Platform initPlatform()
-    {  Platform platform;
+    public static ArrayList<Platform> initPlatform()
+    {  ArrayList<Platform> platform=new ArrayList<Platform>();
         switch (Load.levelNum)
         {
             case 1:
                 
-            {
-               platform=new Platform (240, 180, 90, 0);
+            {   
+               platform.add(new Platform (240, 180, 90, 0));
                 break;
             }
             default:
@@ -444,9 +444,9 @@ public class Load {
         //Platform platform=new Platform (240, 180, 90, 0);
         //Platform[]plat=new Platform[1];
         //plat[0]=platform;
-        Platform platform=initPlatform();
-        if (platform!=null)
-        { level.add(initPlatform()); }  
+      
+        if (initPlatform()!=null)
+        { level.addAll( initPlatform()); }  
         
          //levelOne.add(Load.initBoxes());
          return level;

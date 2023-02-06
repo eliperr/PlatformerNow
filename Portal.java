@@ -61,7 +61,9 @@ public class Portal extends Obstacle{
               p.setPosition(100,270);
             game.ObstacleList=Load.initLevel();
              game.box=Load.initBoxes();
-            
+            if (Load.initPlatform()!=null)
+         {game.platform=Load.initPlatform();} //test
+      
             Gem.resetGemNum();
            nextLevel=false;
             

@@ -73,7 +73,7 @@ public class GamePanel extends JPanel{
    public Portal portal;
    public ArrayList<Box> box;
    public Button button;
-   public Platform platform;
+   public ArrayList <Platform> platform=new ArrayList<Platform>();//test
    public ArrayList<Obstacle>ObstacleList;
    public boolean platformOn=false;
     public final static int TILESIZE=32;
@@ -98,7 +98,9 @@ public class GamePanel extends JPanel{
          this.box=Load.initBoxes();
          //this.portal=new Portal(735,275); 
          //this.button=new Button (160,190);
-         this.platform=Load.initPlatform();
+         
+         if (Load.initPlatform()!=null)
+         {this.platform=Load.initPlatform();} //test
          playerImg= player.animate();
          
         //keep updating image to draw as you animate player

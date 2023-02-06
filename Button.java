@@ -143,6 +143,11 @@ public class Button extends Obstacle {
                          game.platformOn=true;
                       // System.out.println("platform on");
                      }
+                   else
+                   {
+                       game.platformOn=false;
+                       
+                   }
                      
           }
        @Override  

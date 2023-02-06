@@ -13,6 +13,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 public class Platform extends Obstacle{
     
     private int maxX,  maxY, minX, minY;
@@ -127,10 +128,12 @@ public class Platform extends Obstacle{
     @Override
    public void doStuff(Player p, GamePanel game)
            
-   {
+   {  
        this.platformOn=game.platformOn;
-       game.platform=this; //need to modify for multiple platforms //add into arraylist
-   }  //need setter?
+       game.platform=new ArrayList<Platform>();
+       game.platform.add(this);
+       //need to modify for multiple platforms //add into arraylist
+   }  //need setter?//0 for testing purposes
     
    @Override
    public  BufferedImage animate()

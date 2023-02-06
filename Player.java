@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 
 
 /**
@@ -196,7 +197,7 @@ public class Player  {
      //repaint();
   }
   
-  public  void  setPosition(ArrayList<Box> box, Platform platform)
+  public  void  setPosition(ArrayList<Box> box, ArrayList<Platform> platform)
   {
    
      float newX=this.x;
@@ -351,7 +352,7 @@ public class Player  {
  
   
   
-  private boolean canMoveHere(int x, int y, int width, int height, ArrayList<Box> boxes, Platform platform, int[][] leveldata)
+  private boolean canMoveHere(int x, int y, int width, int height, ArrayList<Box> boxes, ArrayList<Platform> platform, int[][] leveldata)
           
   {  
       if (canBoxMove(x, y , width, height, boxes, leveldata)) //&& Platform.canMovePlatform (x,y, width, height, platform, leveldata)) //add this is want cloud to be solid 
@@ -369,7 +370,7 @@ public class Player  {
        return !isSolid(x,y, leveldata) && !isSolid(x+width,y, leveldata) && !isSolid(x,y+height,leveldata) && !isSolid(x+width, y+height, leveldata);
   }       
   
-  private boolean onGround(int x, int y, int width, int height, ArrayList<Box> boxes, Platform platform, int[][] leveldata )
+  private boolean onGround(int x, int y, int width, int height, ArrayList<Box> boxes, ArrayList<Platform> platform, int[][] leveldata )
            
   {  
      for (Box box: boxes) //same for platforms, can also make a list if/when have multiple platforms 
@@ -382,19 +383,25 @@ public class Player  {
          }
          
         }
-        if (platform!=null && x<platform.getXHitBox()+platform.getWHitBox() && x+width>platform.getXHitBox()  && Math.abs(y+height-platform.getYHitBox())<=4)
-       { //jump=false;
-         //this.setPosition(this.getX(),platform.getYHitBox()-height);
-           //System.out.println("on cloud");
-           /*System.out.println("player x " + x);
-           int res=platform.getXHitBox()+platform.getWHitBox();
-            System.out.println("cloud x " + x);*/
-            
-            
-           return true; }  
-         
-     
-    
+           if (platform!=null)
+           { Iterator<Platform> iter = platform.iterator();   
+                
+                    while (iter.hasNext())
+                 {     System.out.println("iteratr" + iter.hasNext());
+                        Platform p=iter.next();
+                     if (p!=null && x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox()  && Math.abs(y+height-p.getYHitBox())<=4)
+                      { //jump=false;
+                        //this.setPosition(this.getX(),platform.getYHitBox()-height);
+                          //System.out.println("on cloud");
+                          /*System.out.println("player x " + x);
+                          int res=platform.getXHitBox()+platform.getWHitBox();
+                           System.out.println("cloud x " + x);*/
+
+
+                          return true; }  
+
+                   }
+           }
      int n=1;
       return  isSolid(x,y+height+n,leveldata) || isSolid(x+width, y+height+n, leveldata) || isSolid(x,y+n,leveldata) || isSolid(x+width, y+n, leveldata);
   }

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 public class Box extends Obstacle{
 //try to extend Obstacle but too different and neeed too many references 
     private static Collection<? extends Box> ArrayList(ArrayList<Box> boxes) {
@@ -138,7 +139,7 @@ public class Box extends Obstacle{
         
     }
     
-    public void fall(Platform p)
+    public void fall(ArrayList<Platform> p)
     {   
         if (!this.onGround((int)x,(int)y,width, height,p, Load.levelData))
             
@@ -239,23 +240,30 @@ public class Box extends Obstacle{
        //return false; 
     }
     
-    private boolean onGround(int x, int y, int width, int height, Platform platform, int[][] leveldata )
+    private boolean onGround(int x, int y, int width, int height, ArrayList<Platform> platform, int[][] leveldata )
            
-  {  
-     
-        if ( platform!=null && x<platform.getXHitBox()+platform.getWHitBox() && x+width>platform.getXHitBox()  && Math.abs(y+height-platform.getYHitBox())<=4)
-       { //jump=false;
-         //this.setPosition(this.getX(),platform.getYHitBox()-height);
-           //System.out.println("on cloud");
-           /*System.out.println("player x " + x);
-           int res=platform.getXHitBox()+platform.getWHitBox();
-            System.out.println("cloud x " + x);*/
-            
-            
-           return true; }  
-         
-     
-    
+  {     if (platform!=null)
+            {
+                      Iterator<Platform> iter = platform.iterator();   
+                
+                    while (iter.hasNext())
+                        {       System.out.println("iteratr" + iter.hasNext()); 
+                                
+                              Platform p=iter.next();
+                              System.out.println("iteratr" + p); 
+                            if ( p!=null && x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox()  && Math.abs(y+height-p.getYHitBox())<=4)
+                                     { //jump=false;
+                                       //this.setPosition(this.getX(),platform.getYHitBox()-height);
+                                         //System.out.println("on cloud");
+                                         /*System.out.println("player x " + x);
+                                         int res=platform.getXHitBox()+platform.getWHitBox();
+                                          System.out.println("cloud x " + x);*/
+
+
+                                         return true; }  
+
+                        }
+            }
      int n=1;
       return  Player.isSolid(x,y+height+n,leveldata) || Player.isSolid(x+width, y+height+n, leveldata) || Player.isSolid(x,y+n,leveldata) || Player.isSolid(x+width, y+n, leveldata);
   }
