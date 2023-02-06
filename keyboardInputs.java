@@ -77,6 +77,7 @@ public class keyboardInputs extends MouseAdapter implements KeyListener, MouseLi
                GameRunner.togglePause();
             case 82: //r for restart
                 panel.restart();
+             //add to go to next level here for testing  
                 //System.out.println("r");
           //default:
                 //panel.player.stopUp();

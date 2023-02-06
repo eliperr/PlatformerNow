@@ -21,10 +21,14 @@ package com.mycompany.platformernow;
 //more general button, button that makes blue box appear -add event to button to be specificied later 
 //make it harder to jump as wide --shouldn't be able to accelerate x while in air!
 //comments
-//wait  before collecting gem and before moving forward with portal 
+//wait  before collecting gem and before moving forward with portal]
 
+//more buttons
 //new levels!
-
+//new level with many platforms mobing back and forth, need to make detection work with many platforms
+//add sound effects and instructions
+//key to progress thru levels for testing
+//need to set player and portal in rigt position at the start of each level 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -94,7 +98,7 @@ public class GamePanel extends JPanel{
          this.box=Load.initBoxes();
          //this.portal=new Portal(735,275); 
          //this.button=new Button (160,190);
-         this.platform=new Platform (240, 180, 90, 0);
+         this.platform=Load.initPlatform();
          playerImg= player.animate();
          
         //keep updating image to draw as you animate player
@@ -289,7 +293,7 @@ public class GamePanel extends JPanel{
         }
          player.draw(g,playerImg); //img can just be stored in object itself?
          player.drawHitbox(g);
-         
+         Load.drawText(g,player);
          //Gem.drawGemCount(g);
          
          

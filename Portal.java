@@ -55,10 +55,13 @@ public class Portal extends Obstacle{
         if (isTouching(p)&&!nextLevel)
         {  //wait one second before moving forward?
             nextLevel=true;
-            System.out.println("next level");
+           
             Load.upLevel();
+             System.out.println(Load.getLevel());
               p.setPosition(100,270);
             game.ObstacleList=Load.initLevel();
+             game.box=Load.initBoxes();
+            
             Gem.resetGemNum();
            nextLevel=false;
             

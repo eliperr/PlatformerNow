@@ -24,8 +24,10 @@ public class LevelManager {
     Arrays.sort(listOfFiles );
     ArrayList<BufferedImage> sorted=new ArrayList<>();
     for (File f:listOfFiles )
-    {
-       sorted.add( Load.uploadImg("images/lvls/" + f.getName()));
+    {    if (f.getName().contains("png"))
+            {sorted.add( Load.uploadImg("images/lvls/" + f.getName()));
+       System.out.println (f.getName());
+            }
     }
     return sorted;
 

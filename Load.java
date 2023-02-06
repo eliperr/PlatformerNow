@@ -6,6 +6,7 @@ package com.mycompany.platformernow;
 
 import static com.mycompany.platformernow.LevelManager.sortLevels;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,7 +23,7 @@ import javax.imageio.ImageIO;
 public class Load {
  
        private static int levelNum=0;
-       private static final int TOTALNUMBEROFLEVELS=3;
+       private static final int TOTALNUMBEROFLEVELS=4;
        public static boolean wontOverlap=true; //this should change with different levels, default is true
        //remove algrotihm deciding if boxes will overlap if know they couldnt 
       private static BufferedImage[] gameImg=LoadTiles();
@@ -231,7 +232,7 @@ public class Load {
              
      {  
           Fire[] fire;
-          System.out.print ("level is " + Load.levelNum);
+          //System.out.print ("level is " + Load.levelNum);
          switch (Load.levelNum)
         {
              
@@ -239,7 +240,7 @@ public class Load {
              case 0:      
                  {   
                      int w=(int)(88/GamePanel.SCALE);
-                     int len=(int)((GamePanel.GAMEWIDTH-250)/w);
+                     int len=(int)((GamePanel.GAMEWIDTH-200)/w);
                    fire =new Fire[len];
                      for (int f=0; f<len; f++)
                      {
@@ -269,7 +270,7 @@ public class Load {
          default:
          { 
               fire =null;
-              System.out.print("null fire");
+             
            
          }
          
@@ -328,14 +329,17 @@ public class Load {
      }
     
     public static ArrayList<Box> initBoxes()
-    {        
+    {    
         ArrayList<Box> box =new ArrayList<>(); 
+        switch (Load.levelNum)
+      { case 1:
+        
        box.add(new Box(30,30,90,290, Color.RED));
       // box.add(new Box(30,30,50,290, Color.PINK));
        //box.add(new Box(30,30,160,290, Color.GREEN));
        //box.add(new Box(0,0,0,0, Color.BLUE));
        box.add(new Box (30, 30,618,290, Color.BLACK));
-       
+    } 
         
         /*Box[] box=new Box[3];
        box[0]=new Box(30,30,90,290, Color.RED);
@@ -346,8 +350,47 @@ public class Load {
         return box;
         
     }  //
+    //change to array List if multiple platforms
+    public static Platform initPlatform()
+    {  Platform platform;
+        switch (Load.levelNum)
+        {
+            case 1:
+                
+            {
+               platform=new Platform (240, 180, 90, 0);
+                break;
+            }
+            default:
+            { platform=null;}
+            
+        }
+       
+        return platform;
+      
+        
+        
+    }
     
-    
+    public static Button initButton()
+    {  Button button;
+        switch (Load.levelNum)
+        {
+            case 1:
+                
+            {
+               button=new Button(160,190);
+                break;
+            }
+            default:
+            { button=null;}
+            
+        }
+       
+        return button;
+      
+    }   
+       
     //only needed when using array not needed with arraylist
   /* public static ArrayList<Box>  newBoxesToAdd()  //needs to be different for diffferent levels 
            
@@ -358,7 +401,10 @@ public class Load {
        
        return box;
    }*/
-    
+    /*public static ArrayList<Obstacle> addObstacle(ArrayList<Obstacle> oList, Obstacle o )
+    {
+        
+    }*/
     //do these need to be in 2d matrix, 2d should work with new way
      public static ArrayList<Obstacle> initLevel()
      {
@@ -385,23 +431,55 @@ public class Load {
         Portal portal=new Portal(30,270);
         //Portal [] p=new Portal[1];
        // p[0]=portal;
+       
         level.add(portal);
         
-        Button button=new Button (160,190);
+        Button button=initButton();
+        if (button!=null)
          //Button [] b=new Button[1]; //can add more buttons later easier
          //b[0]=button;
-         level.add(button);
+        {level.add(button);}
          
         
-        Platform platform=new Platform (240, 180, 90, 0);
+        //Platform platform=new Platform (240, 180, 90, 0);
         //Platform[]plat=new Platform[1];
         //plat[0]=platform;
-         level.add(platform);   
+        Platform platform=initPlatform();
+        if (platform!=null)
+        { level.add(initPlatform()); }  
         
          //levelOne.add(Load.initBoxes());
          return level;
      }
     
+     
+     public static void drawText(Graphics g, Player p)
+     {
+         
+          g.setColor(Color.BLACK); 
+          g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
+         switch (Load.levelNum)
+             
+         {  case 0:
+             
+              if (p.getHitBoxX()<290)
+              {    
+            
+             g.drawString ("Collect all the         s...",45,228);  
+              }
+             else if (p.getHitBoxX()<690)
+             {   
+               g.drawString ("Avoid the flames (if you wish to live)...",476,258); 
+              
+             }
+             else
+             {
+                 g.drawString ("Enter the portal",630,252);
+                 
+                     g.drawString ("to the next level!",630,272);    
+             }
+         }
+   }
     
 }
 

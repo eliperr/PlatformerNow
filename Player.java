@@ -382,7 +382,7 @@ public class Player  {
          }
          
         }
-        if (x<platform.getXHitBox()+platform.getWHitBox() && x+width>platform.getXHitBox()  && Math.abs(y+height-platform.getYHitBox())<=4)
+        if (platform!=null && x<platform.getXHitBox()+platform.getWHitBox() && x+width>platform.getXHitBox()  && Math.abs(y+height-platform.getYHitBox())<=4)
        { //jump=false;
          //this.setPosition(this.getX(),platform.getYHitBox()-height);
            //System.out.println("on cloud");
