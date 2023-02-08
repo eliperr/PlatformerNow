@@ -387,7 +387,7 @@ public class Player  {
            { Iterator<Platform> iter = platform.iterator();   
                 
                     while (iter.hasNext())
-                 {     System.out.println("iteratr" + iter.hasNext());
+                 {     //System.out.println("iteratr" + iter.hasNext());
                         Platform p=iter.next();
                      if (p!=null && x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox()  && Math.abs(y+height-p.getYHitBox())<=4)
                       { //jump=false;

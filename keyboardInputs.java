@@ -77,11 +77,27 @@ public class keyboardInputs extends MouseAdapter implements KeyListener, MouseLi
                GameRunner.togglePause();
             case 82: //r for restart
                 panel.restart();
+                break;
+            case 78: //for testing will be removed for players 
+                Portal.passedLevel=true;
+                break;
+           /* case isDigitKey(): //set to level 0
+                Load.setLevel(-1);
+               Portal.passedLevel=true;
+               
+               break;*/
              //add to go to next level here for testing  
                 //System.out.println("r");
           //default:
                 //panel.player.stopUp();
    
+        }
+        
+        if (e.getKeyCode()>=48 && e.getKeyCode()<=57) 
+            //need to expand past level 9 eventually
+        {
+             Load.setLevel(e.getKeyCode()-49);
+               Portal.passedLevel=true;
         }
     }
     

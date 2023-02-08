@@ -43,6 +43,13 @@ public class Load {
         
           levelData=loadLevelData();
       }
+    public static  void setLevel(int i)
+      {
+        levelNum=i;
+      }
+        
+      
+      
       
      public static BufferedImage uploadImg(String pic)
    {
@@ -427,8 +434,9 @@ public class Load {
          levelOne.add(boxy);*/
         //tried adding boxes, but too diffferent need to be own group
          //tester
-        //Portal portal=new Portal(735,275); 
-        Portal portal=new Portal(30,270);
+        Portal portal=new Portal(755,270); 
+        //may eventuallly need to be in different places for diff levels
+       // Portal portal=new Portal(30,270);
         //Portal [] p=new Portal[1];
        // p[0]=portal;
        

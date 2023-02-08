@@ -247,10 +247,10 @@ public class Box extends Obstacle{
                       Iterator<Platform> iter = platform.iterator();   
                 
                     while (iter.hasNext())
-                        {       System.out.println("iteratr" + iter.hasNext()); 
+                        {       //System.out.println("iteratr" + iter.hasNext()); 
                                 
                               Platform p=iter.next();
-                              System.out.println("iteratr" + p); 
+                             // System.out.println("iteratr" + p); 
                             if ( p!=null && x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox()  && Math.abs(y+height-p.getYHitBox())<=4)
                                      { //jump=false;
                                        //this.setPosition(this.getX(),platform.getYHitBox()-height);

@@ -17,7 +17,7 @@ import java.awt.image.BufferedImage;
 
 public class Portal extends Obstacle{
  private static boolean nextLevel=false;   
-    
+ public static boolean passedLevel=false;     
   //private static BufferedImage subImg;
  // private static BufferedImage subImg;
  
@@ -52,10 +52,10 @@ public class Portal extends Obstacle{
             
     public void nextLevel(Player p,GamePanel game)
     {
-        if (isTouching(p)&&!nextLevel)
+        if ((isTouching(p)&&!nextLevel) || passedLevel)
         {  //wait one second before moving forward?
             nextLevel=true;
-           
+           passedLevel=false;
             Load.upLevel();
              System.out.println(Load.getLevel());
               p.setPosition(100,270);
@@ -63,9 +63,12 @@ public class Portal extends Obstacle{
              game.box=Load.initBoxes();
             if (Load.initPlatform()!=null)
          {game.platform=Load.initPlatform();} //test
-      
+          else
+            {
+                game.platform=null;
+            }
             Gem.resetGemNum();
-           nextLevel=false;
+          nextLevel=false;
             
             
             //System.exit(0);
