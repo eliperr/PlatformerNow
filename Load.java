@@ -366,7 +366,49 @@ public class Load {
                 
             {   
                platform.add(new Platform (240, 180, 90, 0));
+               platform.add(new Platform (100, 240, 90, 0)); //tester platform
                 break;
+            }
+            
+            case 2:
+            {  int xStart=90;
+                //int i=160;
+                int Xdistance=160;
+                Platform.platformOn=true; //test
+                int steps=0;
+                for (int y=240;y>120;y-=50 )
+                {   
+                    int speed=1;
+                    int x=xStart;
+                    for (int i=0;i<4; i++)
+                     { 
+                        if (i==2) 
+                        {
+                            x=x+100;
+                        }
+                        if ((i%2==0) || (i%2==1 && (steps)%2==1))
+                        {  Platform p= new Platform (x, y, Xdistance/(speed+1), 0);
+                          platform.add(p);
+                   System.out.println ("speed "+ speed);
+                   p.setSpeed(2*speed);
+                         }
+                x+= Xdistance;
+                   speed++;
+                   speed=speed%2;
+                  //if ((i%2==0 && (steps)%2==0) || (i%2==1 && (steps)%2==1))
+                   //for (int x=xStart; x<xStart+(3*Xdistance); x+=(Xdistance))
+                   
+               
+                     // Xdistance=-Xdistance;
+                
+                     }
+                   //pause before starting for sone?
+                   //remove some clouds in columns?
+                   steps++;
+                }   
+              // platform.add(new Platform (100, 240, 90, 0)); 
+              break;
+                
             }
             default:
             { platform=null;}
@@ -454,7 +496,9 @@ public class Load {
         //plat[0]=platform;
       
         if (initPlatform()!=null)
-        { level.addAll( initPlatform()); }  
+        { level.addAll( initPlatform()); 
+        System.out.println("adding platform level " + levelNum);
+        }  
         
          //levelOne.add(Load.initBoxes());
          return level;

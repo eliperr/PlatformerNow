@@ -59,14 +59,18 @@ public class Portal extends Obstacle{
             Load.upLevel();
              System.out.println(Load.getLevel());
               p.setPosition(100,270);
-            game.ObstacleList=Load.initLevel();
-             game.box=Load.initBoxes();
-            if (Load.initPlatform()!=null)
+             if (Load.initPlatform()!=null)
          {game.platform=Load.initPlatform();} //test
           else
             {
                 game.platform=null;
+                
             }
+            game.ObstacleList=Load.initLevel();
+             game.box=Load.initBoxes();
+             Platform.n=0;
+            
+            System.out.println("starting " + game.platform);
             Gem.resetGemNum();
           nextLevel=false;
             

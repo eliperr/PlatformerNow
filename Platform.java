@@ -19,7 +19,8 @@ public class Platform extends Obstacle{
     private int maxX,  maxY, minX, minY;
     private boolean movingRight=true;
       private boolean movingDown=true;
-      public boolean platformOn=false;
+      public static boolean platformOn=false;
+     public static int n;
       //private Rectangle2D.Float hitbox;
       //private int h, w;
       //private final int yOffset;
@@ -39,6 +40,8 @@ public class Platform extends Obstacle{
        yOffset=(int)(350/SCALE);
        xOffset=(int)(0/SCALE);
        subImg=img;
+       tickspeed=1;
+       //tickspeed=5;
       //System.out.println("height is " + h + " width is " + w );
      
       //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);
@@ -66,6 +69,12 @@ public class Platform extends Obstacle{
         
     }
     
+    public void setSpeed(int i)
+    {
+        
+       this.tickspeed=i;
+    }
+    
     
     
     @Override
@@ -74,6 +83,8 @@ public class Platform extends Obstacle{
         if (platformOn)
             
         {    
+           // System.out.println("tickspeed " + tickspeed);
+            //tickspeed=0;
             tick++;
              if (tick>=tickspeed)
              {
@@ -127,12 +138,51 @@ public class Platform extends Obstacle{
   }
     @Override
    public void doStuff(Player p, GamePanel game)
-           
-   {  
-       this.platformOn=game.platformOn;
-       game.platform=new ArrayList<Platform>();
-       game.platform.add(this);
-       //need to modify for multiple platforms //add into arraylist
+            //kind of annaying but need two instances of platform with this OOP
+   {  platformOn=game.platformOn;
+       
+      if (game.platform!=null) 
+      {
+       int numPlatforms=game.platform.size();
+  //System.out.println(" start: n " +n);
+  // System.out.println("numPlatforms" + numPlatforms);
+    //. System.out.println("numplatforms " + numPlatforms);
+   
+       //maybe someday each platform has its own on button, for now all turned on at once
+        
+        
+     game.platform.set(n,this);
+        
+       //add platform  reference and then index changes accordingly 
+       if (n<numPlatforms-1) //0 for list of 2, otherwise if was 1 start again
+      {      
+       
+            //System.out.println(game.platform);
+             
+                 // if (!game.platform.contains(this)) //dont know i need to add this, not efficient 
+                 //but other ways of doing it make it wobbly when moving
+                  //{
+     // game.platform.set(n,this);
+                 // }
+      // System.out.println("end");
+     //  game.platform=new ArrayList<Platform>();
+         // 
+      
+     n++;
+      
+      }
+      
+      else
+      {   
+         n=0; 
+         
+         
+      }
+       
+      //System.out.println("platform in obstacle list is " + this);
+       //System.out.println(game.platform);
+      
+      }  //need to modify for multiple platforms //add into arraylist
    }  //need setter?//0 for testing purposes
     
    @Override

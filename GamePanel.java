@@ -26,9 +26,9 @@ package com.mycompany.platformernow;
 //more buttons
 //new levels!
 //new level with many platforms mobing back and forth, need to make detection work with many platforms
-//add sound effects and instructions
-//key to progress thru levels for testing
-//need to set player and portal in rigt position at the start of each level 
+//add sound effects 
+//fix pause problem
+//make platforms the way the used to be not in object list
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -83,7 +83,7 @@ public class GamePanel extends JPanel{
   public final static int SCALEDTILESIZE=(int) (TILESIZE*SCALE);
   public final static int GAMEWIDTH=SCALEDTILESIZE*TILESINWIDTH;
    public final static int GAMEHEIGHT=SCALEDTILESIZE*TILESINHEIGHT;
-   
+    public  static int p=0; //platform index
     
     public GamePanel()
     {    //init

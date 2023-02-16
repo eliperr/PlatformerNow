@@ -75,6 +75,7 @@ public class keyboardInputs extends MouseAdapter implements KeyListener, MouseLi
              break;
             case 32: //space
                GameRunner.togglePause();
+               break;
             case 82: //r for restart
                 panel.restart();
                 break;
