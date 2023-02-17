@@ -14,9 +14,12 @@ package com.mycompany.platformernow;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Portal extends Obstacle{
- private static boolean nextLevel=false;   
+ public static boolean nextLevel=false;   
  public static boolean passedLevel=false;     
   //private static BufferedImage subImg;
  // private static BufferedImage subImg;
@@ -50,14 +53,14 @@ public class Portal extends Obstacle{
     
  
             
-    public void nextLevel(Player p,GamePanel game)
-    {
+    public void nextLevel(Player p,GamePanel game) throws InterruptedException
+    {  //clean this up?
         if ((isTouching(p)&&!nextLevel) || passedLevel)
         {  //wait one second before moving forward?
             nextLevel=true;
            passedLevel=false;
             Load.upLevel();
-             System.out.println(Load.getLevel());
+             //System.out.println(Load.getLevel());
               p.setPosition(100,270);
              if (Load.initPlatform()!=null)
          {game.platform=Load.initPlatform();} //test
@@ -66,24 +69,35 @@ public class Portal extends Obstacle{
                 game.platform=null;
                 
             }
+             
             game.ObstacleList=Load.initLevel();
              game.box=Load.initBoxes();
              Platform.n=0;
             
-            System.out.println("starting " + game.platform);
+            //System.out.println("starting " + game.platform);
             Gem.resetGemNum();
           nextLevel=false;
-            
-            
-            //System.exit(0);
-        }
+              //time to load new level:
+          GameRunner.togglePause();
+          
+          try {
+                Thread.sleep(100);
+              } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+              }
+          GameRunner.togglePause();
+          }// if make normal platform as seperate object, can probably remove because wont need much time to load
     }
     
     @Override
     public void doStuff (Player p, GamePanel game) 
    {
+     try {
          //this.updateTick();
-             //this.animate();
-       this.nextLevel(p,game);
+         //this.animate();
+         this.nextLevel(p,game);
+     } catch (InterruptedException ex) {
+         Logger.getLogger(Portal.class.getName()).log(Level.SEVERE, null, ex);
+     } ///have to put this here to prevent errors from sleeping thread
    }
 }

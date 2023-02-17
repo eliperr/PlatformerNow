@@ -18,11 +18,12 @@ public class Button extends Obstacle {
    private boolean pressed=false;
     boolean wasNotTouching=true;
      boolean neverPressed=true;
-     
+     private static int numIDs=0;
+     private  int ID=0;
    //what should button do when pressed? Open door?
    //maybe button stays
     public Button (int x, int y)
-    {
+    {    
         super(x, y);
         super.restartable=true;
         super.img=Load.uploadButton();  //Button
@@ -33,10 +34,10 @@ public class Button extends Obstacle {
        xOffset=(int)(0/SCALE); //5
        //super.subImg=super.img.getSubimage(0,1100,1000,1000);
       //System.out.println("height is " + h + " width is " + w );
-     
+     ID=numIDs;
       //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);
       hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), w, h); 
-      
+      numIDs++;
     }
     
     public void run(Player p)
@@ -70,7 +71,6 @@ public class Button extends Obstacle {
            pressed=false;
            wasNotTouching=false;
        }
-        
        
     }  
     @Override
@@ -81,6 +81,8 @@ public class Button extends Obstacle {
          neverPressed=true;
         game.platformOn=false;
     }
+    
+   
     
     public boolean isOn()
     {
@@ -133,28 +135,76 @@ public class Button extends Obstacle {
     public void doStuff(Player p,GamePanel game)   //wish I could access player without adding it in
    { //this.animate();  
        this.run(p);         
-           if (this.turnedOn())
-                  {
-                      game.box.add(new Box(30,30,480,100, Color.BLUE)); 
-                         
-                   }
-                   if (this.isOn())
-                     {
-                         game.platformOn=true;
-                      // System.out.println("platform on");
-                     }
-                   else
-                   {
-                       game.platformOn=false;
-                       
-                   }
-                     
+           
+                      decide(game);
+                                       System.out.println(this.isOn() +"platform is on");
+
+                   //}
+                 
+                 //System.out.println(this.isOn() +"platform is on");
+                  //System.out.println(!this.isOn() +"platform is off");
+                if (Portal.nextLevel)
+                {
+                    this.restart(game);
+                }   
+
           }
        @Override  
        public void updateTick()
        {
        }
     
+       
+       public  void decide(GamePanel game)
+               
+       {
+           switch (this.ID)
+               
+           {
+               case 0:
+                   
+                   
+               {
+                    if (this.turnedOn())
+                  {
+                      
+                       game.box.add(new Box(30,30,480,100, Color.BLUE)); 
+                  }     
+                   
+                   if (this.isOn())
+                     {
+                         game.platformOn=true;
+                       System.out.println("platform on");
+                     }
+                   else
+                   {
+                       game.platformOn=false;
+                       System.out.println("platform false");
+                   }
+                   break;
+               }
+               
+               default:
+               {
+                   
+                     if (this.isOn())
+                     {
+                         game.platformOn=true;
+                       System.out.println("platform on");
+                     }
+                   else
+                   {
+                       game.platformOn=false;
+                        System.out.println("platform false");
+                   }
+              
+                   break;
+                   
+                   
+               }
+           }
+           
+       }
     //only needs draw and toutching  //override animate
     //and dont need tick 
     

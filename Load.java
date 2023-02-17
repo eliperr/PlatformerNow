@@ -356,8 +356,35 @@ public class Load {
         box[2]=new Box(30, 30,618,290, Color.BLACK);*/
         return box;
         
-    }  //
-    //change to array List if multiple platforms
+    } 
+    
+  public static ArrayList<Portal> initPortal()
+  {
+      ArrayList<Portal> portal=new ArrayList<Portal>();
+      
+      switch (Load.levelNum)
+      {
+          case 2:
+              
+          {
+              portal.add(new Portal(760,120)); 
+              break;
+          }
+          
+          default:
+          {
+              portal.add(new Portal(755,270)); 
+              break;
+          }
+      }
+      
+     return portal;
+  }
+  
+  
+  
+  
+  
     public static ArrayList<Platform> initPlatform()
     {  ArrayList<Platform> platform=new ArrayList<Platform>();
         switch (Load.levelNum)
@@ -386,10 +413,14 @@ public class Load {
                         {
                             x=x+100;
                         }
-                        if ((i%2==0) || (i%2==1 && (steps)%2==1))
+                        if (((i%2==0) || (i%2==1 && (steps)%2==1))  && !(i==2 && steps==0))
                         {  Platform p= new Platform (x, y, Xdistance/(speed+1), 0);
                           platform.add(p);
                    System.out.println ("speed "+ speed);
+                   boolean check=(i==0 && steps==0);
+                   System.out.println ("is true " + check );
+                    System.out.println ("steps " + steps);
+                    System.out.println ("i " + i);
                    p.setSpeed(2*speed);
                          }
                 x+= Xdistance;
@@ -430,6 +461,14 @@ public class Load {
             {
                button=new Button(160,190);
                 break;
+            }
+            
+            case 2:
+                
+            {
+                button=new Button(160,190);
+                break;
+                
             }
             default:
             { button=null;}
@@ -476,13 +515,10 @@ public class Load {
          levelOne.add(boxy);*/
         //tried adding boxes, but too diffferent need to be own group
          //tester
-        Portal portal=new Portal(755,270); 
-        //may eventuallly need to be in different places for diff levels
-       // Portal portal=new Portal(30,270);
-        //Portal [] p=new Portal[1];
-       // p[0]=portal;
-       
-        level.add(portal);
+     
+        level.addAll(initPortal()); 
+        
+        
         
         Button button=initButton();
         if (button!=null)
