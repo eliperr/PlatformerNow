@@ -28,7 +28,7 @@ package com.mycompany.platformernow;
 //new level with many platforms mobing back and forth, need to make detection work with many platforms
 //add sound effects 
 //fix pause problem
-//make platforms the way the used to be not in object list
+//make platforms the way the used to be not in object list--need to do this not working as well as an Obstacle
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

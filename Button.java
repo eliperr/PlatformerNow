@@ -137,7 +137,7 @@ public class Button extends Obstacle {
        this.run(p);         
            
                       decide(game);
-                                       System.out.println(this.isOn() +"platform is on");
+                                      // System.out.println(this.isOn() +"platform is on");
 
                    //}
                  
@@ -174,12 +174,12 @@ public class Button extends Obstacle {
                    if (this.isOn())
                      {
                          game.platformOn=true;
-                       System.out.println("platform on");
+                       //System.out.println("platform on");
                      }
                    else
                    {
                        game.platformOn=false;
-                       System.out.println("platform false");
+                       //System.out.println("platform false");
                    }
                    break;
                }
@@ -190,12 +190,12 @@ public class Button extends Obstacle {
                      if (this.isOn())
                      {
                          game.platformOn=true;
-                       System.out.println("platform on");
+                       //System.out.println("platform on");
                      }
                    else
                    {
                        game.platformOn=false;
-                        System.out.println("platform false");
+                        //System.out.println("platform false");
                    }
               
                    break;

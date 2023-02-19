@@ -274,6 +274,25 @@ public class Load {
                     fire[3]=new Fire(700,280);
                   break;
              }
+             
+             case 2:
+             {
+                 
+                 
+                 
+                     int w=(int)(50/GamePanel.SCALE);
+                     int len=(int)((GamePanel.GAMEWIDTH)/w);
+                   fire =new Fire[len];
+                     for (int f=0; f<len; f++)
+                     {
+                        
+                         fire[f] =new Fire(238+(f*50), 280);
+                     }   
+                 
+                break; 
+                 
+             }
+             
          default:
          { 
               fire =null;
@@ -326,6 +345,20 @@ public class Load {
             gem[2]=new Gem(550,120);
             gem[3]=new Gem(615,290);
             break;
+             }
+             
+             case 2:
+             {
+                 
+                 gem =new Gem[4];
+                gem[0]=new Gem(55,116);
+            gem[1]=new Gem(331,137);
+            gem[2]=new Gem(736,127);
+            gem[3]=new Gem(474,194); 
+                 
+                 
+              break;   
+                 
              }
              default:
              {
@@ -393,7 +426,7 @@ public class Load {
                 
             {   
                platform.add(new Platform (240, 180, 90, 0));
-               platform.add(new Platform (100, 240, 90, 0)); //tester platform
+              // platform.add(new Platform (100, 240, 90, 0)); //tester platform
                 break;
             }
             
@@ -416,11 +449,11 @@ public class Load {
                         if (((i%2==0) || (i%2==1 && (steps)%2==1))  && !(i==2 && steps==0))
                         {  Platform p= new Platform (x, y, Xdistance/(speed+1), 0);
                           platform.add(p);
-                   System.out.println ("speed "+ speed);
+                  // System.out.println ("speed "+ speed);
                    boolean check=(i==0 && steps==0);
-                   System.out.println ("is true " + check );
-                    System.out.println ("steps " + steps);
-                    System.out.println ("i " + i);
+                  // System.out.println ("is true " + check );
+                   // System.out.println ("steps " + steps);
+                   // System.out.println ("i " + i);
                    p.setSpeed(2*speed);
                          }
                 x+= Xdistance;
@@ -533,7 +566,7 @@ public class Load {
       
         if (initPlatform()!=null)
         { level.addAll( initPlatform()); 
-        System.out.println("adding platform level " + levelNum);
+       
         }  
         
          //levelOne.add(Load.initBoxes());
