@@ -58,7 +58,7 @@ public void collectGem(Player p)
         collectedYet=true;
         drawable=false;
         gemsCollected++;
-        
+        Sounds.collectGem();
         //System.out.print("collected! "+ gemsCollected );
         //System.exit(0);
     }

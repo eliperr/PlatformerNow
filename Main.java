@@ -4,6 +4,10 @@ package com.mycompany.platformernow;
  *
  * @author eliperr
  */
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 public class Main  {
   
@@ -16,7 +20,28 @@ public class Main  {
     game.startGameLoop();
  Thread gameThread=new Thread(game);
         gameThread.start();
+        Sounds.test();
+     /* Sounds sound=new Sounds();  
+  Thread soundThread=new Thread(sound);
+        soundThread.start(); */
         
-        LevelManager.sortLevels();
+        
+        //LevelManager.sortLevels();
+        
+        
+        
+        //test:
+        
+        
+    
+
+    }
+   
 }
-}
+
+//need sound effects
+//song to play on repeat
+//sound effect for fire death
+//sound effect for get gem
+//sound effect for portal?
+//sound effect for jump

@@ -60,6 +60,7 @@ public class Fire extends Obstacle{
          g.drawString("dead",100,100);*/
              //System.out.println("dead");
              GameRunner.gameover=true;
+             GameRunner.restart=false;
          
          }
          
@@ -74,8 +75,8 @@ public class Fire extends Obstacle{
         // g.setColor(Color.RED);
          
         if (!messageSent)
-         {
-            
+         { 
+             Sounds.fireDeath();
              //System.out.println("game over");
               label= new JLabel("You died :( press 'r' to restart");
           label.setFont(new java.awt.Font("Arial", Font.ITALIC, 16));
@@ -91,6 +92,7 @@ public class Fire extends Obstacle{
         //game.setComponentZOrder(label,1);
          game.add(label);
          messageSent=true;
+        
          }
         
         // g.drawString("You died :( press 'r' to restart",GamePanel.GAMEWIDTH/2,GamePanel.GAMEHEIGHT/2);
@@ -126,7 +128,7 @@ public class Fire extends Obstacle{
              //this.animate();
              this.isDead(p);
               if (GameRunner.gameover)
-        {
+        {   GameRunner.restart=false;
             Fire.deathScreen(game);
         }
               

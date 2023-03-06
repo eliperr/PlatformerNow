@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 
 /**
@@ -72,6 +75,7 @@ public class Player  {
    //add friction
    //add gracity 
    private boolean jump=false;
+   public static volatile boolean jumpSound=false; //synchronized
    //private boolean jumping=false;
    private float gravity=0.25f;
    private boolean movingBox;
@@ -184,7 +188,9 @@ public class Player  {
       //y-=10; 
       up=true;
         //System.out.println(up);
-
+        
+  
+    //make it stop immediately if already jumping?
      
       
   }
@@ -197,7 +203,7 @@ public class Player  {
      //repaint();
   }
   
-  public  void  setPosition(ArrayList<Box> box, ArrayList<Platform> platform)
+  public  void  setPosition(ArrayList<Box> box, ArrayList<Platform> platform) throws InterruptedException
   {
    
      float newX=this.x;
@@ -297,10 +303,18 @@ public class Player  {
      // System.out.println("jump" + jump);
      // System.out.println("up " + up);
        if (up && onGround)
-      {
+      {    
+          Sounds.jump();
           jump=true;
+          jumpSound=true;
+          //System.out.println("jump sound");
           //jumping=true;
           yspeed=newYspeed=yspeedInit;
+         
+          
+        
+     //better sound?       
+            
       }
        //new
       /*if (jump && onGround((int)(this.x + xOffset), (int)(this.y +yOffset), (int) hitBoxWidth, (int) hitBoxHeight, box, platform, Load.levelData))
@@ -314,6 +328,7 @@ public class Player  {
        {
            
            jump=false;
+           jumpSound=false;
            /*if (Math.abs(newYspeed)<=1 ||Math.abs(yspeed)<=1 )
            {jumping=false;}*/
           

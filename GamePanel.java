@@ -123,7 +123,8 @@ public class GamePanel extends JPanel{
     
     public void restart()
             
-    {  
+    {  GameRunner.restart=true;
+       Sounds.testStop();
       this.repaint();
         
         GameRunner.gameover=false;
@@ -158,7 +159,7 @@ public class GamePanel extends JPanel{
     
    
     
-    public void update()
+    public void update() throws InterruptedException
  {   //pattern: updatetick and animate all except box and button (button only animate
      playerImg= player.animate(); 
       player.updateTick();

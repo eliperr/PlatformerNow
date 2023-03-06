@@ -21,7 +21,7 @@ public class GameRunner implements Runnable{
   private int updates=0;
   private static boolean pause=false;
  
-   
+   public static boolean restart=false;
   
   
   
@@ -82,6 +82,8 @@ long timer = System.currentTimeMillis();
             timer += 1000;
         }
     } 
+        
+        
         else {    //not focus
             
             deltaU = 0;
@@ -90,6 +92,7 @@ long timer = System.currentTimeMillis();
            updates = 0;
             
         }   
+      
         
     }
 }
@@ -97,5 +100,8 @@ long timer = System.currentTimeMillis();
  {
      pause=!pause;
  }
-   
+   public static boolean isPaused()
+   {
+       return pause;
+   }
 }

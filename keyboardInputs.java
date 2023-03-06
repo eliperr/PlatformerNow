@@ -41,6 +41,7 @@ public class keyboardInputs extends MouseAdapter implements KeyListener, MouseLi
         switch(e.getKeyCode()){
             case 38:   //up
             panel.player.stopUp();
+             Sounds.jumping=true;
             break;
             case 37: //left
             panel.player.stopLeft();
@@ -62,6 +63,7 @@ public class keyboardInputs extends MouseAdapter implements KeyListener, MouseLi
         switch(e.getKeyCode()){
             case 38:   //up
             panel.player.Up();
+            
             break;
             case 37: //left
             panel.player.Left();
@@ -78,6 +80,7 @@ public class keyboardInputs extends MouseAdapter implements KeyListener, MouseLi
                break;
             case 82: //r for restart
                 panel.restart();
+               
                 break;
             case 78: //for testing will be removed for players 
                 Portal.passedLevel=true;
@@ -93,7 +96,7 @@ public class keyboardInputs extends MouseAdapter implements KeyListener, MouseLi
                 //panel.player.stopUp();
    
         }
-        
+          //for level testing-not for actual play
         if (e.getKeyCode()>=48 && e.getKeyCode()<=57) 
             //need to expand past level 9 eventually
         {
