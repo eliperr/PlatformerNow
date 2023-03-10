@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -49,7 +51,7 @@ public class Gem  extends Obstacle{
   }
 
 
-public void collectGem(Player p)
+public void collectGem(Player p) throws InterruptedException
         
 {
     if (this.isTouching(p)&&!collectedYet)
@@ -58,8 +60,8 @@ public void collectGem(Player p)
         collectedYet=true;
         drawable=false;
         gemsCollected++;
-        Sounds.collectGem();
-        //System.out.print("collected! "+ gemsCollected );
+        Sounds.playSounds(Sounds.GET_GEM);
+       System.out.print("collected! "+ gemsCollected );
         //System.exit(0);
     }
     
@@ -119,9 +121,13 @@ public static void drawGemCount(Graphics g)
 public void doStuff(Player p, GamePanel game)
 {
     
-     //this.updateTick();
-      //this.animate();
-      this.collectGem(p);
+      try {
+          //this.updateTick();
+          //this.animate();
+          this.collectGem(p);
+      } catch (InterruptedException ex) {
+          Logger.getLogger(Gem.class.getName()).log(Level.SEVERE, null, ex);
+      }
     
 }
  

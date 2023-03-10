@@ -20,7 +20,7 @@ public class Main  {
     game.startGameLoop();
  Thread gameThread=new Thread(game);
         gameThread.start();
-        Sounds.test();
+      //  Sounds.test();
      /* Sounds sound=new Sounds();  
   Thread soundThread=new Thread(sound);
         soundThread.start(); */

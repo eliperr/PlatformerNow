@@ -304,7 +304,7 @@ public class Player  {
      // System.out.println("up " + up);
        if (up && onGround)
       {    
-          Sounds.jump();
+          Sounds.playSounds(Sounds.JUMP);
           jump=true;
           jumpSound=true;
           //System.out.println("jump sound");

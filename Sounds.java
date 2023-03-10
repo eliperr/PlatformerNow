@@ -6,6 +6,7 @@ package com.mycompany.platformernow;
 
 
 import java.io.File;
+import java.util.Arrays;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -18,15 +19,20 @@ import javax.sound.sampled.LineListener;
  */
 public class Sounds 
 //implements Runnable 
-    {  private static Clip[] sounds=loadSounds();//subject to change
-      private static final int JUMP=0;
-       private static final int GET_GEM=1;
-        private static final int FIRE=2;
+    {     private static final String[] soundNames={"Mario_Jumping-Mike_Koenig","Coin-pick-up-sound-effect", "Hot Sizzling", "Coin-pick-up-sound-effect"};
+    private static Clip[] sounds=loadSounds();//subject to change
+      public static final int JUMP=0;
+       public static int GET_GEM=1;//final test
+        public static final int FIRE=2;
       private static int jump=0;
      public static boolean jumping;
-        public static Clip[] loadSounds()
-        {  String[] soundNames={"Mario_Jumping-Mike_Koenig","Coin-pick-up-sound-effect", "Hot Sizzling"};
-        sounds=new Clip[soundNames.length];
+  
+       
+     public static Clip[] loadSounds()
+        {  //String[] soundNames={"Mario_Jumping-Mike_Koenig","Coin-pick-up-sound-effect", "Hot Sizzling", "Coin-pick-up-sound-effect"};
+      
+            //System.out.println(Arrays.toString(soundNames));
+        sounds=new Clip[Sounds.soundNames.length];
         for (int i=0; i<sounds.length; i++)
         {
             sounds[i]=findSound(soundNames[i]);
@@ -41,12 +47,53 @@ public class Sounds
     {
         
         // System.out.println("sounds");
-         String[] soundNames={"Mario_Jumping-Mike_Koenig","Coin-pick-up-sound-effect", "Hot Sizzling"};
+         //String[] soundNames={"Mario_Jumping-Mike_Koenig","Coin-pick-up-sound-effect", "Hot Sizzling", "Coin-pick-up-sound-effect"};
        for (int i=0; i<sounds.length; i++)
        {System.out.println(sounds[i].toString());
        System.out.println (  sounds[i].equals(findSound(soundNames[i])));
        }
     }
+    
+    
+    
+    public static void playSounds(int id) throws InterruptedException
+    {
+        
+        Thread.sleep(10);
+        if (sounds[id].isRunning()&& id==GET_GEM)
+        {
+            //sounds[id].stop();
+            //System.out.println("still running");
+            
+            
+            
+            if (id==1)  //testing
+            {id=3;
+             GET_GEM=3;} 
+            else if (id==3)
+            {
+                id=1;
+                GET_GEM=1;
+            }
+            
+            //sounds[id]=findSound(soundNames[id]);
+            //try to avoid create new clip when possible,
+            //only new clips can play on top of each other
+            //is there a better way to do this?
+                    //i could make multiple versions of clips but two doesnt seem to be enough for gems
+        }
+        
+        sounds[id].setMicrosecondPosition(0);
+        //openClip(sounds[JUMP]);
+        
+        sounds[id].start();
+        //cannot play a sound, while staying playing previous clip of some type 
+    }
+    
+    
+    
+    
+    
     
     public static void jump() throws InterruptedException  //reduce volume?
             
@@ -98,6 +145,7 @@ public class Sounds
             
             
     }
+    
     
     
     public static void fireDeath()

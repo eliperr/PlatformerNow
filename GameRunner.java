@@ -9,6 +9,8 @@ package com.mycompany.platformernow;
  *
  * @author eliperr
  */
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 public class GameRunner implements Runnable{
     
@@ -62,7 +64,11 @@ long timer = System.currentTimeMillis();
         initialTime = currentTime;
 
         if (deltaU >= 1) {
-            gamePanel.update();
+            try {
+                gamePanel.update();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameRunner.class.getName()).log(Level.SEVERE, null, ex);
+            }
            updates++;
             deltaU--;
         }
