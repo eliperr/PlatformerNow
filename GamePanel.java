@@ -296,6 +296,7 @@ public class GamePanel extends JPanel{
         }
          player.draw(g,playerImg); //img can just be stored in object itself?
          player.drawHitbox(g);
+         Sounds.drawSound(g);
          Load.drawText(g,player);
          //Gem.drawGemCount(g);
          

@@ -75,7 +75,7 @@ public class Player  {
    //add friction
    //add gracity 
    private boolean jump=false;
-   public static volatile boolean jumpSound=false; //synchronized
+   //public static volatile boolean jumpSound=false; //synchronized
    //private boolean jumping=false;
    private float gravity=0.25f;
    private boolean movingBox;
@@ -306,7 +306,7 @@ public class Player  {
       {    
           Sounds.playSounds(Sounds.JUMP);
           jump=true;
-          jumpSound=true;
+          //jumpSound=true;
           //System.out.println("jump sound");
           //jumping=true;
           yspeed=newYspeed=yspeedInit;
@@ -328,7 +328,7 @@ public class Player  {
        {
            
            jump=false;
-           jumpSound=false;
+          // jumpSound=false;
            /*if (Math.abs(newYspeed)<=1 ||Math.abs(yspeed)<=1 )
            {jumping=false;}*/
           

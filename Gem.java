@@ -61,7 +61,7 @@ public void collectGem(Player p) throws InterruptedException
         drawable=false;
         gemsCollected++;
         Sounds.playSounds(Sounds.GET_GEM);
-       System.out.print("collected! "+ gemsCollected );
+       //System.out.print("collected! "+ gemsCollected );
         //System.exit(0);
     }
     

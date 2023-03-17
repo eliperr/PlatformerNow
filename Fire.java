@@ -11,6 +11,8 @@ import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 
@@ -67,7 +69,7 @@ public class Fire extends Obstacle{
          
      }
      
-     public static void deathScreen( GamePanel game)
+     public static void deathScreen( GamePanel game) throws InterruptedException
              
      {   //g.setColor(Color.BLACK);
          //g.drawRect(GamePanel.GAMEWIDTH/2,GamePanel.GAMEHEIGHT/2, 20,20);
@@ -76,7 +78,7 @@ public class Fire extends Obstacle{
          
         if (!messageSent)
          { 
-             Sounds.fireDeath();
+             Sounds.playSounds(Sounds.FIRE);
              //System.out.println("game over");
               label= new JLabel("You died :( press 'r' to restart");
           label.setFont(new java.awt.Font("Arial", Font.ITALIC, 16));
@@ -120,6 +122,7 @@ public class Fire extends Obstacle{
     
    
   }
+    @Override
   public void doStuff(Player p, GamePanel game)
           
   {
@@ -129,7 +132,11 @@ public class Fire extends Obstacle{
              this.isDead(p);
               if (GameRunner.gameover)
         {   GameRunner.restart=false;
-            Fire.deathScreen(game);
+                 try {
+                     Fire.deathScreen(game);
+                 } catch (InterruptedException ex) {
+                     Logger.getLogger(Fire.class.getName()).log(Level.SEVERE, null, ex);
+                 }
         }
               
               

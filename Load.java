@@ -119,6 +119,15 @@ public class Load {
         
     }
     
+    public static BufferedImage uploadSound()
+    {
+        //return uploadImg("images/portal.png");
+        return uploadImg("images/sound.png");
+        
+        
+    }
+    
+    
     public static BufferedImage[] LoadTiles()
             
             
