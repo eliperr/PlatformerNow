@@ -56,7 +56,8 @@ long timer = System.currentTimeMillis();
 
     while (true) {
         if (gameFrame.focus && !pause && !gameover)
-        {    
+        {
+            
 
         long currentTime = System.nanoTime();
         deltaU += (currentTime - initialTime) / timeU;

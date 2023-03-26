@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -40,7 +42,7 @@ public class Button extends Obstacle {
       numIDs++;
     }
     
-    public void run(Player p)
+    public void run(Player p) throws InterruptedException 
     {
         //boolean wasNotTouching=true;
       /*if (this.isTouching(p))      
@@ -60,14 +62,15 @@ public class Button extends Obstacle {
      }
         
        if (!pressed && this.isTouching(p) && wasNotTouching) 
-       {
-           
+       {  //Sounds.stopSound(Sounds.BUTTON);
+          Sounds.playSounds(Sounds.BUTTON);
            pressed=true;
            wasNotTouching=false;
        }
        else if (pressed && this.isTouching(p) && wasNotTouching)
        {
-           
+          // Sounds.stopSound(Sounds.BUTTON);
+           Sounds.playSounds(Sounds.BUTTON);
            pressed=false;
            wasNotTouching=false;
        }
@@ -133,8 +136,12 @@ public class Button extends Obstacle {
     }
       @Override  
     public void doStuff(Player p,GamePanel game)   //wish I could access player without adding it in
-   { //this.animate();  
-       this.run(p);         
+   {   try {
+       //this.animate();
+       this.run(p);
+       } catch (InterruptedException ex) {
+           Logger.getLogger(Button.class.getName()).log(Level.SEVERE, null, ex);
+       }
            
                       decide(game);
                                       // System.out.println(this.isOn() +"platform is on");

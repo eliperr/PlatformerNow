@@ -19,6 +19,10 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
+
+
+//button sound 
+
  
 /**
  *
@@ -27,33 +31,48 @@ import javax.sound.sampled.LineListener;
 //need to add menu to game with sound preferences and volume later
 public class Sounds 
 //implements Runnable 
-    {     private static final String[] soundNames={"Mario_Jumping-Mike_Koenig","Coin-pick-up-sound-effect", "Hot Sizzling", "Coin-pick-up-sound-effect", "Mario_Jumping-Mike_Koenig"};
+    {     private static final String[] soundNames={"Mario_Jumping-Mike_Koenig","Coin-pick-up-sound-effect", "Hot Sizzling", "Coin-pick-up-sound-effect", "Move Forward", "Portal-sound-effect", "interface"};
     private static Clip[] sounds=loadSounds();//subject to change
       public static  int JUMP=0;
        public static int GET_GEM=1;//final test
         public static final int FIRE=2;
       private static int jump=0;
+      public static final int SONG=4;
+      public static final int PORTAL=5;
+      public static final int BUTTON=6;
       public static boolean sound=true; //on
       private static BufferedImage soundButton= Load.uploadSound();
-      private static BufferedImage sub=soundButton.getSubimage(0, 0,320,370);
+      private static BufferedImage sub;
      //public static boolean notjumped=true;
   public static void drawSound(Graphics g)
   {
        
+      if (sound)
+          
+      {
+          sub=soundButton.getSubimage(0, 0,380,310); 
+          
+      }
+      
+      else if (!sound)
+          
+      {
+           sub=soundButton.getSubimage(410,0,380,310); 
+          
+      }
       
       
-      
-    int x=(int)((double)(GamePanel.GAMEWIDTH)*0.76);
+    int x=(int)((double)(GamePanel.GAMEWIDTH)*0.90);
     int y=(int)((double)(GamePanel.GAMEHEIGHT)*0.1);
-      g.drawImage(sub ,x,y, (int) (sub.getWidth()/SCALE/18), (int) (soundButton.getHeight()/SCALE/28), null);
-    g.setColor(Color.BLUE);
-     int hRect=(int)(200);
-     int wRect=(int)(200);
-     g.fillRect(30, 50, wRect, hRect);
-   
+      
+    g.setColor(Color.WHITE);
+     int hRect=(int)(sub.getHeight()/SCALE/12);
+     int wRect=(int)(sub.getWidth()/SCALE/12);
+     g.fillRect((int) (x + sub.getWidth()/SCALE/14-26*SCALE), (int) (y + sub.getHeight()/SCALE/14/3), wRect, hRect);
+   g.drawImage(sub ,(int)(x+3/SCALE),(int)(y+8/SCALE), (int) (sub.getWidth()/SCALE/14), (int) (sub.getHeight()/SCALE/14), null);
    
      
-     
+     //subImg.getWidth()/SCALE)+(int)(7*SCALE), y+ (int) (subImg.getWidth()/SCALE/3)
    
               
               
@@ -182,7 +201,7 @@ public class Sounds
          //less efficient though 
             
         }*/
-        if (id==JUMP)
+        if (id==JUMP || id==BUTTON)
         {Thread.sleep(1);} //only helpful for jumps
         
         else if (sounds[id].isRunning()&& id==GET_GEM)
@@ -195,7 +214,7 @@ public class Sounds
             if (id==1)  //testing; only helpful for gems--> switch between multiple clips of same type
             {id=3;
              GET_GEM=3;} 
-            else if (id==3)
+            else if (id==3 )
             {
                 id=1;
                 GET_GEM=1;
@@ -237,14 +256,31 @@ public class Sounds
         //openClip(sounds[JUMP]);
         
         sounds[id].start();
+        
+        if (id==4)
+        {
+            sounds[id].loop(Clip.LOOP_CONTINUOUSLY);
+            
+        }
+        else if (id==5)
+        {
+            
+                
+               // Thread.sleep(10);
+            
+            
+        }
        //System.out.println( getVolume(sounds[id]));
         //cannot play a sound, while staying playing previous clip of some type 
     }
     
+    public static void stopSound(int id)
+    {
+        sounds[id].stop();
+        
+    }
     
-    
-    
-    
+   
     
     public static void jump() throws InterruptedException  //reduce volume?
             
@@ -319,9 +355,8 @@ public class Sounds
     }
     
     
-    public static void testStop()
-    {  sounds[FIRE].stop();
-    }
+   
+    
     private static void openClip(Clip c)
     {
           try {

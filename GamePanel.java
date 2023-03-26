@@ -41,6 +41,8 @@ import java.io.File;
 import java.io.IOException;
  import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 public class GamePanel extends JPanel{
@@ -117,16 +119,26 @@ public class GamePanel extends JPanel{
        setPreferredSize(size);
        
        
-         
+       try {
+                Sounds.playSounds(Sounds.SONG);
+                //System.out.println("playing sound");
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameRunner.class.getName()).log(Level.SEVERE, null, ex);
+            }  
          
     }
     
     public void restart()
             
     {  GameRunner.restart=true;
-       Sounds.testStop();
+      Sounds.stopSound(Sounds.FIRE);
       this.repaint();
-        
+        try {
+                Sounds.playSounds(Sounds.SONG);
+                System.out.println("playing sound");
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameRunner.class.getName()).log(Level.SEVERE, null, ex);
+            }  
         GameRunner.gameover=false;
     player.setPosition(100f,285f);
     /*for ( int b=0; b<box.size(); b++)

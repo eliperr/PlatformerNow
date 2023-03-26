@@ -79,6 +79,7 @@ public class Fire extends Obstacle{
         if (!messageSent)
          { 
              Sounds.playSounds(Sounds.FIRE);
+             Sounds.stopSound(Sounds.SONG);
              //System.out.println("game over");
               label= new JLabel("You died :( press 'r' to restart");
           label.setFont(new java.awt.Font("Arial", Font.ITALIC, 16));

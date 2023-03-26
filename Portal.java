@@ -57,8 +57,11 @@ public class Portal extends Obstacle{
     {  //clean this up?
         if ((isTouching(p)&&!nextLevel) || passedLevel)
         {  //wait one second before moving forward?
+            
+            
             nextLevel=true;
            passedLevel=false;
+           Sounds.playSounds(Sounds.PORTAL);
             Load.upLevel();
              //System.out.println(Load.getLevel());
               p.setPosition(100,270);
