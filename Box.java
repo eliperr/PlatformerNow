@@ -76,9 +76,9 @@ public class Box extends Obstacle{
     {  
       //  System.out.println(boxIndex);
         fall(game.platform);
-       game.box.set(boxIndex,this);
+       //game.box.set(boxIndex,this);
        
-          int find=0;
+       /*   int find=0;
        // enneficient to do it is this way
       for (int i=0;i<game.ObstacleList.size();i++)
       {
@@ -104,7 +104,7 @@ public class Box extends Obstacle{
              boxIndex=0;
              
         }
-     
+     */
       
     }
     
@@ -239,7 +239,7 @@ public class Box extends Obstacle{
         //return checkbox if no overlaps?
        //return false; 
     }
-    
+    //is box on ground--?--> fall
     private boolean onGround(int x, int y, int width, int height, ArrayList<Platform> platform, int[][] leveldata )
            
   {     if (platform!=null)
@@ -268,7 +268,16 @@ public class Box extends Obstacle{
       return  Player.isSolid(x,y+height+n,leveldata) || Player.isSolid(x+width, y+height+n, leveldata) || Player.isSolid(x,y+n,leveldata) || Player.isSolid(x+width, y+n, leveldata);
   }
     
+    //is player on ground (standing on box)
+    public boolean onGround(int x, int y, int width, int height)
     
+    {
+        return (x<this.x+this.width && x+width>this.x  && y+height==this.y);
+        
+    }
+            
+            
+            
 }
 
 

@@ -141,7 +141,9 @@ public class Platform extends Obstacle{
             //kind of annaying but need two instances of platform with this OOP
    {  platformOn=game.platformOn;
        
-      if (game.platform!=null) 
+   
+   //not nessecary to have reference with new way having check onGround method by going through all obstacles
+     /* if (game.platform!=null) 
       {
        int numPlatforms=game.platform.size();
   //System.out.println(" start: n " +n);
@@ -178,17 +180,23 @@ public class Platform extends Obstacle{
          
          
       }
-       
+       */
       //System.out.println("platform in obstacle list is " + this);
        //System.out.println(game.platform);
       
-      }  //need to modify for multiple platforms //add into arraylist
+      //}  //need to modify for multiple platforms //add into arraylist
    }  //need setter?//0 for testing purposes
     
    @Override
    public  BufferedImage animate()
    { return img;
    };
+   
+   public boolean onGround(int width, int height, int  x, int y)
+   {
+       
+     return (this!=null && x<this.getXHitBox()+this.getWHitBox() && x+width>this.getXHitBox()  && Math.abs(y+height-this.getYHitBox())<=4);
+   }
    
    
 }

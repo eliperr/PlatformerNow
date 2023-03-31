@@ -352,6 +352,13 @@ public abstract class Obstacle {
           System.out.println( "HH is " + hitbox );*/
    }
   
+  public boolean onGround(int x, int y, int width, int height)
+          
+  {
+      
+      return false;
+  }
+  
     public int getXHitBox()
     {
         

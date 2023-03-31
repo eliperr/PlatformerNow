@@ -391,20 +391,15 @@ public class Player  {
      for (Box box: boxes) //same for platforms, can also make a list if/when have multiple platforms 
          
      { 
-         if (x<box.x+box.width && x+width>box.x  && y+height==box.y)
+         if (box.onGround(x,y, width, height))
          { 
            
            return true; 
          }
          
         }
-           if (platform!=null)
-           { Iterator<Platform> iter = platform.iterator();   
-                
-                    while (iter.hasNext())
-                 {     //System.out.println("iteratr" + iter.hasNext());
-                        Platform p=iter.next();
-                     if (p!=null && x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox()  && Math.abs(y+height-p.getYHitBox())<=4)
+              for (Obstacle o:GamePanel.ObstacleList)
+              {   if (o.onGround(width, height ,x ,y ) )
                       { //jump=false;
                         //this.setPosition(this.getX(),platform.getYHitBox()-height);
                           //System.out.println("on cloud");
@@ -416,7 +411,7 @@ public class Player  {
                           return true; }  
 
                    }
-           }
+           
      int n=1;
       return  isSolid(x,y+height+n,leveldata) || isSolid(x+width, y+height+n, leveldata) || isSolid(x,y+n,leveldata) || isSolid(x+width, y+n, leveldata);
   }

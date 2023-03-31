@@ -80,7 +80,7 @@ public class GamePanel extends JPanel{
    public ArrayList<Box> box;
    public Button button;
    public ArrayList <Platform> platform=new ArrayList<Platform>();//test
-   public ArrayList<Obstacle>ObstacleList;
+   public static ArrayList<Obstacle>ObstacleList;
    public boolean platformOn=false;
     public final static int TILESIZE=32;
   public final static float SCALE=1f; ///This cannot be scaled easily 
