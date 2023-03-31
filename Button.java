@@ -63,16 +63,20 @@ public class Button extends Obstacle {
         
        if (!pressed && this.isTouching(p) && wasNotTouching) 
        {  //Sounds.stopSound(Sounds.BUTTON);
-          Sounds.playSounds(Sounds.BUTTON);
+          
+          System.out.println("button on");
            pressed=true;
            wasNotTouching=false;
+           Sounds.playSounds(Sounds.BUTTON);
        }
        else if (pressed && this.isTouching(p) && wasNotTouching)
        {
           // Sounds.stopSound(Sounds.BUTTON);
-           Sounds.playSounds(Sounds.BUTTON);
+          
+            System.out.println("button off");
            pressed=false;
            wasNotTouching=false;
+            Sounds.playSounds(Sounds.BUTTON);
        }
        
     }  
@@ -143,7 +147,7 @@ public class Button extends Obstacle {
            Logger.getLogger(Button.class.getName()).log(Level.SEVERE, null, ex);
        }
            
-                      decide(game);
+                      decide(game); //determine what effect button will have
                                       // System.out.println(this.isOn() +"platform is on");
 
                    //}

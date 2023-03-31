@@ -58,11 +58,10 @@ public void collectGem(Player p) throws InterruptedException
     {
         
         collectedYet=true;
-        drawable=false;
+        
         gemsCollected++;
         Sounds.playSounds(Sounds.GET_GEM);
-       //System.out.print("collected! "+ gemsCollected );
-        //System.exit(0);
+       
     }
     
     
@@ -95,7 +94,7 @@ public  void restart(GamePanel game)
 {
     gemsCollected=0;
     collectedYet=false;
-    drawable=true;
+
     
 }
 
@@ -135,7 +134,7 @@ public void doStuff(Player p, GamePanel game)
  public void draw(Graphics g)
    {
 
-        if (this.drawable)          ///worth doing like this?  instead of just if statement 
+        if (!this.collectedYet)          ///worth doing like this?  instead of just if statement 
         {   
             super.draw(g);
 

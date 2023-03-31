@@ -19,16 +19,20 @@ package com.mycompany.platformernow;
 
 //boxes for buttons that only turn on temporarily 
 //more general button, button that makes blue box appear -add event to button to be specificied later 
-//make it harder to jump as wide --shouldn't be able to accelerate x while in air!
-//comments
+
 //wait  before collecting gem and before moving forward with portal]
 
 //more buttons
 //new levels!
 //new level with many platforms mobing back and forth, need to make detection work with many platforms
-//add sound effects 
-//fix pause problem
+
+//fix pause problem (what is this??)
+
+
+//NEXT UP
 //make platforms the way the used to be not in object list--need to do this not working as well as an Obstacle
+//add settings and level menu
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -221,7 +225,7 @@ public class GamePanel extends JPanel{
      //button.run(player);
      /*if (button.isOn())
         {
-     platform.updateTick();
+    *************************************************8 platform.updateTick();
      //box[1]=new Box(30,30,480,195, Color.BLUE);
         }
      /*if (button.turnedOn())

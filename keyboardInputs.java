@@ -43,15 +43,7 @@ public class keyboardInputs extends MouseAdapter implements KeyListener, MouseLi
         switch(e.getKeyCode()){
             case 38:   //up
             panel.player.stopUp();
-            /* if (Sounds.notjumped)
-             {
-                 
-            try {
-                Sounds.playSounds(Sounds.JUMP);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(keyboardInputs.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             }*/
+            
             break;
             case 37: //left
             panel.player.stopLeft();
@@ -93,23 +85,12 @@ public class keyboardInputs extends MouseAdapter implements KeyListener, MouseLi
                 break;
              case 77:  //m for mute, will add to menu eventually
                  Sounds.toggle();
-                 /*if (!Sounds.sound)
-                 {
-                 Sounds.mute();
-                 }*/
+                 
                 break;
             case 78: //for testing will be removed for players 
                 Portal.passedLevel=true;
                 break;
-           /* case isDigitKey(): //set to level 0
-                Load.setLevel(-1);
-               Portal.passedLevel=true;
-               
-               break;*/
-             //add to go to next level here for testing  
-                //System.out.println("r");
-          //default:
-                //panel.player.stopUp();
+          
    
         }
           //for level testing-not for actual play
