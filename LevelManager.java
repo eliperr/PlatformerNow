@@ -26,7 +26,7 @@ public class LevelManager {
     for (File f:listOfFiles )
     {    if (f.getName().contains("png"))
             {sorted.add( Load.uploadImg("images/lvls/" + f.getName()));
-       //System.out.println (f.getName());
+       System.out.println (f.getName());
             }
     }
     return sorted;

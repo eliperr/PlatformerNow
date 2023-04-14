@@ -243,6 +243,26 @@ public class Load {
          
          
      }*/
+     public static Fire[] createFirePattern(int len, int x, int y, int gap)
+             
+     {
+          Fire[] fire;
+                        //lengthToEnd=(int)(lengthToEnd*4);
+                     //int len=(int)600/gap;
+                             //((GamePanel.GAMEWIDTH-lengthToEnd)/gap *GamePanel.SCALE);
+                  len=len/gap;
+                             fire =new Fire[len];
+                     for (int f=0; f<len; f++)
+                     {
+                        
+                         fire[f] =new Fire( x + (f*gap), y);
+                     }   
+                     
+         return fire;
+           
+         
+     }
+     
      
      public static Fire[] initFires()   //make different for diff levels this is level one
              
@@ -254,30 +274,19 @@ public class Load {
              
             
              case 0:      
-                 {   
-                     int w=(int)(88/GamePanel.SCALE);
-                     int len=(int)((GamePanel.GAMEWIDTH-200)/w);
-                   fire =new Fire[len];
-                     for (int f=0; f<len; f++)
-                     {
-                        
-                         fire[f] =new Fire(400+(f*50), 280);
-                     }   
-                        
-                                  
-                   
-                    //fire[0]=new Fire(400,280);
-                    //fire[1]=new Fire(450,280);
-         //fire[4]=new Fire(170,280);
-                 break;
+                 {  
+                     
+                     fire=createFirePattern(350,400,280,50);
+                 
+                 break; //450
                  }
              case 1:
              { //test
                  fire =new Fire[4];
-
+                 
                    // fire[0]=new Fire(170,280);
                    fire[0]=new Fire(335,215);//320
-
+                 //System.out.println("fire width" + fire[0].getWHitBox());
                    fire[1]=new Fire(290,215);
                     fire[2]=new Fire(420,280); //420
                     fire[3]=new Fire(700,280);
@@ -287,18 +296,41 @@ public class Load {
              case 2:
              {
                  
+                  fire=createFirePattern(600,238,280,50);
                  
-                 
-                     int w=(int)(50/GamePanel.SCALE);
-                     int len=(int)((GamePanel.GAMEWIDTH)/w);
-                   fire =new Fire[len];
-                     for (int f=0; f<len; f++)
-                     {
-                        
-                         fire[f] =new Fire(238+(f*50), 280);
-                     }   
+                   
                  
                 break; 
+                 
+             }
+             
+             case 3:
+                 
+             {
+                 //make arraylist if do this alot 
+                 Fire[] fire1=createFirePattern(150,514,215,50);
+                 Fire []fire2=createFirePattern(200,736,215,50);
+                 //two lists because gap between stream of fires
+                 
+                 //fire=new Fire[1];
+                 //fire[0]=new Fire(335,215);
+                  fire=new Fire[fire1.length+fire2.length];
+                  
+                  //add two lists of fires together: (woild be easier with arraylist)
+                  for (int f=0; f<fire1.length; f++)
+                  {
+                      fire[f]=fire1[f];
+                      
+                  }
+                  for (int f=fire1.length; f<fire1.length+fire2.length; f++)
+                  {
+                      fire[f]=fire2[f-fire1.length];
+                      
+                  }
+               
+                 break;
+                 
+                
                  
              }
              
@@ -410,6 +442,13 @@ public class Load {
               
           {
               portal.add(new Portal(760,120)); 
+              break;
+          }
+          
+          case 3:
+              
+          {
+              portal.add(new Portal(670,270)); 
               break;
           }
           
