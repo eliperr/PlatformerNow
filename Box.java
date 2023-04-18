@@ -75,7 +75,7 @@ public class Box extends Obstacle{
     public void doStuff(Player p, GamePanel game)
     {  
       //  System.out.println(boxIndex);
-        fall(game.platform);
+        fall(game.platform, game.box);
        //game.box.set(boxIndex,this);
        
        /*   int find=0;
@@ -139,16 +139,17 @@ public class Box extends Obstacle{
         
     }
     
-    public void fall(ArrayList<Platform> p)
-    {   
-        if (!this.onGround((int)x,(int)y,width, height,p, Load.levelData))
+    public void fall(ArrayList<Platform> p, ArrayList<Box> b)
+    {    
+        //System.out.println("falling");
+        if (!this.onGround((int)x,(int)y,width, height,p,b, Load.levelData))
             
         {
             newYspeed=yspeed + gravity;
            //System.out.println("newYspeed " + newYspeed);
             
         }
-        if (!this.onGround((int)x,(int)y+(int)newYspeed,width, height,p, Load.levelData))
+        if (!this.onGround((int)x,(int)y+(int)newYspeed,width, height,p, b, Load.levelData))
         
         {
             yspeed=newYspeed;
@@ -171,7 +172,7 @@ public class Box extends Obstacle{
     public static boolean overlapBox(Box a, Box b)
             //&& a.y>=b.y)
     {                   
-        if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y<=b.y+b.height && b.y<=a.y+a.height))
+        if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y<=b.y +b.height && b.y<=a.y + a.height))
         
         {
         //System.out.println("boxes overlap");
@@ -182,7 +183,63 @@ public class Box extends Obstacle{
         return false;
                 
     }
-    //add case for know boxes can never overlap
+     public static boolean groundBox(Box a, Box b)
+            //&& a.y>=b.y)
+    {    
+         //System.out.println("gets here");
+         //if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y<=b.y +b.height && b.y<=a.y + a.height))              
+        if (a.x<b.x+b.width && a.x+a.width>b.x && Math.abs(a.y+a.height-b.y)<=4 )
+        //x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox() 
+            
+            //x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox()  && Math.abs(y+height-p.getYHitBox())<=4
+        {
+        //System.out.println("boxes on top of box");
+        return true;
+        }
+        
+       //System.out.println("boxes do not overlap");
+        return false;
+                
+    }
+     //need to check if box is on grouhd on the box just like overlap box but only on ground -put in onground check to see if falling
+    
+    
+     
+     public static boolean groundBox(Box checkBox, ArrayList <Box> boxes)
+            
+    {
+         
+      
+        
+        for (Box b: boxes)
+        {   
+           if  (b!=checkBox && groundBox( checkBox, b) ) //&& (!overlaps.contains(b))
+               
+           {
+               
+                   
+              //  overlaps.add(b);
+                  //System.out.println ("added " + b);
+                 //System.exit(0);
+             
+               return true;
+              
+               
+             // overlaps=overlapBox(b, check,overlaps);
+              //calls itself to find other boxes overlapping with the overlapped box
+               //but not already checked box
+               
+           }
+            
+        }
+       
+       // return overlaps;
+        return false;
+                
+        //return checkbox if no overlaps?
+       //return false; 
+    }
+     
     public static ArrayList <Box>  overlapBox(Box checkBox, ArrayList <Box> boxes, ArrayList overlaps)
             
     {
@@ -238,14 +295,17 @@ public class Box extends Obstacle{
                 
         //return checkbox if no overlaps?
        //return false; 
-    }
+    } 
+     
     //is box on ground--?--> fall
-    private boolean onGround(int x, int y, int width, int height, ArrayList<Platform> platform, int[][] leveldata )
+    private boolean onGround(int x, int y, int width, int height, ArrayList<Platform> platform, ArrayList<Box> box, int[][] leveldata )
            
-  {     if (platform!=null)
+  {    // System.out.println("gets hre begining");
+      
+      if (platform!=null)
             {
                       Iterator<Platform> iter = platform.iterator();   
-                
+               
                     while (iter.hasNext())
                         {       //System.out.println("iteratr" + iter.hasNext()); 
                                 
@@ -263,7 +323,14 @@ public class Box extends Obstacle{
                                          return true; }  
 
                         }
+                    
+                    
             }
+      
+         if (groundBox (this, box))
+                            { //System.out.println("gets hre 2");
+                                return true;
+                            }
      int n=1;
       return  Player.isSolid(x,y+height+n,leveldata) || Player.isSolid(x+width, y+height+n, leveldata) || Player.isSolid(x,y+n,leveldata) || Player.isSolid(x+width, y+n, leveldata);
   }

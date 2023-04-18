@@ -20,11 +20,11 @@ public class Button extends Obstacle {
    private boolean pressed=false;
     boolean wasNotTouching=true;
      boolean neverPressed=true;
-     private static int numIDs=0;
-     private  int ID=0;
+    // private static int numIDs=0;
+     private  int id;
    //what should button do when pressed? Open door?
    //maybe button stays
-    public Button (int x, int y)
+    public Button (int x, int y, int id)
     {    
         super(x, y);
         super.restartable=true;
@@ -34,12 +34,15 @@ public class Button extends Obstacle {
        w=(int)(965/SCALE);
        yOffset=(int)(0/SCALE);
        xOffset=(int)(0/SCALE); //5
+       this.id=id;
        //super.subImg=super.img.getSubimage(0,1100,1000,1000);
       //System.out.println("height is " + h + " width is " + w );
-     ID=numIDs;
+     //ID=numIDs;
       //hitbox=new Rectangle2D.Float( (float) x, (float) y, (float) w, (float) h);
       hitbox=new Rectangle2D.Float( (float) (x + xOffset), (float) (y + yOffset), w, h); 
-      numIDs++;
+      //numIDs++;
+      //need better way to keep track of numIDS if skipping levels or restarting levels -may need to be hardcoded
+      
     }
     
     public void run(Player p) throws InterruptedException 
@@ -169,7 +172,7 @@ public class Button extends Obstacle {
        public  void decide(GamePanel game)
                
        {
-           switch (this.ID)
+           switch (this.id)
                
            {
                case 0:
@@ -193,6 +196,23 @@ public class Button extends Obstacle {
                        //System.out.println("platform false");
                    }
                    break;
+               }
+               
+               
+               case 2:
+               {
+                   
+                    if (this.turnedOn())
+                  {
+                      
+                       game.box.add(new Box(30,30,480,100, Color.RED)); 
+                  }   
+                   
+                   
+                   
+                   
+                   
+                   
                }
                
                default:

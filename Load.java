@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.imageio.ImageIO;
-
+import java.util.Arrays;
 
 /**   
  *
@@ -27,6 +27,7 @@ public class Load {
        public static boolean wontOverlap=true; //this should change with different levels, default is true
        //remove algrotihm deciding if boxes will overlap if know they couldnt 
       private static BufferedImage[] gameImg=LoadTiles();
+      static int [] overlapLevels={3}; //for now
       public static int[][] levelData=loadLevelData();
       
       public static  int getLevel()
@@ -40,8 +41,21 @@ public class Load {
         levelNum++;
         if (levelNum>=TOTALNUMBEROFLEVELS)
         {levelNum=0;}
-        
+           
           levelData=loadLevelData();
+          
+        for (int num:overlapLevels)
+        {
+            if (num==levelNum)
+            {
+                wontOverlap=false;
+              
+                return;
+            }
+       
+        }  
+        wontOverlap=true;
+           
       }
     public static  void setLevel(int i)
       {
@@ -247,15 +261,14 @@ public class Load {
              
      {
           Fire[] fire;
-                        //lengthToEnd=(int)(lengthToEnd*4);
-                     //int len=(int)600/gap;
-                             //((GamePanel.GAMEWIDTH-lengthToEnd)/gap *GamePanel.SCALE);
-                  len=len/gap;
+                       //len is the length on screen of rows of fire
+                     len=len/gap; //how many flames to add based on gaps in between flames
                              fire =new Fire[len];
                      for (int f=0; f<len; f++)
                      {
                         
                          fire[f] =new Fire( x + (f*gap), y);
+                         //add fire starting at x and increase by gaps each time
                      }   
                      
          return fire;
@@ -413,21 +426,33 @@ public class Load {
     {    
         ArrayList<Box> box =new ArrayList<>(); 
         switch (Load.levelNum)
-      { case 1:
+        {       case 1:
+             { 
+
+                box.add(new Box(30,30,90,290, Color.RED));
+               // box.add(new Box(30,30,50,290, Color.PINK));
+                //box.add(new Box(30,30,160,290, Color.GREEN));
+                //box.add(new Box(0,0,0,0, Color.BLUE));
+                box.add(new Box (30, 30,618,290, Color.BLACK));
+                break;
+             } 
+
+             case 3:
+            { 
+              box.add(new Box(30,30,200,290, Color.BLUE));
+              //box.add(new Box(30,30,300,290, Color.BLUE));
+              
+             // test
+             box.add(new Box(30,30,50,290, Color.BLUE));
+             //box.add(new Box(30,30,470,290, Color.BLACK));
+             break;
+
+             }
+
+        }
         
-       box.add(new Box(30,30,90,290, Color.RED));
-      // box.add(new Box(30,30,50,290, Color.PINK));
-       //box.add(new Box(30,30,160,290, Color.GREEN));
-       //box.add(new Box(0,0,0,0, Color.BLUE));
-       box.add(new Box (30, 30,618,290, Color.BLACK));
-    } 
         
-        /*Box[] box=new Box[3];
-       box[0]=new Box(30,30,90,290, Color.RED);
-       box[1]=new Box(0,0,0,0, Color.BLUE); //place holder box, could also use an array list
-        //box[1]=new Box(30,30,480,100, Color.BLUE);
-   //box[1]=new Box(30, 30,160,290, Color.BLACK);   
-        box[2]=new Box(30, 30,618,290, Color.BLACK);*/
+        
         return box;
         
     } 
@@ -540,17 +565,27 @@ public class Load {
             case 1:
                 
             {
-               button=new Button(160,190);
+               button=new Button(160,190,0);
                 break;
             }
             
             case 2:
                 
             {
-                button=new Button(160,190);
+                button=new Button(160,190,1);
                 break;
                 
             }
+            
+            case 3:
+                
+            {
+                button=new Button(50,190,2);
+                break;
+                
+            }
+            
+            
             default:
             { button=null;}
             

@@ -239,7 +239,7 @@ public class GamePanel extends JPanel{
      //box.move(player);
      
      for (Box b:box)
-         {  b.fall(platform);
+         {  b.fall(platform,box);
                                      }
      
      //gem[0].collectGem(player);
