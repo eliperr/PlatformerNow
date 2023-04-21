@@ -441,10 +441,21 @@ public class Load {
             { 
               box.add(new Box(30,30,200,290, Color.BLUE));
               //box.add(new Box(30,30,300,290, Color.BLUE));
+             
+             box.add(new Box(30,30,80,290, Color.BLUE));
               
              // test
-             box.add(new Box(30,30,50,290, Color.BLUE));
-             //box.add(new Box(30,30,470,290, Color.BLACK));
+             box.add(new Box(30,30,470,290, Color.BLACK));
+             box.add(new Box(30,30,420,290, Color.BLACK));
+             
+             
+             //test 2:
+             
+             box.add(new Box(30,30,313,290, Color.RED));
+             box.add(new Box(30,30,363,290, Color.RED));
+             box.add(new Box(30,30,363,261, Color.YELLOW));
+            //should move until any box cannot move
+             
              break;
 
              }

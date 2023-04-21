@@ -172,10 +172,10 @@ public class Box extends Obstacle{
     public static boolean overlapBox(Box a, Box b)
             //&& a.y>=b.y)
     {                   
-        if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y<=b.y +b.height && b.y<=a.y + a.height))
-        
+        if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y<b.y +b.height && b.y<a.y + a.height))
+        //if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y<=b.y +b.height && b.y<=a.y + a.height))
         {
-        //System.out.println("boxes overlap");
+        System.out.println("boxes overlap");
         return true;
         }
         
