@@ -434,26 +434,29 @@ public class Load {
                 //box.add(new Box(30,30,160,290, Color.GREEN));
                 //box.add(new Box(0,0,0,0, Color.BLUE));
                 box.add(new Box (30, 30,618,290, Color.BLACK));
+                //test
+                box.add(new Box (30, 30,618,150, Color.YELLOW));
                 break;
              } 
 
              case 3:
             { 
-              box.add(new Box(30,30,200,290, Color.BLUE));
+              box.add(new Box(30,30,200,270, Color.BLUE));
               //box.add(new Box(30,30,300,290, Color.BLUE));
              
-             box.add(new Box(30,30,80,290, Color.BLUE));
+             box.add(new Box(30,30,80,270, Color.BLUE));
               
              // test
-             box.add(new Box(30,30,470,290, Color.BLACK));
-             box.add(new Box(30,30,420,290, Color.BLACK));
+             //box.add(new Box(30,30,470,290, Color.BLACK));
+             box.add(new Box(30,30,420,270, Color.BLACK));
              
              
-             //test 2:
+             //test 2:  //make it a little above so all fall to same spot-nesscasry for levels with
+             //falling blocks that don't fall all the way but need to interact with blocks already at bottom-doesnt look as good
              
-             box.add(new Box(30,30,313,290, Color.RED));
-             box.add(new Box(30,30,363,290, Color.RED));
-             box.add(new Box(30,30,363,261, Color.YELLOW));
+             //box.add(new Box(30,30,313,270, Color.RED));
+             box.add(new Box(30,30,363,270, Color.RED));
+             box.add(new Box(30,30,363,240, Color.YELLOW));
             //should move until any box cannot move
              
              break;

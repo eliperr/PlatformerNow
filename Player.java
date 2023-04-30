@@ -448,7 +448,7 @@ public class Player  {
   private boolean canBoxMove(int x, int y, int width, int height, ArrayList<Box> boxes, int[][] leveldata)
   {
          //int checkCount=0;
-      boolean blocked=false;
+      
       for (Box box: boxes)
       {     
        if ( (y+height>box.y && (box.y+box.height>y))  && (x<box.x+box.width && x+width>box.x))  //if running into box 
@@ -480,12 +480,12 @@ public class Player  {
           
           {
            //move ALL boxes, including box that overlaps one player is touching
-           float value=xspeed/(overlaps.size()*2); //overlap>=1 //this value gets to small to move if there are three boxes
-                  
-                 int val=(int)value;
+           
               for (int i=overlaps.size()-1; i>=0; i--)
                   
-              {   
+              {   float value=xspeed/(overlaps.size()*2); //overlap>=1 //this value gets to small to move if there are three boxes
+                  
+                 int val=(int)value;
                  //get rid of these to say too many boxes are too heavy for one character to move
                       //makes a min speed of boxes
                      if( value<1 && value>0)
@@ -499,29 +499,21 @@ public class Player  {
               
               
                   Box overlapBox=overlaps.get(i);
-                  if (!moveHelper((int)(overlapBox.x+val),(int)(overlapBox.y),(int)(overlapBox.width-1),(int)(overlapBox.height-1),leveldata))
+                  if (moveHelper((int)(overlapBox.x+val),(int)(overlapBox.y),(int)(overlapBox.width-1),(int)(overlapBox.height-1),leveldata))
                   {  
                       
                       
-                     //only moves if none of boxes are blocked
-                      blocked=true;
-                      break;
+                      
+                      overlapBox.setPosition(overlapBox.x+val, overlapBox.y);
                   }
                   
              
-                 
-                 
+                 else
+                     {
+               
+                  return false;}
+                  //break
                }
-              
-              if (!blocked)
-              {
-                   for (int i=overlaps.size()-1; i>=0; i--)
-                   {
-                       Box overlapBox=overlaps.get(i);
-                        overlapBox.setPosition(overlapBox.x+val, overlapBox.y);
-                   }
-                  
-              }
               
              
               

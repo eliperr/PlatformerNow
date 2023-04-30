@@ -139,8 +139,13 @@ public class Box extends Obstacle{
         
     }
     
+    public int getTop()
+    {
+        
+        return this.y;
+    }
     public void fall(ArrayList<Platform> p, ArrayList<Box> b)
-    {    
+    {      //should accelertate?
         //System.out.println("falling");
         if (!this.onGround((int)x,(int)y,width, height,p,b, Load.levelData))
             
@@ -171,11 +176,14 @@ public class Box extends Obstacle{
     // need to make work for more than two boxes
     public static boolean overlapBox(Box a, Box b)
             //&& a.y>=b.y)
-    {                   
-        if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y<b.y +b.height && b.y<a.y + a.height))
+           
+    {     
+ if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y+a.height>b.y  && b.y+b.height>=a.y))
+//if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y+a.height>=b.y +b.height && b.y<=a.y))  //add or on ground to last statement             
+        //if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y<b.y +b.height && b.y<a.y + a.height))
         //if ((a.x+a.width>=b.x && a.x<=b.x+ b.width) &&  (a.y<=b.y +b.height && b.y<=a.y + a.height))
-        {
-        System.out.println("boxes overlap");
+        {  //if a below  or same level as b
+        //System.out.println("boxes overlap");
         return true;
         }
         
@@ -221,7 +229,8 @@ public class Box extends Obstacle{
               //  overlaps.add(b);
                   //System.out.println ("added " + b);
                  //System.exit(0);
-             
+              //ensure all the way on ground:
+                              checkBox.setPosition(checkBox.x, b.y-checkBox.height);
                return true;
               
                
@@ -330,8 +339,10 @@ public class Box extends Obstacle{
          if (groundBox (this, box))
                             { //System.out.println("gets hre 2");
                                 return true;
+                                
+                               
                             }
-     int n=1;
+     int n=0;
       return  Player.isSolid(x,y+height+n,leveldata) || Player.isSolid(x+width, y+height+n, leveldata) || Player.isSolid(x,y+n,leveldata) || Player.isSolid(x+width, y+n, leveldata);
   }
     
