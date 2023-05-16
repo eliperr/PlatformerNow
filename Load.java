@@ -444,7 +444,7 @@ public class Load {
               box.add(new Box(30,30,200,270, Color.BLUE));
               //box.add(new Box(30,30,300,290, Color.BLUE));
              
-             box.add(new Box(30,30,80,270, Color.BLUE));
+             //box.add(new Box(30,30,80,270, Color.BLUE));
               
              // test
              //box.add(new Box(30,30,470,290, Color.BLACK));

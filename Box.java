@@ -26,7 +26,7 @@ public class Box extends Obstacle{
     public  int width;
     public  int height;
     public  int x, y; 
-    private Color color;
+   public Color color;
     private Rectangle rect;
     public  int wobble =5;
     private float yspeed, yaccel,maxYspeed;
@@ -221,7 +221,7 @@ public class Box extends Obstacle{
         
         for (Box b: boxes)
         {   
-           if  (b!=checkBox && groundBox( checkBox, b) ) //&& (!overlaps.contains(b))
+           if  (b!=checkBox && groundBox( checkBox, b) ) //&& (!overlaps.contains(b)) //checbox canmoxeinX direction
                
            {
                
@@ -249,7 +249,7 @@ public class Box extends Obstacle{
        //return false; 
     }
      
-    public static ArrayList <Box>  overlapBox(Box checkBox, ArrayList <Box> boxes, ArrayList overlaps)
+    public static ArrayList <Box>  overlapBox(Box checkBox, ArrayList <Box> boxes, ArrayList overlaps, int[][]leveldata)
             
     {
         //ArrayList <Box> overlaps=new ArrayList<Box>();
@@ -265,24 +265,54 @@ public class Box extends Obstacle{
         {   //!equating an object 
            if  (b!=checkBox && overlapBox( checkBox, b) && (!overlaps.contains(b)))
                
-           {
-               
-                   
-                overlaps.add(b);
+           {   /* System.out.println("run into box " + checkBox.color);
+            if (checkBox.color!=Color.BLUE)
+            {
+                //System.exit(0);
+            }*/ //sometimes not blue or running into box because recursive-not sure if problem
+                 
+                 //canBoxMoveX (Box checkBox, ArrayList <Box> boxes, int[][] leveldata)
+                   overlaps.add(b);
+                  //System.out.println("adding");
+                 
+                /* else
+                 {   overlaps.clear();
+                   // overlaps.add(checkBox);  //just say ccannot move
+                    
+                     //System.out.println("cannot move x" + checkBox.color);
+                     
+                       
+       
+          
+            for  (int i=0; i<overlaps.size(); i++)
+            {
+          
+              
+              System.out.println(overlaps.get(i));
+             
+            
+            }
+            System.out.println("yellow?");
+            //System.exit(0);
+            return overlaps;
+                     
+                     
+                     
+                 }*/
                   //System.out.println ("added " + b);
                  //System.exit(0);
              
                
               
                
-              overlaps=overlapBox(b, check,overlaps);
+              overlaps=overlapBox(b, check,overlaps,leveldata);
               //calls itself to find other boxes overlapping with the overlapped box
                //but not already checked box
                
            }
             
         }
-       /* if (overlaps.size()>2)
+     /* if (overlaps.size()>2)
        
         {    
             for  (int i=0; i<overlaps.size(); i++)
@@ -306,6 +336,76 @@ public class Box extends Obstacle{
        //return false; 
     } 
      
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public static boolean  canBoxMoveX (Box checkBox, ArrayList <Box> boxes, int value, int[][] leveldata)
+            
+    {
+        int maxX=0;
+        int diff=0;
+        Box maxBox=checkBox;
+        System.out.println("checkBox" + checkBox.color);
+        int x=0;
+         for (Box a: boxes)
+         { 
+             
+             //if overlaps on x side--this is not working correct-SEE HERE //&& a.x<=checkBox.x+checkBox.width3 a.x+a.width>=checkBox.x  &&
+            if ( a.y==checkBox.y ) //would need to modify for diff size boxes //need to ensure ys are the same
+            {    //not all boxes entering into here everytime  
+                 System.out.println("overlaps x" + x);
+                    System.out.println("box" + a.color);
+                    int res=a.x+a.width;
+                    System.out.println("a.x"+ res );
+                    
+                    x++;
+                if (Math.abs((a.x+a.width)-(checkBox.x+checkBox.width))>maxX)
+                {
+                    maxX=Math.abs((a.x+a.width)-(checkBox.x+checkBox.width));
+                    
+                    maxBox=a;  //but even when goes through right list selects the wrong maxBox and wrong maxx
+                    System.out.println("maxX" + maxX);
+                }
+                
+            }
+            
+            //fix and put under player
+         }
+           System.out.println( "maxNox 1" + maxBox.color); //blue as soon as yellow starts moving -ehen black cant move
+         
+            if (Player.moveHelper((int)(maxBox.x+value),(int)(maxBox.y),(int)(maxBox.width),(int)(maxBox.height),leveldata)  )        //need tro try other valeus besides 1
+             
+                    {
+                        
+                       // System.out.println(maxX+15);
+                        //System.out.println( " hh maxNox" + maxBox.color);
+                               // System.out.println(" hh true");
+                                
+                        return true;
+                    }
+        // System.out.println(" hh false");
+            return false;
+       
+    } 
+     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //is box on ground--?--> fall
     private boolean onGround(int x, int y, int width, int height, ArrayList<Platform> platform, ArrayList<Box> box, int[][] leveldata )
            

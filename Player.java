@@ -4,6 +4,7 @@
  */
 package com.mycompany.platformernow;
 
+import static com.mycompany.platformernow.Box.canBoxMoveX;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -379,7 +380,7 @@ public class Player  {
   }
   
   
-  private boolean moveHelper(int x, int y, int width, int height, int[][] leveldata)
+  public  static boolean moveHelper(int x, int y, int width, int height, int[][] leveldata)
   {
       
        return !isSolid(x,y, leveldata) && !isSolid(x+width,y, leveldata) && !isSolid(x,y+height,leveldata) && !isSolid(x+width, y+height, leveldata);
@@ -452,7 +453,7 @@ public class Player  {
       for (Box box: boxes)
       {     
        if ( (y+height>box.y && (box.y+box.height>y))  && (x<box.x+box.width && x+width>box.x))  //if running into box 
-        {
+        {  
             
           if (Load.wontOverlap)
             {  //list is single box
@@ -471,11 +472,14 @@ public class Player  {
                 {  overlaps.addAll(boxes); 
                  //System.out.println("using faster way");
                 }
-          else
-          {
+          else  
+          {  
+              
            ArrayList <Box> check=new ArrayList<Box>();
          check.addAll(boxes);
-           overlaps=Box.overlapBox(box,check,overlaps); 
+         
+         
+           overlaps=Box.overlapBox(box,check,overlaps,leveldata); 
           }//if boxes are running into other boxes move each other
           
           {
@@ -497,14 +501,17 @@ public class Player  {
                           val=-1;
                       }
               
-              
+               //ArrayList<Box> checkBox=new ArrayList<>();
+                       //checkBox.add(box);
                   Box overlapBox=overlaps.get(i);
                   if (moveHelper((int)(overlapBox.x+val),(int)(overlapBox.y),(int)(overlapBox.width-1),(int)(overlapBox.height-1),leveldata))
                   {  
                       
                       
+                        if ( canBoxMoveX(box,overlaps,val, leveldata)) 
+                     // System.out.println("overlapbox " + overlapBox.color);
+                       { overlapBox.setPosition(overlapBox.x+val, overlapBox.y); }
                       
-                      overlapBox.setPosition(overlapBox.x+val, overlapBox.y);
                   }
                   
              
