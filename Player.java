@@ -508,7 +508,7 @@ public class Player  {
                   {  
                       
                       
-                        if ( canBoxMoveX(box,overlaps,val, leveldata)) 
+                        if ( overlaps.size()==1 || canBoxMoveX(box,overlaps,val, leveldata)) //short circuit so doesn't need to go through this if only one box
                      // System.out.println("overlapbox " + overlapBox.color);
                        { overlapBox.setPosition(overlapBox.x+val, overlapBox.y); }
                       

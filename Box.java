@@ -154,7 +154,7 @@ public class Box extends Obstacle{
            //System.out.println("newYspeed " + newYspeed);
             
         }
-        if (!this.onGround((int)x,(int)y+(int)newYspeed,width, height,p, b, Load.levelData))
+        if (!this.onGround((int)x,(int)y+(int)newYspeed,width, height-1,p, b, Load.levelData)) //-1 so exactly on ground with no gaps
         
         {
             yspeed=newYspeed;
@@ -167,7 +167,7 @@ public class Box extends Obstacle{
         else
         {
             
-            yspeed=0;
+            yspeed=0; //slow down until exactly on ground
         }
         
         
@@ -191,6 +191,7 @@ public class Box extends Obstacle{
         return false;
                 
     }
+    
      public static boolean groundBox(Box a, Box b)
             //&& a.y>=b.y)
     {    
@@ -380,23 +381,28 @@ public class Box extends Obstacle{
          }
            System.out.println( "maxNox 1" + maxBox.color); //blue as soon as yellow starts moving -ehen black cant move
          
-            if (Player.moveHelper((int)(maxBox.x+value),(int)(maxBox.y),(int)(maxBox.width),(int)(maxBox.height),leveldata)  )        //need tro try other valeus besides 1
+            if (Player.moveHelper((int)(maxBox.x+value),(int)(maxBox.y),(int)(maxBox.width-1),(int)(maxBox.height-1),leveldata)  )        //need tro try other valeus besides 1
              
                     {
                         
                        // System.out.println(maxX+15);
                         //System.out.println( " hh maxNox" + maxBox.color);
-                               // System.out.println(" hh true");
+                              // System.out.println(" hh true");
                                 
                         return true;
                     }
-        // System.out.println(" hh false");
+         //System.out.println(" hh false");
             return false;
        
     } 
      
     
-    
+  /*  public  static boolean moveHelper(int x, int y, int width, int height, int[][] leveldata)
+  {
+      
+       return !isSolid(x,y, leveldata) && !isSolid(x+width,y, leveldata) && !isSolid(x,y+height,leveldata) && !isSolid(x+width, y+height, leveldata);
+  }    */   
+  
     
     
     

@@ -433,9 +433,9 @@ public class Load {
                // box.add(new Box(30,30,50,290, Color.PINK));
                 //box.add(new Box(30,30,160,290, Color.GREEN));
                 //box.add(new Box(0,0,0,0, Color.BLUE));
-                box.add(new Box (30, 30,618,290, Color.BLACK));
+                box.add(new Box (30, 30,618,280, Color.BLACK));
                 //test
-                box.add(new Box (30, 30,618,150, Color.YELLOW));
+               // box.add(new Box (30, 30,618,140, Color.YELLOW));
                 break;
              } 
 
