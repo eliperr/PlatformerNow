@@ -8,6 +8,7 @@ package com.mycompany.platformernow;
  *
  * @author eliperr
  */
+import static com.mycompany.platformernow.Player.isSolid;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -165,7 +166,7 @@ public class Box extends Obstacle{
             
         }
         else
-        {
+        {   
             
             yspeed=0; //slow down until exactly on ground
         }
@@ -406,7 +407,43 @@ public class Box extends Obstacle{
     
     
     
-    
+    public boolean onGround2(int x, int y, int width, int height, ArrayList<Platform> platform, ArrayList<Box> boxes, int[][] leveldata )
+           
+  {  
+    /*for (Box box: boxes) //same for platforms, can also make a list if/when have multiple platforms 
+         
+     { 
+         if (box.onGround(x,y, width, height))
+         { 
+           
+           return true; 
+         }
+         
+        }*/
+              for (Obstacle o:GamePanel.ObstacleList)
+              {   if (o.onGround(width, height ,x ,y ) )
+                      { //jump=false;
+                        //this.setPosition(this.getX(),platform.getYHitBox()-height);
+                          //System.out.println("on cloud");
+                          /*System.out.println("player x " + x);
+                          int res=platform.getXHitBox()+platform.getWHitBox();
+                           System.out.println("cloud x " + x);*/
+
+
+                          return true; }  
+
+                   }
+              if (groundBox (this, boxes))
+                            { //System.out.println("gets hre 2");
+                                return true;
+                                
+                               
+                            }
+           
+     int n=1;
+      return  Player.isSolid(x,y+height+n,leveldata) || isSolid(x+width, y+height+n, leveldata) || isSolid(x,y+n,leveldata) || isSolid(x+width, y+n, leveldata);
+  }
+  
     
     
     
@@ -419,25 +456,43 @@ public class Box extends Obstacle{
       
       if (platform!=null)
             {
-                      Iterator<Platform> iter = platform.iterator();   
+                      //Iterator<Platform> iter = platform.iterator();   
                
-                    while (iter.hasNext())
+                   // while (iter.hasNext())
+                
+                
+                for (Obstacle o:GamePanel.ObstacleList)
+              {   
+                  if (o.onGround(width, height ,x ,y ) )
+                      
+                  {return true;    }
+                  
+                  
+                  }
+               /* for (Platform p:platform)//platform not being updated-only list of obstacles, no direct refernce to changing platform, do only original platform accesssed 
                         {       //System.out.println("iteratr" + iter.hasNext()); 
-                                
-                              Platform p=iter.next();
-                             // System.out.println("iteratr" + p); 
-                            if ( p!=null && x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox()  && Math.abs(y+height-p.getYHitBox())<=4)
-                                     { //jump=false;
-                                       //this.setPosition(this.getX(),platform.getYHitBox()-height);
-                                         //System.out.println("on cloud");
-                                         /*System.out.println("player x " + x);
-                                         int res=platform.getXHitBox()+platform.getWHitBox();
-                                          System.out.println("cloud x " + x);*/
+                            
+                            //int res=p.getXHitBox(); //+p.getWHitBox();
+                                        // System.out.println("platform is testx " + p.testX);
+                              //Platform p=iter.next();//x<p.getXHitBox()
+                             // System.out.println("iteratr" + p);       //&& Math.abs(y+height-p.getYHitBox())<=4
+                            if (  x<p.testX+p.getWHitBox() && x+width>p.getXHitBox() && Math.abs(y+height-p.getYHitBox())<=4  )
+                                     { 
+                              //x<this.getXHitBox()+this.getWHitBox() && x+width>this.getXHitBox()  && Math.abs(y+height-this.getYHitBox())<=4
+ // if (this.color==Color.RED)
+         //{System.out.println("on platform");}
+                                         return true; 
+                                     
+                            
+                            else
+                            {
+                               // if (this.color==Color.RED)
+        // {System.out.println("off platform");}
+                                     
+                            }
+                            
 
-
-                                         return true; }  
-
-                        }
+                        }*/
                     
                     
             }

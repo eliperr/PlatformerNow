@@ -386,7 +386,7 @@ public class Player  {
        return !isSolid(x,y, leveldata) && !isSolid(x+width,y, leveldata) && !isSolid(x,y+height,leveldata) && !isSolid(x+width, y+height, leveldata);
   }       
   
-  private boolean onGround(int x, int y, int width, int height, ArrayList<Box> boxes, ArrayList<Platform> platform, int[][] leveldata )
+ public boolean onGround(int x, int y, int width, int height, ArrayList<Box> boxes, ArrayList<Platform> platform, int[][] leveldata )
            
   {  
      for (Box box: boxes) //same for platforms, can also make a list if/when have multiple platforms 

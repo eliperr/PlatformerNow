@@ -180,7 +180,11 @@ public class GamePanel extends JPanel{
      playerImg= player.animate(); 
       player.updateTick();
       player.setPosition(box,platform);
-      
+      if (platform!=null && platform.size()>=1)
+      {System.out.println("gamepanel platform" +  platform.get(0).getX());
+       /*if( platform.get(0).getX()!=240)
+       {System.exit(0);}*/
+      }
      //x=player.setPosition(x,y)[0];
      //y=player.setPosition(x,y)[1];
       for (Obstacle o:ObstacleList)

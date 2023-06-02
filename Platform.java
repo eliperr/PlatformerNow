@@ -21,6 +21,7 @@ public class Platform extends Obstacle{
       private boolean movingDown=true;
       public static boolean platformOn=false;
      public static int n;
+     public int testX=240;
       //private Rectangle2D.Float hitbox;
       //private int h, w;
       //private final int yOffset;
@@ -121,13 +122,20 @@ public class Platform extends Obstacle{
                 }
 
               super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h); 
-                //System.out.println("updating");
+                System.out.println("x is " + x );
+                testX=x;
+               
+               
              }
              
         }      
     
     }
     
+    public int getX()
+    {
+        return x;
+    }
      public static  boolean canMovePlatform(int x, int y, int width, int height, Platform p, int[][] leveldata)
   {
       if ( (y<p.getYHitBox()  && y+height>p.getYHitBox()+p.getHHitBox())  && (x<p.getXHitBox()+p.getWHitBox() && x+width>p.getXHitBox()))
@@ -140,7 +148,13 @@ public class Platform extends Obstacle{
    public void doStuff(Player p, GamePanel game)
             //kind of annaying but need two instances of platform with this OOP
    {  platformOn=game.platformOn;
+  // testX=x;
+    System.out.println("dostuff testx" + testX);
+     System.out.println("dostuff x" + x);
+      System.out.println("dostuff getx" + getX());
+    
        
+   
    
    //not nessecary to have reference with new way having check onGround method by going through all obstacles
      /* if (game.platform!=null) 
@@ -197,6 +211,34 @@ public class Platform extends Obstacle{
        
      return (this!=null && x<this.getXHitBox()+this.getWHitBox() && x+width>this.getXHitBox()  && Math.abs(y+height-this.getYHitBox())<=4);
    }
+   
+    @Override
+   public int getXHitBox()
+    {  int res=x+xOffset;
+        //System.out.println("getXHitBox()" + this.x);
+         System.out.println("testX" + testX);
+        return this.x+ xOffset;
+        
+    }
+    
+    @Override
+    public int getYHitBox()
+    {
+        
+        return y + yOffset;
+    }
+    @Override
+    public int getHHitBox()
+    {
+        return h;
+    }
+    @Override
+    public int getWHitBox()
+    {
+        return w;
+    }
+      
+   
    
    
 }

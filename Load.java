@@ -435,7 +435,7 @@ public class Load {
                 //box.add(new Box(0,0,0,0, Color.BLUE));
                 box.add(new Box (30, 30,618,280, Color.BLACK));
                 //test
-               // box.add(new Box (30, 30,618,140, Color.YELLOW));
+                box.add(new Box (30, 30,267,100, Color.YELLOW));
                 break;
              } 
 
@@ -455,8 +455,8 @@ public class Load {
              //falling blocks that don't fall all the way but need to interact with blocks already at bottom-doesnt look as good
              
              //box.add(new Box(30,30,313,270, Color.RED));
-             box.add(new Box(30,30,363,270, Color.RED));
-             box.add(new Box(30,30,363,240, Color.YELLOW));
+            // box.add(new Box(30,30,363,270, Color.RED)); //just for testing 
+            // box.add(new Box(30,30,363,240, Color.YELLOW));
             //should move until any box cannot move
              
              break;
@@ -560,6 +560,15 @@ public class Load {
               // platform.add(new Platform (100, 240, 90, 0)); 
               break;
                 
+            }
+            
+            case 3:
+            {
+                platform.add(new Platform (500, 180, 200, 0));
+              
+                break;
+                
+                //[x=512,y=215]
             }
             default:
             { platform=null;}
