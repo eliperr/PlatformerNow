@@ -401,12 +401,8 @@ public class Player  {
         }
               for (Obstacle o:GamePanel.ObstacleList)
               {   if (o.onGround(width, height ,x ,y ) )
-                      { //jump=false;
-                        //this.setPosition(this.getX(),platform.getYHitBox()-height);
-                          //System.out.println("on cloud");
-                          /*System.out.println("player x " + x);
-                          int res=platform.getXHitBox()+platform.getWHitBox();
-                           System.out.println("cloud x " + x);*/
+                      {   
+                         // this.setPosition(x, y);
 
 
                           return true; }  
@@ -470,7 +466,7 @@ public class Player  {
           ArrayList <Box> overlaps=new ArrayList<Box>();
           if (boxes.size()==1)   //if only one block use the less computationally heavy method
                 {  overlaps.addAll(boxes); 
-                 //System.out.println("using faster way");
+                 
                 }
           else  
           {  
@@ -509,7 +505,7 @@ public class Player  {
                       
                       
                         if ( overlaps.size()==1 || canBoxMoveX(box,overlaps,val, leveldata)) //short circuit so doesn't need to go through this if only one box
-                     // System.out.println("overlapbox " + overlapBox.color);
+                     //if nothing preventing last box farthest in x direction from checked box from moving checked box can move
                        { overlapBox.setPosition(overlapBox.x+val, overlapBox.y); }
                       
                   }

@@ -148,10 +148,7 @@ public class Platform extends Obstacle{
    public void doStuff(Player p, GamePanel game)
             //kind of annaying but need two instances of platform with this OOP
    {  platformOn=game.platformOn;
-  // testX=x;
-    System.out.println("dostuff testx" + testX);
-     System.out.println("dostuff x" + x);
-      System.out.println("dostuff getx" + getX());
+  
     
        
    
@@ -214,9 +211,9 @@ public class Platform extends Obstacle{
    
     @Override
    public int getXHitBox()
-    {  int res=x+xOffset;
+    {  
         //System.out.println("getXHitBox()" + this.x);
-         System.out.println("testX" + testX);
+         
         return this.x+ xOffset;
         
     }

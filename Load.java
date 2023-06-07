@@ -414,6 +414,16 @@ public class Load {
               break;   
                  
              }
+             case 3:
+             {
+                 
+                 gem =new Gem[4];
+                gem[0]=new Gem(304,182);
+            gem[1]=new Gem(500,100);
+            gem[2]=new Gem(760,173);
+            gem[3]=new Gem(42,263); 
+                break; 
+             }
              default:
              {
                  gem=null;
@@ -435,7 +445,7 @@ public class Load {
                 //box.add(new Box(0,0,0,0, Color.BLUE));
                 box.add(new Box (30, 30,618,280, Color.BLACK));
                 //test
-                box.add(new Box (30, 30,267,100, Color.YELLOW));
+                //box.add(new Box (30, 30,267,100, Color.YELLOW));
                 break;
              } 
 
@@ -443,7 +453,10 @@ public class Load {
             { 
               box.add(new Box(30,30,200,270, Color.BLUE));
               //box.add(new Box(30,30,300,290, Color.BLUE));
-             
+             //box.add(new Box(30,30,200,240, Color.RED));
+             //box.add(new Box(30,30,200,210, Color.PINK));
+              //testing:
+              
              //box.add(new Box(30,30,80,270, Color.BLUE));
               
              // test
@@ -455,8 +468,10 @@ public class Load {
              //falling blocks that don't fall all the way but need to interact with blocks already at bottom-doesnt look as good
              
              //box.add(new Box(30,30,313,270, Color.RED));
-            // box.add(new Box(30,30,363,270, Color.RED)); //just for testing 
-            // box.add(new Box(30,30,363,240, Color.YELLOW));
+             //box.add(new Box(30,30,363,270, Color.RED)); //just for testing 
+             //box.add(new Box(30,30,363,240, Color.YELLOW));
+             //box.add(new Box(30,30,480,270, Color.YELLOW));
+              //box.add(new Box(30,30,480,240, Color.PINK));
             //should move until any box cannot move
              
              break;
@@ -564,7 +579,7 @@ public class Load {
             
             case 3:
             {
-                platform.add(new Platform (500, 180, 200, 0));
+                platform.add(new Platform (470, 180, 250, 10)); //need to try making it so player moves in y direction with platform 
               
                 break;
                 
@@ -680,7 +695,7 @@ public class Load {
      }
     
      
-     public static void drawText(Graphics g, Player p)
+     public static void drawText(Graphics g, Player p, GamePanel game)
      {
          
           g.setColor(Color.BLACK); 
@@ -688,7 +703,7 @@ public class Load {
          switch (Load.levelNum)
              
          {  case 0:
-             
+           {
               if (p.getHitBoxX()<290)
               {    
             
@@ -705,8 +720,76 @@ public class Load {
                  
                      g.drawString ("to the next level!",630,272);    
              }
-         }
-   }
+              break;
+     
+           }
+         
+         
+         
+         case 1:
+         
+         {
+          if (p.getHitBoxX()<250)
+              {    
+            
+             g.drawString ("You look smart...",100,250);  
+              }
+             else if (p.getHitBoxX()<400)
+             {   
+               g.drawString ("I'm sure you'll figure out the rest.",300,150); 
+              
+             }
+             else
+             {
+                 g.drawString ("",630,252);
+                 
+                     
+             }
+              break;
+          }
+         case 2:
+         {
+          if (p.getHitBoxX()<330)
+              {    
+            
+             g.drawString ("It's looking cloudy today...",173,259);  
+              }
+            if (p.getHitBoxX()<800 && p.getHitBoxX()>330)
+             {   
+               g.drawString ("...with a chance of DEATH!",352,259); 
+              
+             }
+             
+              break;
+          }
+         
+         
+         case 3:
+         {
+          if ( game.platformOn==true && p.getHitBoxX()<600)
+              {    
+            
+             g.drawString ("Hmm...This cloud looks glitchy...",173,259);  
+              }
+            if (p.getHitBoxX()>700)
+             {   
+               g.drawString ("...but maybe its just special.",520,166); 
+              
+             }
+             
+              break;
+          }
+         
+         
+         
+       }  
+         
+         
+     }  
+    
+         
+         
+   
     
 }
 

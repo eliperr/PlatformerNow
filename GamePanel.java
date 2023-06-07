@@ -180,11 +180,11 @@ public class GamePanel extends JPanel{
      playerImg= player.animate(); 
       player.updateTick();
       player.setPosition(box,platform);
-      if (platform!=null && platform.size()>=1)
+      /*if (platform!=null && platform.size()>=1)
       {System.out.println("gamepanel platform" +  platform.get(0).getX());
        /*if( platform.get(0).getX()!=240)
-       {System.exit(0);}*/
-      }
+       {System.exit(0);}
+      }*/
      //x=player.setPosition(x,y)[0];
      //y=player.setPosition(x,y)[1];
       for (Obstacle o:ObstacleList)
@@ -317,7 +317,7 @@ public class GamePanel extends JPanel{
          player.draw(g,playerImg); //img can just be stored in object itself?
          player.drawHitbox(g);
          Sounds.drawSound(g);
-         Load.drawText(g,player);
+         Load.drawText(g,player, this);
          //Gem.drawGemCount(g);
          
          

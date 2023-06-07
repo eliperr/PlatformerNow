@@ -267,11 +267,7 @@ public class Box extends Obstacle{
         {   //!equating an object 
            if  (b!=checkBox && overlapBox( checkBox, b) && (!overlaps.contains(b)))
                
-           {   /* System.out.println("run into box " + checkBox.color);
-            if (checkBox.color!=Color.BLUE)
-            {
-                //System.exit(0);
-            }*/ //sometimes not blue or running into box because recursive-not sure if problem
+           {   
                  
                  //canBoxMoveX (Box checkBox, ArrayList <Box> boxes, int[][] leveldata)
                    overlaps.add(b);
@@ -314,28 +310,11 @@ public class Box extends Obstacle{
            }
             
         }
-     /* if (overlaps.size()>2)
-       
-        {    
-            for  (int i=0; i<overlaps.size(); i++)
-            {
-          
-              
-              System.out.println(overlaps.get(i));
-             
-            
-            }
-            System.out.println("end of overlaps");
-            //System.exit(0);
-        }*/
-        //System.exit(0);
-        
-        //should be faster way to do using Collections but dont have wifi 
+     
         return overlaps;
         
                 
-        //return checkbox if no overlaps?
-       //return false; 
+       
     } 
      
     
@@ -352,97 +331,51 @@ public class Box extends Obstacle{
             
     {
         int maxX=0;
-        int diff=0;
+       
         Box maxBox=checkBox;
-        System.out.println("checkBox" + checkBox.color);
-        int x=0;
+        
+        
          for (Box a: boxes)
          { 
              
-             //if overlaps on x side--this is not working correct-SEE HERE //&& a.x<=checkBox.x+checkBox.width3 a.x+a.width>=checkBox.x  &&
-            if ( a.y==checkBox.y ) //would need to modify for diff size boxes //need to ensure ys are the same
-            {    //not all boxes entering into here everytime  
-                 System.out.println("overlaps x" + x);
-                    System.out.println("box" + a.color);
-                    int res=a.x+a.width;
-                    System.out.println("a.x"+ res );
+             
+            if ( a.y==checkBox.y ) 
+            {    
+                 
                     
-                    x++;
+                    
                 if (Math.abs((a.x+a.width)-(checkBox.x+checkBox.width))>maxX)
                 {
-                    maxX=Math.abs((a.x+a.width)-(checkBox.x+checkBox.width));
+                    maxX=Math.abs((a.x+a.width)-(checkBox.x+checkBox.width)); //find box farthest away from checkbox, absolute value to find in left or right direction 
                     
-                    maxBox=a;  //but even when goes through right list selects the wrong maxBox and wrong maxx
-                    System.out.println("maxX" + maxX);
+                    maxBox=a;  
+                   
                 }
                 
             }
             
-            //fix and put under player
+            
          }
-           System.out.println( "maxNox 1" + maxBox.color); //blue as soon as yellow starts moving -ehen black cant move
+            
          
             if (Player.moveHelper((int)(maxBox.x+value),(int)(maxBox.y),(int)(maxBox.width-1),(int)(maxBox.height-1),leveldata)  )        //need tro try other valeus besides 1
              
                     {
                         
-                       // System.out.println(maxX+15);
-                        //System.out.println( " hh maxNox" + maxBox.color);
-                              // System.out.println(" hh true");
+                      
                                 
                         return true;
                     }
-         //System.out.println(" hh false");
+       
             return false;
        
     } 
      
     
-  /*  public  static boolean moveHelper(int x, int y, int width, int height, int[][] leveldata)
-  {
-      
-       return !isSolid(x,y, leveldata) && !isSolid(x+width,y, leveldata) && !isSolid(x,y+height,leveldata) && !isSolid(x+width, y+height, leveldata);
-  }    */   
   
     
     
     
-    public boolean onGround2(int x, int y, int width, int height, ArrayList<Platform> platform, ArrayList<Box> boxes, int[][] leveldata )
-           
-  {  
-    /*for (Box box: boxes) //same for platforms, can also make a list if/when have multiple platforms 
-         
-     { 
-         if (box.onGround(x,y, width, height))
-         { 
-           
-           return true; 
-         }
-         
-        }*/
-              for (Obstacle o:GamePanel.ObstacleList)
-              {   if (o.onGround(width, height ,x ,y ) )
-                      { //jump=false;
-                        //this.setPosition(this.getX(),platform.getYHitBox()-height);
-                          //System.out.println("on cloud");
-                          /*System.out.println("player x " + x);
-                          int res=platform.getXHitBox()+platform.getWHitBox();
-                           System.out.println("cloud x " + x);*/
-
-
-                          return true; }  
-
-                   }
-              if (groundBox (this, boxes))
-                            { //System.out.println("gets hre 2");
-                                return true;
-                                
-                               
-                            }
-           
-     int n=1;
-      return  Player.isSolid(x,y+height+n,leveldata) || isSolid(x+width, y+height+n, leveldata) || isSolid(x,y+n,leveldata) || isSolid(x+width, y+n, leveldata);
-  }
   
     
     
@@ -452,13 +385,7 @@ public class Box extends Obstacle{
     //is box on ground--?--> fall
     private boolean onGround(int x, int y, int width, int height, ArrayList<Platform> platform, ArrayList<Box> box, int[][] leveldata )
            
-  {    // System.out.println("gets hre begining");
-      
-      if (platform!=null)
-            {
-                      //Iterator<Platform> iter = platform.iterator();   
-               
-                   // while (iter.hasNext())
+  {    
                 
                 
                 for (Obstacle o:GamePanel.ObstacleList)
@@ -469,33 +396,10 @@ public class Box extends Obstacle{
                   
                   
                   }
-               /* for (Platform p:platform)//platform not being updated-only list of obstacles, no direct refernce to changing platform, do only original platform accesssed 
-                        {       //System.out.println("iteratr" + iter.hasNext()); 
-                            
-                            //int res=p.getXHitBox(); //+p.getWHitBox();
-                                        // System.out.println("platform is testx " + p.testX);
-                              //Platform p=iter.next();//x<p.getXHitBox()
-                             // System.out.println("iteratr" + p);       //&& Math.abs(y+height-p.getYHitBox())<=4
-                            if (  x<p.testX+p.getWHitBox() && x+width>p.getXHitBox() && Math.abs(y+height-p.getYHitBox())<=4  )
-                                     { 
-                              //x<this.getXHitBox()+this.getWHitBox() && x+width>this.getXHitBox()  && Math.abs(y+height-this.getYHitBox())<=4
- // if (this.color==Color.RED)
-         //{System.out.println("on platform");}
-                                         return true; 
-                                     
-                            
-                            else
-                            {
-                               // if (this.color==Color.RED)
-        // {System.out.println("off platform");}
-                                     
-                            }
-                            
-
-                        }*/
+              
                     
                     
-            }
+            
       
          if (groundBox (this, box))
                             { //System.out.println("gets hre 2");

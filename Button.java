@@ -67,7 +67,7 @@ public class Button extends Obstacle {
        if (!pressed && this.isTouching(p) && wasNotTouching) 
        {  //Sounds.stopSound(Sounds.BUTTON);
           
-          System.out.println("button on");
+         // System.out.println("button on");
            pressed=true;
            wasNotTouching=false;
            Sounds.playSounds(Sounds.BUTTON);
@@ -76,7 +76,7 @@ public class Button extends Obstacle {
        {
           // Sounds.stopSound(Sounds.BUTTON);
           
-            System.out.println("button off");
+            //System.out.println("button off");
            pressed=false;
            wasNotTouching=false;
             Sounds.playSounds(Sounds.BUTTON);
