@@ -34,7 +34,8 @@ public class Box extends Obstacle{
     private float gravity;
     private float newYspeed;
     private int boxIndex=0; //make x y floats again
-    
+    private double counter=0;
+    private Obstacle o;
     public Box(int width, int height,  int x, int y, Color color)
     {   super(x,y);
     this.x=x;
@@ -169,6 +170,10 @@ public class Box extends Obstacle{
         {   
             
             yspeed=0; //slow down until exactly on ground
+            if (this.o!=null)
+            {followObstacle(this.o);
+                
+            }
         }
         
         
@@ -392,9 +397,14 @@ public class Box extends Obstacle{
               {   
                   if (o.onGround(width, height ,x ,y ) )
                       
-                  {return true;    }
+                  { this.o=o;
+//this.followObstacle(o);
+                      
+                      return true;    }
                   
-                  
+                   this.o=null; 
+                   if (this.color==Color.red)
+                   {System.out.println ("set to null");}
                   }
               
                     
@@ -416,6 +426,41 @@ public class Box extends Obstacle{
     
     {
         return (x<this.x+this.width && x+width>this.x  && y+height==this.y);
+        
+    }
+    
+    private void followObstacle(Obstacle o)
+    { 
+        if (o.isMovingRight())
+        {
+            this.x++;
+            /* this.x=x+(int)counter;
+            if (counter==0)
+            {
+                counter=1;
+            }
+            else
+            {
+                counter=0;
+            }*/
+           
+        }
+        else
+        {
+            
+            this.x--;
+        }
+        //what if not moving? if platform on
+        /*  System.out.println(" counter " + counter);
+        System.out.println(" box x " + x);
+        System.out.println("platform x " + o.getXHitBox());
+        int  res=o.getXHitBox()+o.getWidth();
+        System.out.println("platform x + w" + res);
+        //this.x=o.getXHitBox()+(o.getWidth()/2);*/
+        
+       //this.x=this.x/o.getXHitBox();
+        
+        
         
     }
             

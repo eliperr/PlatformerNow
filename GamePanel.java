@@ -139,7 +139,7 @@ public class GamePanel extends JPanel{
       this.repaint();
         try {
                 Sounds.playSounds(Sounds.SONG);
-                System.out.println("playing sound");
+                
             } catch (InterruptedException ex) {
                 Logger.getLogger(GameRunner.class.getName()).log(Level.SEVERE, null, ex);
             }  

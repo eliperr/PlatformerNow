@@ -20,6 +20,7 @@ public class Platform extends Obstacle{
     private boolean movingRight=true;
       private boolean movingDown=true;
       public static boolean platformOn=false;
+      public static boolean alwaysOn=false;
      public static int n;
      public int testX=240;
       //private Rectangle2D.Float hitbox;
@@ -75,7 +76,16 @@ public class Platform extends Obstacle{
         
        this.tickspeed=i;
     }
-    
+    public boolean isMovingRight()
+    {
+        
+        return movingRight;
+    }
+    public boolean isMovingDown()
+    {
+        
+        return movingDown;
+    }
     
     
     @Override
@@ -89,6 +99,7 @@ public class Platform extends Obstacle{
             tick++;
              if (tick>=tickspeed)
              {
+                 
                 tick=0;
                 if (x<=minX)
                     { movingRight=true;}
@@ -122,11 +133,11 @@ public class Platform extends Obstacle{
                 }
 
               super.hitbox.setRect(  (float) (x + xOffset ), (float) (y + yOffset),w, h); 
-                System.out.println("x is " + x );
+                
                 testX=x;
                
                
-             }
+            }
              
         }      
     
@@ -147,7 +158,9 @@ public class Platform extends Obstacle{
     @Override
    public void doStuff(Player p, GamePanel game)
             //kind of annaying but need two instances of platform with this OOP
-   {  platformOn=game.platformOn;
+   {  
+       if (!alwaysOn)
+       { platformOn=game.platformOn;}
   
     
        

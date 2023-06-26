@@ -23,11 +23,11 @@ import java.util.Arrays;
 public class Load {
  
        private static int levelNum=0;
-       private static final int TOTALNUMBEROFLEVELS=4;
+       private static final int TOTALNUMBEROFLEVELS=5;
        public static boolean wontOverlap=true; //this should change with different levels, default is true
        //remove algrotihm deciding if boxes will overlap if know they couldnt 
       private static BufferedImage[] gameImg=LoadTiles();
-      static int [] overlapLevels={3}; //for now
+      static int [] overlapLevels={3,4}; //for now
       public static int[][] levelData=loadLevelData();
       
       public static  int getLevel()
@@ -325,8 +325,7 @@ public class Load {
                  Fire []fire2=createFirePattern(200,736,215,50);
                  //two lists because gap between stream of fires
                  
-                 //fire=new Fire[1];
-                 //fire[0]=new Fire(335,215);
+                 /*
                   fire=new Fire[fire1.length+fire2.length];
                   
                   //add two lists of fires together: (woild be easier with arraylist)
@@ -339,12 +338,25 @@ public class Load {
                   {
                       fire[f]=fire2[f-fire1.length];
                       
-                  }
+                  }*/
                
+                  fire=addFire(fire1, fire2);
                  break;
                  
                 
                  
+             }
+             
+             case 4:
+             {
+                 
+                 
+                  Fire[] fire1=createFirePattern(230,200,280,30);
+                  Fire[] fire2=createFirePattern(150,545,280,30);
+                 
+                 fire=addFire(fire1, fire2);
+                 
+                 break;
              }
              
          default:
@@ -358,6 +370,31 @@ public class Load {
        }     
          return fire;
          
+         
+     }
+     
+     
+     private static Fire[] addFire (Fire[] fire1, Fire[] fire2)
+             
+             
+     {
+        Fire [] fire=new Fire[fire1.length+fire2.length];
+                  
+                  //add two lists of fires together: (woild be easier with arraylist)
+                  for (int f=0; f<fire1.length; f++)
+                  {
+                      fire[f]=fire1[f];
+                      
+                  }
+                  for (int f=fire1.length; f<fire1.length+fire2.length; f++)
+                  {
+                      fire[f]=fire2[f-fire1.length];
+                      
+                  }
+         
+         
+         
+         return fire;
          
      }
      
@@ -424,6 +461,18 @@ public class Load {
             gem[3]=new Gem(42,263); 
                 break; 
              }
+             
+             case 4:
+             {
+                gem=new Gem[5];
+                gem[0]=new Gem(140,130);
+                gem[1]=new Gem (53,236);
+                gem[2]=new Gem (441, 264);
+                gem[3]=new Gem (782, 255);
+                 gem[4]=new Gem (622, 195);
+                 
+               break;  
+             }
              default:
              {
                  gem=null;
@@ -476,6 +525,16 @@ public class Load {
              
              break;
 
+             }
+            
+             case 4:
+             {
+                 box.add(new Box(30,30,160,270, Color.BLUE));
+                 box.add(new Box(30,30,160,240, new Color (200,0, 255)));
+                 box.add(new Box(30,30,160,210, Color.GREEN));
+                 //box.add(new Box (30,30, 500,150, Color.GRAY));
+                 
+                 
              }
 
         }
@@ -536,7 +595,7 @@ public class Load {
             {  int xStart=90;
                 //int i=160;
                 int Xdistance=160;
-                Platform.platformOn=true; //test
+                //Platform.platformOn=true; //test
                 int steps=0;
                 for (int y=240;y>120;y-=50 )
                 {   
@@ -579,11 +638,27 @@ public class Load {
             
             case 3:
             {
-                platform.add(new Platform (470, 180, 250, 10)); //need to try making it so player moves in y direction with platform 
+                platform.add(new Platform (500, 180, 260, 10)); //need to try making it so player moves in y direction with platform 
               
                 break;
                 
                 //[x=512,y=215]
+            }
+            
+            case 4:
+            {  
+              
+                
+                platform.add(new Platform (680, 200, 100, 0));
+                platform.add(new Platform (620, 150, 100, 0));
+                Platform p=new Platform (580, 180, 100, 0);
+                p.setSpeed(2);
+                   platform.add(p);
+                 platform.add(new Platform (400, 100, 100, 0));
+                 platform.add(new Platform (470, 130, 100, 0));
+                Platform.platformOn=true;
+                Platform.alwaysOn=true;
+                break;
             }
             default:
             { platform=null;}
@@ -621,6 +696,13 @@ public class Load {
                 button=new Button(50,190,2);
                 break;
                 
+            }
+            
+            case 4:
+            {
+                
+                button=new Button (329,145,3);
+                break;
             }
             
             

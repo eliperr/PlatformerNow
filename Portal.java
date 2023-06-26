@@ -62,10 +62,12 @@ public class Portal extends Obstacle{
             nextLevel=true;
            passedLevel=false;
            Sounds.playSounds(Sounds.PORTAL);
+           Platform.alwaysOn=false;//always on unless load from level says otherwise
             Load.upLevel();
              //System.out.println(Load.getLevel());
               p.setPosition(100,270);
              if (Load.initPlatform()!=null)
+                 
          {game.platform=Load.initPlatform();} //test
           else
             {

@@ -208,6 +208,19 @@ public abstract class Obstacle {
         
         
     }
+    
+    public boolean isMovingRight()
+    { System.out.println("should not be called");
+        
+        return false; 
+       
+    }
+    
+    public boolean isMovingDown()
+    {
+         System.out.println("should not be called");
+        return false; 
+    }
    /* 
     public int getWidth()
     {

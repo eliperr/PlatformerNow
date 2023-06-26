@@ -208,12 +208,34 @@ public class Button extends Obstacle {
                        game.box.add(new Box(30,30,480,100, Color.RED)); 
                   }   
                    
+                  if (this.isOn())
+                     {
+                         game.platformOn=true;
+                       //System.out.println("platform on");
+                     }
+                   else
+                   {
+                       game.platformOn=false;
+                        //System.out.println("platform false");
+                   }  
+                    
+                    
+                   break;
                    
+             
+               }
+               
+               case 3:
+               {
                    
-                   
-                   
+                    if (this.turnedOn())
+                  {
+                      
+                       game.box.add(new Box(30,30,600,107, Color.BLUE)); 
+                  }   
                    
                }
+               
                
                default:
                {
