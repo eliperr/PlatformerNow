@@ -82,6 +82,7 @@ public class Player  {
    private boolean movingBox;
    private float hitBoxWidth=26;
    private float hitBoxHeight=30;
+   public int scrollOffset;
    
    public Player(float x, float y)
    {
@@ -361,7 +362,9 @@ public class Player  {
       
        }
        
-      hitbox.setRect(  (float) (this.x + xOffset), (float) (this.y +yOffset),  hitBoxWidth, hitBoxHeight);
+      hitbox.setRect(  (float) (this.x + xOffset-scrollOffset), (float) (this.y +yOffset),  hitBoxWidth, hitBoxHeight);
+      
+      //System.out.println( "player x is " + this.x); 
      
   }
 
@@ -414,14 +417,27 @@ public class Player  {
   }
   
   public static boolean isSolid(int x, int y, int[][] leveldata)
+          
+   
+  {        
+      double maxWidth=leveldata.length*GamePanel.SCALEDTILESIZE; //*0.52
+      
+      if (x>=maxWidth)
   
-  {  if (x<0 || x>=GamePanel.GAMEWIDTH || y>=GamePanel.GAMEHEIGHT || y<0)
+     {
+      //System.out.println("outside");
+  
+              }
+      //System.out.println( " maxWidth " + maxWidth);
+       //System.out.println( " gameWidth " + GamePanel.GAMEWIDTH);
+      
+      if (x<0 || x>=maxWidth|| y>=GamePanel.GAMEHEIGHT || y<0)
      { 
         
          return true;}
      
-    float xIndex=x/GamePanel.TILESIZE;
-    float yIndex=y/GamePanel.TILESIZE;
+    float xIndex=x/GamePanel.SCALEDTILESIZE;
+    float yIndex=y/GamePanel.SCALEDTILESIZE;
     
     int val=leveldata[(int)xIndex][(int)yIndex];  //can just use Load.leveldata?
     //System.out.println(val);
@@ -652,11 +668,11 @@ public class Player  {
       } 
          
 
-    public void draw(Graphics g, BufferedImage img)
+    public void draw(Graphics g, BufferedImage img, int scrollOffset)
     {
         
-       g.drawImage(img,(int)(this.x),(int)this.y, img.getWidth()*(int)(GamePanel.SCALE), img.getHeight()*(int)(GamePanel.SCALE), null);   
-        
+       g.drawImage(img,(int)(this.x-scrollOffset),(int)this.y, img.getWidth()*(int)(GamePanel.SCALE), img.getHeight()*(int)(GamePanel.SCALE), null);   
+        this.scrollOffset=scrollOffset;
     }
     
     public final int getWidth()

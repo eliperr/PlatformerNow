@@ -397,14 +397,14 @@ public class Box extends Obstacle{
               {   
                   if (o.onGround(width, height ,x ,y ) )
                       
-                  { this.o=o;
-//this.followObstacle(o);
+                  { this.o=o; //helping box to follow obstacle (usually staying on platform)
+
                       
                       return true;    }
                   
-                   this.o=null; 
-                   if (this.color==Color.red)
-                   {System.out.println ("set to null");}
+                  this.o=null; 
+                   //if (this.color==Color.red)
+                   //{System.out.println ("set to null");}
                   }
               
                     
@@ -430,7 +430,7 @@ public class Box extends Obstacle{
     }
     
     private void followObstacle(Obstacle o)
-    { 
+    { //box should stay on platform and follow its movements 
         if (o.isMovingRight())
         {
             this.x++;

@@ -4,6 +4,8 @@
  */
 package com.mycompany.platformernow;
 
+import static com.mycompany.platformernow.GamePanel.TILESINWIDTH;
+import static com.mycompany.platformernow.GamePanel.TILESIZE;
 import static com.mycompany.platformernow.LevelManager.sortLevels;
 import java.awt.Color;
 import java.awt.Font;
@@ -23,10 +25,11 @@ import java.util.Arrays;
 public class Load {
  
        private static int levelNum=0;
-       private static final int TOTALNUMBEROFLEVELS=5;
+       private static final int TOTALNUMBEROFLEVELS=7;
        public static boolean wontOverlap=true; //this should change with different levels, default is true
        //remove algrotihm deciding if boxes will overlap if know they couldnt 
       private static BufferedImage[] gameImg=LoadTiles();
+      private static double levelWidth;
       static int [] overlapLevels={3,4}; //for now
       public static int[][] levelData=loadLevelData();
       
@@ -35,6 +38,23 @@ public class Load {
          return levelNum; 
           
       }
+      
+      public static double getLevelWidth()
+              
+      {
+          
+          return levelWidth;
+          
+      }
+      
+      public static int[][] getLevelData()
+              
+      {
+          
+          
+          return levelData;
+      }
+      
       
       public static  void upLevel()
       {
@@ -152,9 +172,9 @@ public class Load {
         for (int j=0; j<4;j++)
          {
             for (int i=0; i<12; i++) 
-            { 
+            { // index = j * 12 + i;
               gameImg[index]=gamefile.getSubimage(i*GamePanel.TILESIZE,j*GamePanel.TILESIZE,GamePanel.TILESIZE,GamePanel.TILESIZE);
-               index++; 
+              index++; 
             }
              
          }
@@ -188,7 +208,13 @@ public class Load {
      {   
          BufferedImage level=LevelManager.levels.get(levelNum);
                  //uploadImg("images/lvls/1.png");
+                 levelWidth=level.getWidth() ;
+                         
+                         //*GamePanel.TILESIZE*0.52;
+                 //System.out.println("level num " + levelNum);
+                 //System.out.println("level width " + level.getWidth() *GamePanel.TILESIZE*0.52);
          int[][] levelData=new int [level.getWidth()][level.getHeight()];
+         //why times 0.52?
          
          for (int x=0; x<level.getWidth();x++ )
          {   
@@ -212,26 +238,26 @@ public class Load {
          
      }
      
-     public static void LoadGameImg(Graphics g)
+     public static void LoadGameImg(Graphics g, int scrollOffset)
              
      {
          int index;
          
-         for (int x=0; x<GamePanel.TILESINWIDTH;x++)
+         for (int x=0; x<((int)Load.getLevelWidth()) ;x++)//level width in tiles 
          {
              
              for (int y=0; y<GamePanel.TILESINHEIGHT; y++)
                  
              {
                  index=levelData[x][y];
-                 g.drawImage(gameImg[index],x*GamePanel.TILESIZE,y*GamePanel.TILESIZE,null);
+                 g.drawImage(gameImg[index],x*GamePanel.TILESIZE-scrollOffset,y*GamePanel.TILESIZE,null);
                  //
                  
              }
              
              
          }
-         
+         //((int)Load.getLevelWidth()-TILESINWIDTH) 
          
      }
      
@@ -351,7 +377,7 @@ public class Load {
              {
                  
                  
-                  Fire[] fire1=createFirePattern(230,200,280,30);
+                  Fire[] fire1=createFirePattern(200,200,280,30);  //230
                   Fire[] fire2=createFirePattern(150,545,280,30);
                  
                  fire=addFire(fire1, fire2);
@@ -563,6 +589,13 @@ public class Load {
           {
               portal.add(new Portal(670,270)); 
               break;
+          }
+          
+          case 5:
+          {
+              //nothing--for testing
+              break;
+              
           }
           
           default:

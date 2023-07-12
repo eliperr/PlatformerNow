@@ -84,13 +84,13 @@ public class GamePanel extends JPanel{
    public boolean platformOn=false;
     public final static int TILESIZE=32;
   public final static float SCALE=1f; ///This cannot be scaled easily 
-  public final static int TILESINWIDTH=26;
+  public final static int TILESINWIDTH=26; //levels need to be tilesinwidth size unless a scrolling letter 
   public final static int TILESINHEIGHT=14;
   public final static int SCALEDTILESIZE=(int) (TILESIZE*SCALE);
   public final static int GAMEWIDTH=SCALEDTILESIZE*TILESINWIDTH;
    public final static int GAMEHEIGHT=SCALEDTILESIZE*TILESINHEIGHT;
     public  static int p=0; //platform index
-    
+    public int scrollOffset=0;
     public GamePanel()
     {    //init
         ObstacleList=Load.initLevel();
@@ -177,6 +177,7 @@ public class GamePanel extends JPanel{
     
     public void update() throws InterruptedException
  {   //pattern: updatetick and animate all except box and button (button only animate
+     checkOffset();
      playerImg= player.animate(); 
       player.updateTick();
       player.setPosition(box,platform);
@@ -267,7 +268,7 @@ public class GamePanel extends JPanel{
         
         super.paintComponent(g);
         
-         Load.LoadGameImg(g);
+         Load.LoadGameImg(g,scrollOffset);
          
          
          
@@ -286,6 +287,10 @@ public class GamePanel extends JPanel{
           
           
       }
+         
+       
+            
+         
          
       /*   for (Fire f:fire)
          { f.draw(g);
@@ -314,7 +319,7 @@ public class GamePanel extends JPanel{
          {    
            b.draw(g);
         }
-         player.draw(g,playerImg); //img can just be stored in object itself?
+         player.draw(g,playerImg, scrollOffset); //img can just be stored in object itself?
          player.drawHitbox(g);
          Sounds.drawSound(g);
          Load.drawText(g,player, this);
@@ -388,4 +393,75 @@ public class GamePanel extends JPanel{
       return  new Color(red, green, blue);
     
   }
+  
+       //scrolling method:
+   public void checkOffset()
+         {
+             
+             
+             int playerX=player.getHitBoxX();
+             
+             //TILES in entire level-TILES visible=TILE OFFset * size in pixels of tile
+             int maxOffset=((int)Load.getLevelWidth()-TILESINWIDTH) *TILESIZE;
+             int maxOffset2=((int)Load.getLevelData().length-TILESINWIDTH) *TILESIZE; //total length in tiles minus tiles we can see
+             
+                   //  System.out.println("maxOffset " + maxOffset);
+                     // System.out.println("maxOffset2 " + maxOffset2);
+                      // System.out.println("Load.getLevelWidth() " + Load.getLevelWidth());
+                        //System.out.println("Load.getLevelData() " + Load.getLevelData().length);
+                     //Load.getLevel().getWidth()*GamePanel.TILESIZE*0.52;
+                     
+                     //scrolloffset-move player back to stay in frame, level and objects that were forward also move back to stay 
+                     //in frame and give the appearance of moving -to give this effect scrolloffset is substracted from player position
+             if (playerX-scrollOffset>=(GAMEWIDTH*0.8))      //if players apparent position (considering scrolloffset) outside
+                                                              //borders need to change scrolloffset
+             {
+                 
+                 scrollOffset=(int)(playerX-(GAMEWIDTH*0.8)); //how far the player is a head of the border, 
+                 //will be the scrolloffset and will be substracted from the player so player cannot get ahead of border
+                 
+                 
+                 System.out.println("scrollOffset right " + scrollOffset); 
+                 
+             }
+             
+             else if (playerX-scrollOffset<(GAMEWIDTH*0.2))
+                 
+             {
+                 
+                 scrollOffset=(int)(playerX-(GAMEWIDTH*0.2));
+                 
+                 
+                 System.out.println("scrollOffset left " + scrollOffset); 
+                 
+                 
+             }
+             
+             
+             if (scrollOffset>maxOffset)
+                 
+             {
+                 
+                 scrollOffset=maxOffset;
+             }
+                
+             
+             else if (scrollOffset<0)
+             {
+                 
+                 scrollOffset=0;
+             }
+                 
+             
+             
+             
+             
+             
+             
+         }          
+             
+  
+  
+  
+  
 }
